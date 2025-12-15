@@ -1,0 +1,4 @@
+- [x] Add localStorage persistence to cartSlice.js
+  - [x] Add function to load initial state from localStorage
+  - [x] Modify initialState to use loaded state
+  - [x] Update each reducer to save state to localStorage after mutations
