@@ -1,0 +1,110 @@
+{
+  "common": {
+    "back": "Back",
+    "search": "Search Product",
+    "cart": "Cart",
+    "profile": "Profile",
+    "logout": "Logout",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "edit": "Edit",
+    "save": "Save",
+    "delete": "Delete",
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "header": {
+    "logoAlt": "Logo"
+  },
+  "editProfile": {
+    "title": "Edit Profile",
+    "contactPerson": "Contact Person",
+    "fullName": "Full Name",
+    "phoneNumber": "Phone Number",
+    "email": "Email",
+    "companyDetails": "Company Details",
+    "companyName": "Company Name",
+    "vatNumber": "VAT Number",
+    "businessAddress": "Business Address",
+    "street": "Street",
+    "number": "Number",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "accountSetup": "Account Setup",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "requestAccount": "Request Account"
+  },
+  "orderPage": {
+    "back": "Back",
+    "cartSummary": "Cart Summary",
+    "yourCartIsEmpty": "Your cart is empty",
+    "totalItems": "Total items:",
+    "deliveryDetails": "Delivery Details",
+    "deliveryDate": "Delivery Date",
+    "pickADate": "Pick a date",
+    "deliveryAddress": "Delivery Address",
+    "additionalInstructions": "Additional Instructions",
+    "instructionsPlaceholder": "eg.,Din Ena City, gate code 1504",
+    "submitOrder": "Submit Order",
+    "ordersAfter5PM": "Orders after 5 PM cannot be delivered the next day"
+  },
+  "profilePage": {
+    "myAccount": "My Account",
+    "profile": "Profile",
+    "orderHistory": "Order History",
+    "termsAndCondition": "Terms & Condition",
+    "privacyPolicy": "Privacy Policy",
+    "companyDetails": "Company Details",
+    "contactInformation": "Contact Information",
+    "businessAddress": "Business Address",
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
+    "companyName": "Company Name",
+    "vatNumber": "VAT Number",
+    "street": "Street",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "orderDate": "Order Date",
+    "reference": "Reference",
+    "totalItems": "Total Items",
+    "deliveryDate": "Delivery Date",
+    "status": "Status"
+  },
+  "privacyPage": {
+    "title": "Privacy Policy",
+    "content": [
+      "Your privacy is important to us. It is Brainstorming's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.",
+      "We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we're collecting it and how it will be used.",
+      "We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we'll protect within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use or modification."
+    ]
+  },
+  "termsPage": {
+    "clause1": {
+      "title": "Clause 1",
+      "content": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
+      ]
+    },
+    "clause2": {
+      "title": "Clause 2",
+      "content": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
+      ]
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "message": "Message",
+    "howCanWeHelp": "How can we help?",
+    "send": "Send"
+  }
+}

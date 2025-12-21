@@ -1,13 +1,21 @@
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Heart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "../Redux/features/cart/cartSlice";
+import { toggleFavorite } from "../Redux/features/favorites/favoritesSlice";
 
 export default function ProductCard({ product }) {
+  const currentLanguage = useSelector((state) => {
+    return state.language.currentLanguage;
+  });
   const dispatch = useDispatch();
   const cartItem = useSelector((state) =>
     state.cart.items.find((item) => item.id === product.id)
   );
   const quantity = cartItem ? cartItem.quantity : 0;
+
+  const isFavorite = useSelector((state) =>
+    state.favorites.items.some((item) => item.id === product.id)
+  );
 
   const handleDecrease = () => {
     if (quantity > 0) {
@@ -34,7 +42,6 @@ export default function ProductCard({ product }) {
   const handleQuantityChange = (e) => {
     const newQuantity = Number.parseInt(e.target.value) || 0;
     if (newQuantity > 0 && !cartItem) {
-      
       dispatch(
         addToCart({
           id: product.id,
@@ -49,20 +56,59 @@ export default function ProductCard({ product }) {
     }
   };
 
+  const handleToggleFavorite = () => {
+    dispatch(
+      toggleFavorite({
+        id: product.id,
+        name: product.name,
+        size: product.size,
+        image: product.image,
+      })
+    );
+  };
+
   return (
     <div className="bg-[#FBFFFC] rounded-lg border border-gray-200 overflow-hidden min-h-80 hover:shadow-lg transition-shadow">
       {/* Product Image */}
       <div className="relative border-b-2 h-72 md:h-60  overflow-hidden flex items-center justify-center">
         <img
           src={product.image}
-          alt={product.name}
+          alt={
+            currentLanguage === "eng" && product.name?.eng?.length > 0
+              ? product.name?.eng
+              : currentLanguage === "fr" && product.name?.fra?.length > 0
+              ? product.name?.fra
+              : currentLanguage === "nl" && product.name?.nld?.length > 0
+              ? product.name?.nld
+              : product.name._
+          }
           className="h-full w-full object-contain"
         />
+        {/* Favorite Button */}
+        <button
+          onClick={handleToggleFavorite}
+          className="absolute top-2 right-2 w-8 h-8 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-opacity"
+        >
+          <Heart
+            className={`w-5 h-5 ${
+              isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
+            }`}
+          />
+        </button>
       </div>
 
       {/* Product Info */}
       <div className="p-4">
-        <h3 className="font-semibold text-gray-900 mb-1">{product.name}</h3>
+        <h3 className="font-semibold text-gray-900 mb-1  whitespace-normal break-words">
+          {currentLanguage === "eng" && product.name?.eng?.length > 0
+            ? product.name?.eng
+            : currentLanguage === "fr" && product.name?.fra?.length > 0
+            ? product.name?.fra
+            : currentLanguage === "nl" && product.name?.nld?.length > 0
+            ? product.name?.nld
+            : product.name._}
+          {/* {product.name._} */}
+        </h3>
         <p className="text-sm text-gray-600 mb-4">{product.size}</p>
 
         {/* Quantity Selector */}
@@ -89,6 +135,9 @@ export default function ProductCard({ product }) {
             <Plus className="w-4 h-4" />
           </button>
         </div>
+        <span>
+          ${product.price_excl?.["1190"] || product.price_excl?._ || "00.00"}
+        </span>
       </div>
     </div>
   );

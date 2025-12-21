@@ -1,14 +1,20 @@
 "use client";
 
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setLanguage } from "@/Redux/features/language/languageSlice";
 
-import { ShoppingCart, User, LogOut, Search } from "lucide-react";
+import { ShoppingCart, User, LogOut, Search, Heart } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 
 export default function UserHeader() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const totalItems = useSelector((state) => state.cart.totalItems);
+  const totalFavorites = useSelector((state) => state.favorites.items.length);
+  const currentLanguage = useSelector((state) => state.language.currentLanguage);
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -27,7 +33,7 @@ export default function UserHeader() {
             <Search className="absolute w-4 h-4 ml-3 text-gray-400" />
             <Input
               type="text"
-              placeholder="Search Product"
+              placeholder={t('common.search')}
               className="w-full border-none focus-visible:ring-primary bg-transparent pl-10"
             />
           </div>
@@ -36,16 +42,50 @@ export default function UserHeader() {
           <div className="flex items-center gap-4">
             {/* Language Selection */}
             <div className="hidden sm:flex gap-2">
-              <button className="px-3 py-1 bg-primary text-white text-sm rounded font-medium">
+              <button
+                onClick={() => dispatch(setLanguage('EN'))}
+                className={`px-3 py-1 text-sm rounded font-medium ${
+                  currentLanguage.toUpperCase() === 'EN'
+                    ? 'bg-primary text-white'
+                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
                 EN
               </button>
-              <button className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded hover:bg-gray-50">
+              <button
+                onClick={() => dispatch(setLanguage('NL'))}
+                className={`px-3 py-1 text-sm rounded font-medium ${
+                  currentLanguage.toUpperCase() === 'NL'
+                    ? 'bg-primary text-white'
+                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
                 NL
               </button>
-              <button className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded hover:bg-gray-50">
+              <button
+                onClick={() => dispatch(setLanguage('FR'))}
+                className={`px-3 py-1 text-sm rounded font-medium ${
+                  currentLanguage.toUpperCase() === 'FR'
+                    ? 'bg-primary text-white'
+                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
                 FR
               </button>
             </div>
+
+            {/* Favorites */}
+            <button
+              onClick={() => navigate("/favorites")}
+              className="relative p-2 hover:bg-gray-100 rounded-full"
+            >
+              <Heart className="w-6 h-6 text-gray-700" />
+              {totalFavorites > 0 && (
+                <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  {totalFavorites}
+                </span>
+              )}
+            </button>
 
             {/* Cart */}
             <button
@@ -72,7 +112,7 @@ export default function UserHeader() {
               className="hidden sm:flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-400 font-medium"
             >
               <LogOut className="w-4 h-4" />
-              Logout
+              {t('common.logout')}
             </button>
           </div>
         </div>

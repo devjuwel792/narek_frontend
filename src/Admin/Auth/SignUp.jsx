@@ -36,7 +36,6 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle registration logic here
-    console.log("Registration data:", formData);
     navigate("/");
   };
 

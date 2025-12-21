@@ -3,8 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function UserFooter() {
+  const { t } = useTranslation();
   const [contactForm, setContactForm] = useState({
     firstName: "",
     lastName: "",
@@ -22,7 +24,6 @@ export default function UserFooter() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Contact form submitted:", contactForm);
   };
 
   return (
@@ -31,7 +32,7 @@ export default function UserFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Contact Info */}
           <div>
-            <h3 className="text-2xl font-bold text-primary mb-6">Contact</h3>
+            <h3 className="text-2xl font-bold text-primary mb-6">{t('footer.contact')}</h3>
             <div className="space-y-3">
               <p className="font-semibold text-white">DRANKHANDEL</p>
               <p className="text-gray-400">Antwerp Province, Belgium</p>
@@ -45,13 +46,13 @@ export default function UserFooter() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                    
-                  <label htmlFor="firstName" >First Name</label>
+
+                  <label htmlFor="firstName" >{t('footer.firstName')}</label>
                   <Input
                     type="text"
                     name="firstName"
                     id="firstName"
-                    placeholder="First Name"
+                    placeholder={t('footer.firstName')}
                     value={contactForm.firstName}
                     onChange={handleContactChange}
                     className="bg-white text-gray-900 border-0"
@@ -59,12 +60,12 @@ export default function UserFooter() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="lastName">Last Name</label>
+                  <label htmlFor="lastName">{t('footer.lastName')}</label>
                   <Input
                     type="text"
                     name="lastName"
                     id="lastName"
-                    placeholder="Last Name"
+                    placeholder={t('footer.lastName')}
                     value={contactForm.lastName}
                     onChange={handleContactChange}
                     className="bg-white text-gray-900 border-0"
@@ -73,12 +74,12 @@ export default function UserFooter() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">{t('footer.email')}</label>
                 <Input
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="Enter your email"
+                  placeholder={t('footer.email')}
                   value={contactForm.email}
                   onChange={handleContactChange}
                   className="bg-white text-gray-900 border-0"
@@ -86,11 +87,11 @@ export default function UserFooter() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="message">Message</label>
+                <label htmlFor="message">{t('footer.message')}</label>
                 <textarea
                   name="message"
                   id="message"
-                  placeholder="How can we help?"
+                  placeholder={t('footer.howCanWeHelp')}
                   value={contactForm.message}
                   onChange={handleContactChange}
                   className="w-full p-3 rounded text-gray-900 border-0 resize-none h-32"
@@ -101,7 +102,7 @@ export default function UserFooter() {
                 type="submit"
                 className="w-full bg-primary hover:bg-green-400 text-white"
               >
-                Send
+                {t('footer.send')}
               </Button>
             </form>
           </div>

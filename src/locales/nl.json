@@ -1,0 +1,110 @@
+{
+  "common": {
+    "back": "Terug",
+    "search": "Product Zoeken",
+    "cart": "Winkelwagen",
+    "profile": "Profiel",
+    "logout": "Uitloggen",
+    "cancel": "Annuleren",
+    "submit": "Verzenden",
+    "edit": "Bewerken",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "yes": "Ja",
+    "no": "Nee",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes"
+  },
+  "header": {
+    "logoAlt": "Logo"
+  },
+  "editProfile": {
+    "title": "Profiel Bewerken",
+    "contactPerson": "Contactpersoon",
+    "fullName": "Volledige Naam",
+    "phoneNumber": "Telefoonnummer",
+    "email": "E-mail",
+    "companyDetails": "Bedrijfsgegevens",
+    "companyName": "Bedrijfsnaam",
+    "vatNumber": "BTW-nummer",
+    "businessAddress": "Zakelijk Adres",
+    "street": "Straat",
+    "number": "Nummer",
+    "city": "Stad",
+    "postalCode": "Postcode",
+    "accountSetup": "Account Instellen",
+    "password": "Wachtwoord",
+    "confirmPassword": "Wachtwoord Bevestigen",
+    "requestAccount": "Account Aanvragen"
+  },
+  "orderPage": {
+    "back": "Terug",
+    "cartSummary": "Winkelwagen Samenvatting",
+    "yourCartIsEmpty": "Uw winkelwagen is leeg",
+    "totalItems": "Totaal aantal artikelen:",
+    "deliveryDetails": "Leveringsgegevens",
+    "deliveryDate": "Leveringsdatum",
+    "pickADate": "Kies een datum",
+    "deliveryAddress": "Leveringsadres",
+    "additionalInstructions": "Aanvullende Instructies",
+    "instructionsPlaceholder": "bijv., Din Ena City, poortcode 1504",
+    "submitOrder": "Bestelling Verzenden",
+    "ordersAfter5PM": "Bestellingen na 17:00 kunnen niet de volgende dag worden geleverd"
+  },
+  "profilePage": {
+    "myAccount": "Mijn Account",
+    "profile": "Profiel",
+    "orderHistory": "Bestelgeschiedenis",
+    "termsAndCondition": "Algemene Voorwaarden",
+    "privacyPolicy": "Privacybeleid",
+    "companyDetails": "Bedrijfsgegevens",
+    "contactInformation": "Contactgegevens",
+    "businessAddress": "Zakelijk Adres",
+    "fullName": "Volledige Naam",
+    "phone": "Telefoon",
+    "email": "E-mail",
+    "companyName": "Bedrijfsnaam",
+    "vatNumber": "BTW-nummer",
+    "street": "Straat",
+    "city": "Stad",
+    "postalCode": "Postcode",
+    "orderDate": "Besteldatum",
+    "reference": "Referentie",
+    "totalItems": "Totaal Aantal Artikelen",
+    "deliveryDate": "Leveringsdatum",
+    "status": "Status"
+  },
+  "privacyPage": {
+    "title": "Privacybeleid",
+    "content": [
+      "Uw privacy is belangrijk voor ons. Het is het beleid van Brainstorming om uw privacy te respecteren met betrekking tot alle informatie die we van u kunnen verzamelen via onze website en andere sites die we bezitten en exploiteren.",
+      "We vragen alleen om persoonlijke informatie wanneer we deze echt nodig hebben om u een dienst te verlenen. We verzamelen het op eerlijke en wettelijke manieren, met uw kennis en toestemming. We laten u ook weten waarom we het verzamelen en hoe het zal worden gebruikt.",
+      "We bewaren verzamelde informatie alleen zolang als nodig is om u de gevraagde dienst te verlenen. Welke gegevens we opslaan, zullen we beschermen binnen commercieel aanvaardbare middelen om verlies en diefstal te voorkomen, evenals ongeautoriseerde toegang, openbaarmaking, kopiëren, gebruik of wijziging."
+    ]
+  },
+  "termsPage": {
+    "clause1": {
+      "title": "Clausule 1",
+      "content": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
+      ]
+    },
+    "clause2": {
+      "title": "Clausule 2",
+      "content": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
+      ]
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "E-mail",
+    "message": "Bericht",
+    "howCanWeHelp": "Hoe kunnen we helpen?",
+    "send": "Verzenden"
+  }
+}

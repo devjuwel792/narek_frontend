@@ -69,7 +69,6 @@ export default function Settings() {
     isLoading: termsLoading,
     error: termsError,
   } = useGetTermsAndConditionsQuery();
-  console.log("🚀 ~ Settings ~ termsData:", termsData);
   const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
 
   const {
@@ -164,16 +163,7 @@ export default function Settings() {
       );
     }
   };
-  const handleDeleteAccount = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete your account? This action cannot be undone."
-      )
-    ) {
-      console.log("Deleting account");
-      alert("Account deletion initiated");
-    }
-  };
+
 
   const tabs = [
     { id: "general", label: "General", icon: FiSettings },

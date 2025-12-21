@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import {
   updateQuantity,
   removeFromCart,
@@ -22,16 +23,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 
 export default function OrderPage() {
+  const currentLanguage = useSelector((state) => {
+    return state.language.currentLanguage;
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
   const totalItems = useSelector((state) => state.cart.totalItems);
 
   const currentHour = new Date().getHours();
-  const isBetween3and5 = currentHour >= 15 && currentHour < 17;
+  const isAfter5PM = currentHour >= 17;
+
+  const minDate = isAfter5PM ? addDays(new Date(), 2) : addDays(new Date(), 0);
 
   const [deliveryData, setDeliveryData] = useState({
     deliveryDate: "",
@@ -39,7 +46,8 @@ export default function OrderPage() {
     instructions: "",
   });
 
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(addDays(minDate, 1));
+
 
   useEffect(() => {
     if (date) {
@@ -80,18 +88,20 @@ export default function OrderPage() {
         className="flex items-center gap-2 text-gray-700 mb-8 hover:text-gray-900"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span>Back</span>
+        <span>{t("common.back")}</span>
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Summary */}
         <div className="lg:col-span-1">
           <div className="border border-gray-200 rounded-lg p-4 bg-[#F9F9F9] ">
-            <h2 className="text-xl font-bold mb-6">Cart Summary</h2>
+            <h2 className="text-xl font-bold mb-6">
+              {t("orderPage.cartSummary")}
+            </h2>
             <div className=" border rounded bg-white border-gray-200">
               {cartItems.length === 0 ? (
                 <p className="p-4 text-center text-gray-500">
-                  Your cart is empty
+                  {t("orderPage.yourCartIsEmpty")}
                 </p>
               ) : (
                 cartItems.map((item) => (
@@ -101,12 +111,30 @@ export default function OrderPage() {
                   >
                     <img
                       src={item.image}
-                      alt={item.name}
+                      alt={
+                        currentLanguage === "eng" && item.name?.eng?.length > 0
+                          ? item.name?.eng
+                          : currentLanguage === "fr" &&
+                            item.name?.fra?.length > 0
+                          ? item.name?.fra
+                          : currentLanguage === "nl" &&
+                            item.name?.nld?.length > 0
+                          ? item.name?.nld
+                          : item.name._
+                      }
                       className="w-16 h-16 object-cover bg-gray-50 m-2 rounded "
                     />
                     <div className="flex-1">
                       <h3 className="font-semibold text-sm mb-1">
-                        {item.name}
+                        {currentLanguage === "eng" && item.name?.eng?.length > 0
+                          ? item.name?.eng
+                          : currentLanguage === "fr" &&
+                            item.name?.fra?.length > 0
+                          ? item.name?.fra
+                          : currentLanguage === "nl" &&
+                            item.name?.nld?.length > 0
+                          ? item.name?.nld
+                          : item.name._}
                       </h3>
                       <p className="text-xs text-gray-600 mb-3">{item.size}</p>
                       <div className="flex items-center justify-between">
@@ -146,7 +174,9 @@ export default function OrderPage() {
 
             <div className="mt-4 pt-4 border-t border-gray-200">
               <div className="flex justify-between items-center">
-                <span className="text-gray-700 font-medium">Total items:</span>
+                <span className="text-gray-700 font-medium">
+                  {t("orderPage.totalItems")}
+                </span>
                 <span className="font-bold">{totalItems}</span>
               </div>
             </div>
@@ -155,11 +185,13 @@ export default function OrderPage() {
 
         {/* Delivery Details */}
         <div className="lg:col-span-2 bg-[#F9F9F9] p-6 rounded-lg border border-gray-200">
-          <h2 className="text-xl font-bold mb-6">Delivery Details</h2>
+          <h2 className="text-xl font-bold mb-6">
+            {t("orderPage.deliveryDetails")}
+          </h2>
           <form onSubmit={handleSubmitOrder} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Delivery Date
+                {t("orderPage.deliveryDate")}
               </label>
               <Popover>
                 <PopoverTrigger asChild>
@@ -171,21 +203,22 @@ export default function OrderPage() {
                     {date ? (
                       format(date, "MM/dd/yyyy")
                     ) : (
-                      <span>Pick a date</span>
+                      <span>{t("orderPage.pickADate")}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto h-48 p-0" align="start">
                   <div className="relative">
-                    {!isBetween3and5 && (
+                    {/* {!isBetween3and5 && (
                       <div className="flex justify-center items-center mr-auto w-full h-full bg-white/20 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[5px] border border-white/30 p-6  m-auto  absolute top-0 left-0 z-10">
-                        Orders after 5 PM cannot be delivered the next day
+                        {t("orderPage.ordersAfter5PM")}
                       </div>
-                    )}
+                    )} */}
                     <Calendar
                       mode="single"
                       selected={date}
                       onSelect={setDate}
+                      disabled={(date) => date < minDate}
                       className={"focus-visible:ring-primary border-primary"}
                       initialFocus
                     />
@@ -193,13 +226,13 @@ export default function OrderPage() {
                 </PopoverContent>
               </Popover>
               <p className="text-xs text-gray-600 mt-2">
-                Orders after 5 PM cannot be delivered the next day
+                {t("orderPage.ordersAfter5PM")}
               </p>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Delivery Address
+                {t("orderPage.deliveryAddress")}
               </label>
               <textarea
                 name="deliveryAddress"
@@ -211,13 +244,13 @@ export default function OrderPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Additional Instructions
+                {t("orderPage.additionalInstructions")}
               </label>
               <textarea
                 name="instructions"
                 value={deliveryData.instructions}
                 onChange={handleChange}
-                placeholder="eg.,Din Ena City, gate code 1504"
+                placeholder={t("orderPage.instructionsPlaceholder")}
                 className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-10 min-h-32 resize-none"
               />
             </div>
@@ -226,7 +259,7 @@ export default function OrderPage() {
               type="submit"
               className="w-full bg-primary hover:bg-green-400 text-white py-3 font-medium"
             >
-              Submit Order
+              {t("orderPage.submitOrder")}
             </Button>
           </form>
         </div>

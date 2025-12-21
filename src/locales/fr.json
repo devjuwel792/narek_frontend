@@ -1,0 +1,110 @@
+{
+  "common": {
+    "back": "Retour",
+    "search": "Rechercher un Produit",
+    "cart": "Panier",
+    "profile": "Profil",
+    "logout": "Déconnexion",
+    "cancel": "Annuler",
+    "submit": "Soumettre",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "yes": "Oui",
+    "no": "Non",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "header": {
+    "logoAlt": "Logo"
+  },
+  "editProfile": {
+    "title": "Modifier le Profil",
+    "contactPerson": "Personne de Contact",
+    "fullName": "Nom Complet",
+    "phoneNumber": "Numéro de Téléphone",
+    "email": "E-mail",
+    "companyDetails": "Détails de l'Entreprise",
+    "companyName": "Nom de l'Entreprise",
+    "vatNumber": "Numéro de TVA",
+    "businessAddress": "Adresse d'Affaires",
+    "street": "Rue",
+    "number": "Numéro",
+    "city": "Ville",
+    "postalCode": "Code Postal",
+    "accountSetup": "Configuration du Compte",
+    "password": "Mot de Passe",
+    "confirmPassword": "Confirmer le Mot de Passe",
+    "requestAccount": "Demander un Compte"
+  },
+  "orderPage": {
+    "back": "Retour",
+    "cartSummary": "Résumé du Panier",
+    "yourCartIsEmpty": "Votre panier est vide",
+    "totalItems": "Total des articles :",
+    "deliveryDetails": "Détails de Livraison",
+    "deliveryDate": "Date de Livraison",
+    "pickADate": "Choisir une date",
+    "deliveryAddress": "Adresse de Livraison",
+    "additionalInstructions": "Instructions Supplémentaires",
+    "instructionsPlaceholder": "par exemple, Din Ena City, code de porte 1504",
+    "submitOrder": "Soumettre la Commande",
+    "ordersAfter5PM": "Les commandes après 17h ne peuvent pas être livrées le lendemain"
+  },
+  "profilePage": {
+    "myAccount": "Mon Compte",
+    "profile": "Profil",
+    "orderHistory": "Historique des Commandes",
+    "termsAndCondition": "Termes et Conditions",
+    "privacyPolicy": "Politique de Confidentialité",
+    "companyDetails": "Détails de l'Entreprise",
+    "contactInformation": "Informations de Contact",
+    "businessAddress": "Adresse d'Affaires",
+    "fullName": "Nom Complet",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "companyName": "Nom de l'Entreprise",
+    "vatNumber": "Numéro de TVA",
+    "street": "Rue",
+    "city": "Ville",
+    "postalCode": "Code Postal",
+    "orderDate": "Date de Commande",
+    "reference": "Référence",
+    "totalItems": "Total des Articles",
+    "deliveryDate": "Date de Livraison",
+    "status": "Statut"
+  },
+  "privacyPage": {
+    "title": "Politique de Confidentialité",
+    "content": [
+      "Votre confidentialité est importante pour nous. Il est de la politique de Brainstorming de respecter votre confidentialité concernant toute information que nous pouvons recueillir auprès de vous sur notre site web et d'autres sites que nous possédons et exploitons.",
+      "Nous ne demandons des informations personnelles que lorsque nous en avons vraiment besoin pour vous fournir un service. Nous les recueillons de manière équitable et légale, avec votre connaissance et votre consentement. Nous vous informons également de la raison pour laquelle nous les recueillons et de leur utilisation.",
+      "Nous ne conservons les informations recueillies que le temps nécessaire pour vous fournir le service demandé. Les données que nous stockons seront protégées dans des moyens commercialement acceptables pour prévenir la perte et le vol, ainsi que l'accès, la divulgation, la copie, l'utilisation ou la modification non autorisés."
+    ]
+  },
+  "termsPage": {
+    "clause1": {
+      "title": "Clause 1",
+      "content": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
+      ]
+    },
+    "clause2": {
+      "title": "Clause 2",
+      "content": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
+      ]
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "firstName": "Prénom",
+    "lastName": "Nom de Famille",
+    "email": "E-mail",
+    "message": "Message",
+    "howCanWeHelp": "Comment pouvons-nous aider ?",
+    "send": "Envoyer"
+  }
+}

@@ -1,4 +1,6 @@
-- [x] Add localStorage persistence to cartSlice.js
-  - [x] Add function to load initial state from localStorage
-  - [x] Modify initialState to use loaded state
-  - [x] Update each reducer to save state to localStorage after mutations
+- [x] Import addDays from date-fns
+- [x] Calculate minDate: if currentHour >= 17, minDate = addDays(new Date(), 2); else addDays(new Date(), 1)
+- [x] Update condition variable to isAfter5PM = currentHour >= 17
+- [x] Add disabled prop to Calendar: disabled={(date) => date < minDate}
+- [x] Set initial date to minDate if no date selected
+- [x] Test calendar selection to ensure next day is disabled after 5 PM

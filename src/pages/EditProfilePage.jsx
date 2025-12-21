@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function EditProfilePage() {
+   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -40,27 +42,27 @@ export default function EditProfilePage() {
         className="flex items-center gap-2 text-gray-700 mb-8 hover:text-gray-900"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span>Back</span>
+        <span>{t('common.back')}</span>
       </button>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold mb-8">Edit Profile</h1>
+      <h1 className="text-3xl font-bold mb-8">{t('editProfile.title')}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Contact Person Section */}
         <section className="pb-8 border-b bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">Contact Person</h2>
+          <h2 className="text-2xl font-bold mb-6">{t('editProfile.contactPerson')}</h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Full Name
+                {t('editProfile.fullName')}
               </label>
               <Input
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                placeholder="Enter your full name"
+                placeholder={t('editProfile.fullName')}
                 className="w-full"
               />
             </div>
@@ -68,26 +70,26 @@ export default function EditProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Phone Number
+                  {t('editProfile.phoneNumber')}
                 </label>
                 <Input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="Enter your phone number"
+                  placeholder={t('editProfile.phoneNumber')}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Email
+                  {t('editProfile.email')}
                 </label>
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Enter your email"
+                  placeholder={t('editProfile.email')}
                 />
               </div>
             </div>
@@ -96,32 +98,32 @@ export default function EditProfilePage() {
 
         {/* Company Details Section */}
         <section className="pb-8 border-b bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">Company Details</h2>
+          <h2 className="text-2xl font-bold mb-6">{t('editProfile.companyDetails')}</h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Company Name
+                {t('editProfile.companyName')}
               </label>
               <Input
                 type="text"
                 name="companyName"
                 value={formData.companyName}
                 onChange={handleChange}
-                placeholder="Enter your company name"
+                placeholder={t('editProfile.companyName')}
                 className="w-full"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                VAT Number
+                {t('editProfile.vatNumber')}
               </label>
               <Input
                 type="text"
                 name="vatNumber"
                 value={formData.vatNumber}
                 onChange={handleChange}
-                placeholder="Enter your VAT number"
+                placeholder={t('editProfile.vatNumber')}
                 className="w-full"
               />
             </div>
@@ -190,11 +192,11 @@ export default function EditProfilePage() {
 
         {/* Account Setup Section */}
         <section className="pb-8 bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">Account Setup</h2>
+          <h2 className="text-2xl font-bold mb-6">{t('editProfile.accountSetup')}</h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Password
+                {t('editProfile.password')}
               </label>
               <div className="relative">
                 <Input
@@ -221,7 +223,7 @@ export default function EditProfilePage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Confirm Password
+                {t('editProfile.confirmPassword')}
               </label>
               <div className="relative">
                 <Input

@@ -5,6 +5,7 @@ import SignUp from "@/Admin/Auth/SignUp";
 import { Layout } from "@/layouts/Layout";
 import { LoginLayout } from "@/layouts/LoginLayout";
 import EditProfilePage from "@/pages/EditProfilePage";
+import FavoritesPage from "@/pages/FavoritesPage";
 import OrderPage from "@/pages/OrderPage";
 import ProfilePage from "@/pages/ProfilePage";
 import UnprotectedRoute from "@/router/UnprotectedRoute";
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/edit-profile",
         element: <EditProfilePage />,
+      },
+      {
+        path: "/favorites",
+        element: <FavoritesPage />,
       },
     ],
   },

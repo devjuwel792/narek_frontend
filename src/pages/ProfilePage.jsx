@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft, Edit2 } from "lucide-react";
 import { DataTable } from "../components/Datatable";
 import TermsPage from "./TermsPage";
@@ -8,7 +9,7 @@ import PrivacyPage from "./PrivacyPage";
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
-
+  const { t } = useTranslation();
   const profileData = {
     fullName: "Narek",
     phone: "+4455200136",
@@ -22,10 +23,10 @@ export default function ProfilePage() {
   };
 
   const tabs = [
-    { id: "profile", label: "Profile" },
-    { id: "orders", label: "Order History" },
-    { id: "terms", label: "Terms & Condition" },
-    { id: "privacy", label: "Privacy Policy" },
+    { id: "profile", label: t("profilePage.profile") },
+    { id: "orders", label: t("profilePage.orderHistory") },
+    { id: "terms", label: t("profilePage.termsAndCondition") },
+    { id: "privacy", label: t("profilePage.privacyPolicy") },
   ];
 
   const orders = [
@@ -34,14 +35,14 @@ export default function ProfilePage() {
       reference: "ORD-12345",
       totalItems: 5,
       deliveryDate: "2023-11-05",
-      status: "Delivered",
+      status: "Pending",
     },
     {
       orderDate: "2023-11-15",
       reference: "ORD-67890",
       totalItems: 3,
       deliveryDate: "2023-11-20",
-      status: "Shipped",
+      status: "Completed",
     },
     // Add more orders as needed
   ];
@@ -49,23 +50,23 @@ export default function ProfilePage() {
   const columns = [
     {
       accessorKey: "orderDate",
-      header: "Order Date",
+      header: t("profilePage.orderDate"),
     },
     {
       accessorKey: "reference",
-      header: "Reference",
+      header: t("profilePage.reference"),
     },
     {
       accessorKey: "totalItems",
-      header: "Total Items",
+      header: t("profilePage.totalItems"),
     },
     {
       accessorKey: "deliveryDate",
-      header: "Delivery Date",
+      header: t("profilePage.deliveryDate"),
     },
     {
       accessorKey: "status",
-      header: "Status",
+      header: t("profilePage.status"),
     },
   ];
 
@@ -77,11 +78,11 @@ export default function ProfilePage() {
         className="flex items-center gap-2 text-gray-700 mb-8 hover:text-gray-900"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span>Back</span>
+        <span>{t("common.back")}</span>
       </button>
 
       {/* Title */}
-      <h1 className="text-4xl font-bold mb-8">My Account</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("profilePage.myAccount")}</h1>
 
       {/* Tabs */}
       <div className="border-b border-gray-200 mb-8">
@@ -108,7 +109,9 @@ export default function ProfilePage() {
           {/* Company Details Card */}
           <div className="lg:col-span-1 bg-gray-50 p-6 rounded-lg">
             <div className="flex justify-between items-start mb-4">
-              <h2 className="text-xl font-bold">Company Details</h2>
+              <h2 className="text-xl font-bold">
+                {t("profilePage.companyDetails")}
+              </h2>
               <button
                 onClick={() => navigate("/edit-profile")}
                 className="text-gray-600 hover:text-gray-900"
@@ -118,11 +121,15 @@ export default function ProfilePage() {
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-gray-600">Company Name</p>
+                <p className="text-sm text-gray-600">
+                  {t("profilePage.companyName")}
+                </p>
                 <p className="font-medium">{profileData.companyName}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">VAT Number</p>
+                <p className="text-sm text-gray-600">
+                  {t("profilePage.vatNumber")}
+                </p>
                 <p className="font-medium">{profileData.vatNumber}</p>
               </div>
             </div>
@@ -130,18 +137,26 @@ export default function ProfilePage() {
 
           {/* Contact Information Card */}
           <div className="lg:col-span-1 bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">Contact Information</h2>
+            <h2 className="text-xl font-bold mb-4">
+              {t("profilePage.contactInformation")}
+            </h2>
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-gray-600">Full Name</p>
+                <p className="text-sm text-gray-600">
+                  {t("profilePage.fullName")}
+                </p>
                 <p className="font-medium">{profileData.fullName}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Phone</p>
+                <p className="text-sm text-gray-600">
+                  {t("profilePage.phone")}
+                </p>
                 <p className="font-medium">{profileData.phone}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Email</p>
+                <p className="text-sm text-gray-600">
+                  {t("profilePage.email")}
+                </p>
                 <p className="font-medium">{profileData.email}</p>
               </div>
             </div>
@@ -149,7 +164,9 @@ export default function ProfilePage() {
 
           {/* Business Address Card */}
           <div className="lg:col-span-2 bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">Business Address</h2>
+            <h2 className="text-xl font-bold mb-4">
+              {t("profilePage.businessAddress")}
+            </h2>
             <p className="text-gray-700">
               {profileData.street}, {profileData.city}, {profileData.postalCode}
             </p>
