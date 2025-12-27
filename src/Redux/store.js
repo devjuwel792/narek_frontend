@@ -5,6 +5,7 @@ import cartReducer from "./features/cart/cartSlice";
 import ordersReducer from "./features/orders/ordersSlice";
 import languageReducer from "./features/language/languageSlice";
 import favoritesReducer from "./features/favorites/favoritesSlice";
+import searchReducer from "./features/search/searchSlice";
 
 import { authApi } from "./services/authApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -18,6 +19,7 @@ export const store = configureStore({
     orders: ordersReducer,
     language: languageReducer,
     favorites: favoritesReducer,
+    search: searchReducer,
     // Add the generated reducer as a specific top-level slice
 
     [authApi.reducerPath]: authApi.reducer,

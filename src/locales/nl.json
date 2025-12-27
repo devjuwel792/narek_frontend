@@ -98,6 +98,11 @@
       ]
     }
   },
+  "favoritesPage": {
+    "title": "Mijn Favorieten",
+    "noFavorites": "Nog geen favoriete producten.",
+    "noFavoritesDesc": "Klik op het hartpictogram op producten om ze toe te voegen aan favorieten."
+  },
   "footer": {
     "contact": "Contact",
     "firstName": "Voornaam",

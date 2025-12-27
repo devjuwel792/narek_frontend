@@ -1,7 +1,7 @@
-import Login from "@/Admin/Auth/Login";
+import Login from "@/pages/Auth/Login";
 import App from "@/App";
 
-import SignUp from "@/Admin/Auth/SignUp";
+import SignUp from "@/pages/Auth/SignUp";
 import { Layout } from "@/layouts/Layout";
 import { LoginLayout } from "@/layouts/LoginLayout";
 import EditProfilePage from "@/pages/EditProfilePage";

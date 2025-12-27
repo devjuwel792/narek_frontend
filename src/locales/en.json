@@ -98,6 +98,11 @@
       ]
     }
   },
+  "favoritesPage": {
+    "title": "My Favorites",
+    "noFavorites": "No favorite products yet.",
+    "noFavoritesDesc": "Click the heart icon on products to add them to favorites."
+  },
   "footer": {
     "contact": "Contact",
     "firstName": "First Name",

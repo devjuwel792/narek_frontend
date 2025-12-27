@@ -1,20 +1,23 @@
 "use client";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLanguage } from "@/Redux/features/language/languageSlice";
 
 import { ShoppingCart, User, LogOut, Search, Heart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
+import { setSearchQuery } from "@/Redux/features/search/searchSlice";
 
 export default function UserHeader() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const totalItems = useSelector((state) => state.cart.totalItems);
   const totalFavorites = useSelector((state) => state.favorites.items.length);
   const currentLanguage = useSelector((state) => state.language.currentLanguage);
+  const searchQuery = useSelector((state) => state.search.query);
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -29,14 +32,18 @@ export default function UserHeader() {
           </div>
 
           {/* Search Bar */}
-          <div className="flex-1 flex justify-start  items-center border-primary border rounded-md  max-w-md">
-            <Search className="absolute w-4 h-4 ml-3 text-gray-400" />
-            <Input
-              type="text"
-              placeholder={t('common.search')}
-              className="w-full border-none focus-visible:ring-primary bg-transparent pl-10"
-            />
-          </div>
+          {location.pathname === "/" && (
+            <div className="relative flex-1 flex justify-start items-center border-primary border rounded-md max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder={t('common.search')}
+                value={searchQuery}
+                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                className="w-full border-none focus-visible:ring-primary bg-transparent pl-10"
+              />
+            </div>
+          )}
 
           {/* Right Actions */}
           <div className="flex items-center gap-4">

@@ -98,6 +98,11 @@
       ]
     }
   },
+  "favoritesPage": {
+    "title": "Mes Favoris",
+    "noFavorites": "Aucun produit favori pour le moment.",
+    "noFavoritesDesc": "Cliquez sur l'icône de cœur sur les produits pour les ajouter aux favoris."
+  },
   "footer": {
     "contact": "Contact",
     "firstName": "Prénom",

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./App.css";
@@ -6,6 +6,15 @@ import "./App.css";
 import ProductCard from "./components/ProductCard";
 import { useGetProductGroupsQuery, useGetProductsQuery } from "./Redux/services/productApi";
 import { useSelector } from "react-redux";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "./components/ui/pagination";
 
 
 
@@ -15,13 +24,16 @@ export default function App() {
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
+  const searchQuery = useSelector((state) => state.search.query);
 
   const [selectedCategory, setSelectedCategory] = useState({
     name: "All",
     id: null,
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
   const { data, error, isLoading } = useGetProductGroupsQuery();
- 
+
   const {
     data: productsData,
     error: productsError,
@@ -29,7 +41,14 @@ export default function App() {
   } = useGetProductsQuery({
     product_group_id:
       selectedCategory.name === "All" ? null : selectedCategory.id,
+      productName: searchQuery,
+      limit,
+      offset: (currentPage - 1) * limit
   });
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery]);
 
  
 
@@ -62,6 +81,12 @@ export default function App() {
   // selectedCategory === "All"
   //   ? productList
   //   : productList.filter((product) => product.category === selectedCategory);
+
+  const totalPages = productsData ? Math.ceil(productsData.count / limit) : 1;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   if (isLoading || productsLoading) {
     return (
@@ -102,12 +127,94 @@ export default function App() {
           ))}
         </div>
 
+        {/* Product Count */}
+        <div className="mb-4 text-sm text-gray-600">
+          Showing {filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0} to {Math.min(currentPage * limit, productsData?.count || 0)} of {productsData?.count || 0} products
+        </div>
+
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+
+                {/* First page */}
+                {currentPage > 3 && (
+                  <>
+                    <PaginationItem>
+                      <PaginationLink
+                        onClick={() => handlePageChange(1)}
+                        className="cursor-pointer"
+                      >
+                        1
+                      </PaginationLink>
+                    </PaginationItem>
+                    {currentPage > 4 && (
+                      <PaginationItem>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    )}
+                  </>
+                )}
+
+                {/* Page numbers around current page */}
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        onClick={() => handlePageChange(page)}
+                        isActive={currentPage === page}
+                        className="cursor-pointer"
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+
+                {/* Last page */}
+                {currentPage < totalPages - 2 && (
+                  <>
+                    {currentPage < totalPages - 3 && (
+                      <PaginationItem>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    )}
+                    <PaginationItem>
+                      <PaginationLink
+                        onClick={() => handlePageChange(totalPages)}
+                        className="cursor-pointer"
+                      >
+                        {totalPages}
+                      </PaginationLink>
+                    </PaginationItem>
+                  </>
+                )}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </main>
     </div>
   );

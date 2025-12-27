@@ -1,6 +1,6 @@
-- [x] Import addDays from date-fns
-- [x] Calculate minDate: if currentHour >= 17, minDate = addDays(new Date(), 2); else addDays(new Date(), 1)
-- [x] Update condition variable to isAfter5PM = currentHour >= 17
-- [x] Add disabled prop to Calendar: disabled={(date) => date < minDate}
-- [x] Set initial date to minDate if no date selected
-- [x] Test calendar selection to ensure next day is disabled after 5 PM
+# TODO: Add Product Pagination
+
+- [x] Update `src/Redux/services/productApi.js` to include `limit` and `offset` parameters in the `getProducts` query.
+- [x] Update `src/App.jsx` to pass default `limit` (e.g., 100) and `offset` (e.g., 0) to the `useGetProductsQuery` hook.
+- [x] Add pagination UI to `src/App.jsx` using the existing pagination component, with state for current page and handlers for page changes.
+- [x] Test the changes to ensure pagination works with the API response structure and UI controls.

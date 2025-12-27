@@ -15,12 +15,14 @@ export const productApi = createApi({
       }),
     }),
     getProducts: builder.query({
-      query: ({ product_group_id }) => ({
+      query: ({ product_group_id, productName, limit = 100, offset = 0 }) => (
+        {
         url: "/products.json?",
-        params: product_group_id
-          ? { q: `productgroup_id:` + product_group_id }
-          : {},
-
+        params: {
+          q: `${product_group_id ? `productgroup_id:${product_group_id} ${product_group_id && productName && " AND "} ` : ''}${productName ? `name:${productName}*` : ''}`.trim(),
+          limit,
+          offset,
+        },
         headers: {
           "X-SESSION-KEY": import.meta.env.VITE_ONFACT_API_KEY,
         },

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Get base URL from environment variable or use default
-const BASE_URL = import.meta.env.VITE_API_URL || "http://10.10.13.16:8000/api";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://10.10.13.19:9400/api";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -19,78 +19,15 @@ export const authApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User"],
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (credentials) => ({
-        url: "/auth/login/",
-        method: "POST",
-        body: credentials,
+    registerUser: builder.mutation({
+      query: (body) => ({
+        url: '/register/',
+        method: 'POST',
+        body,
       }),
     }),
-    // signup: builder.mutation({
-    //   query: (userData) => ({
-    //     url: "/auth/signup",
-    //     method: "POST",
-    //     body: userData,
-    //   }),
-    // }),
-    // logout: builder.mutation({
-    //   query: () => ({
-    //     url: "/auth/logout",
-    //     method: "POST",
-    //   }),
-    // }),
-    // forgotPassword: builder.mutation({
-    //   query: (email) => ({
-    //     url: "/auth/forgot-password",
-    //     method: "POST",
-    //     body: { email },
-    //   }),
-    // }),
-    // verifyOtp: builder.mutation({
-    //   query: (data) => ({
-    //     url: "/auth/verify-otp",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    // }),
-    changePassword: builder.mutation({
-      query: (data) => ({
-        url: "/auth/password/change/",
-        method: "POST",
-        body: data,
-      }),
-    }),
-    getCurrentUser: builder.query({
-      query: () => "/auth/me/",
-      providesTags: ["User"],
-    }),
-    updateCurrentUser: builder.mutation({
-      query: (userData) => ({
-        url: "/auth/me/",
-        method: "PATCH",
-        body: userData,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    // refreshToken: builder.mutation({
-    //   query: () => ({
-    //     url: "/auth/refresh-token",
-    //     method: "POST",
-    //   }),
-    // }),
   }),
 });
 
-export const {
-  useLoginMutation,
-  // useSignupMutation,
-  // useLogoutMutation,
-  // useForgotPasswordMutation,
-  // useVerifyOtpMutation,
-  useChangePasswordMutation,
-  useGetCurrentUserQuery,
-  useUpdateCurrentUserMutation,
-  // useRefreshTokenMutation,
-} = authApi;
+export const { useRegisterUserMutation } = authApi;
