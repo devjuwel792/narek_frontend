@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // Get base URL from environment variable or use default
 const BASE_URL = import.meta.env.VITE_API_URL || "http://10.10.13.19:9400/api";
 
-export const authApi = createApi({
-  reducerPath: "authApi",
+export const checkoutApi = createApi({
+  reducerPath: "checkoutApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -13,29 +13,21 @@ export const authApi = createApi({
 
       // If we have a token, include it in the headers
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("authorization", `Token ${token}`);
       }
 
       return headers;
     },
   }),
   endpoints: (builder) => ({
-    registerUser: builder.mutation({
+    checkout: builder.mutation({
       query: (body) => ({
-        url: '/register/',
+        url: '/checkout/',
         method: 'POST',
         body,
       }),
     }),
-    login: builder.mutation({
-      query: (body) => ({
-        url: '/auth/token/login/',
-        method: 'POST',
-        body,
-      }),
-    }),
-   
   }),
 });
 
-export const { useRegisterUserMutation, useLoginMutation,  } = authApi;
+export const { useCheckoutMutation } = checkoutApi;

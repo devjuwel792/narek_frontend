@@ -20,10 +20,10 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addToFavorites: (state, action) => {
-      const { id, name, size, image } = action.payload;
+      const { id, name, size, image, price_excl } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (!existingItem) {
-        state.items.push({ id, name, size, image });
+        state.items.push({ id, name, size, image, price_excl });
       }
       localStorage.setItem("favorites", JSON.stringify(state));
     },
@@ -33,12 +33,12 @@ const favoritesSlice = createSlice({
       localStorage.setItem("favorites", JSON.stringify(state));
     },
     toggleFavorite: (state, action) => {
-      const { id, name, size, image } = action.payload;
+      const { id, name, size, image, price_excl } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem) {
         state.items = state.items.filter((item) => item.id !== id);
       } else {
-        state.items.push({ id, name, size, image });
+        state.items.push({ id, name, size, image, price_excl });
       }
       localStorage.setItem("favorites", JSON.stringify(state));
     },

@@ -5,22 +5,26 @@ import { ArrowLeft, Edit2 } from "lucide-react";
 import { DataTable } from "../components/Datatable";
 import TermsPage from "./TermsPage";
 import PrivacyPage from "./PrivacyPage";
+import { useGetOrdersQuery, useGetProfileQuery } from "@/Redux/services/ordersApi";
+
 
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
   const { t } = useTranslation();
-  const profileData = {
-    fullName: "Narek",
-    phone: "+4455200136",
-    email: "narek101@gmail.com",
-    companyName: "Snow Tex",
-    vatNumber: "5200136",
-    street: "Belgium",
-    number: "1506",
-    city: "Antwerp Province, Belgium",
-    postalCode: "303",
-  };
+  const { data: profileApiData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
+
+  const profileData = profileApiData ? {
+    fullName: profileApiData.name,
+    phone: profileApiData.phone,
+    email: profileApiData.email,
+    companyName: profileApiData.name, // Assuming name is used for company name
+    vatNumber: profileApiData.vat,
+    street: profileApiData.street,
+    number: profileApiData.streetnumber,
+    city: profileApiData.city,
+    postalCode: profileApiData.citycode,
+  } : null;
 
   const tabs = [
     { id: "profile", label: t("profilePage.profile") },
@@ -29,23 +33,16 @@ export default function ProfilePage() {
     { id: "privacy", label: t("profilePage.privacyPolicy") },
   ];
 
-  const orders = [
-    {
-      orderDate: "2023-10-27",
-      reference: "ORD-12345",
-      totalItems: 5,
-      deliveryDate: "2023-11-05",
-      status: "Pending",
-    },
-    {
-      orderDate: "2023-11-15",
-      reference: "ORD-67890",
-      totalItems: 3,
-      deliveryDate: "2023-11-20",
-      status: "Completed",
-    },
-    // Add more orders as needed
-  ];
+  
+  const { data: ordersData, isLoading, error } = useGetOrdersQuery();
+
+  const processedOrders = ordersData ? ordersData.map(order => ({
+    orderDate: order.date,
+    reference: order.number,
+    totalItems: order.items.reduce((sum, item) => sum + parseInt(item.quantity), 0),
+    deliveryDate: order.date,
+    status: order.status,
+  })) : [];
 
   const columns = [
     {
@@ -61,7 +58,7 @@ export default function ProfilePage() {
       header: t("profilePage.totalItems"),
     },
     {
-      accessorKey: "deliveryDate",
+      accessorKey: "delivery_date",
       header: t("profilePage.deliveryDate"),
     },
     {
@@ -105,72 +102,80 @@ export default function ProfilePage() {
 
       {/* Profile Tab Content */}
       {activeTab === "profile" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Company Details Card */}
-          <div className="lg:col-span-1 bg-gray-50 p-6 rounded-lg">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-xl font-bold">
-                {t("profilePage.companyDetails")}
-              </h2>
-              <button
-                onClick={() => navigate("/edit-profile")}
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <Edit2 className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-gray-600">
-                  {t("profilePage.companyName")}
-                </p>
-                <p className="font-medium">{profileData.companyName}</p>
+        <div>
+          {profileLoading ? (
+            <div className="text-center py-8">{t("common.loading")}</div>
+          ) : profileError ? (
+            <div className="text-center py-8 text-red-500">{t("common.error")}</div>
+          ) : profileData ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Company Details Card */}
+              <div className="lg:col-span-1 bg-gray-50 p-6 rounded-lg">
+                <div className="flex justify-between items-start mb-4">
+                  <h2 className="text-xl font-bold">
+                    {t("profilePage.companyDetails")}
+                  </h2>
+                  <button
+                    onClick={() => navigate("/edit-profile")}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    <Edit2 className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-600">
+                      {t("profilePage.companyName")}
+                    </p>
+                    <p className="font-medium">{profileData.companyName}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">
+                      {t("profilePage.vatNumber")}
+                    </p>
+                    <p className="font-medium">{profileData.vatNumber}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-gray-600">
-                  {t("profilePage.vatNumber")}
-                </p>
-                <p className="font-medium">{profileData.vatNumber}</p>
-              </div>
-            </div>
-          </div>
 
-          {/* Contact Information Card */}
-          <div className="lg:col-span-1 bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">
-              {t("profilePage.contactInformation")}
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-gray-600">
-                  {t("profilePage.fullName")}
-                </p>
-                <p className="font-medium">{profileData.fullName}</p>
+              {/* Contact Information Card */}
+              <div className="lg:col-span-1 bg-gray-50 p-6 rounded-lg">
+                <h2 className="text-xl font-bold mb-4">
+                  {t("profilePage.contactInformation")}
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-600">
+                      {t("profilePage.fullName")}
+                    </p>
+                    <p className="font-medium">{profileData.fullName}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">
+                      {t("profilePage.phone")}
+                    </p>
+                    <p className="font-medium">{profileData.phone}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">
+                      {t("profilePage.email")}
+                    </p>
+                    <p className="font-medium">{profileData.email}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-gray-600">
-                  {t("profilePage.phone")}
+
+              {/* Business Address Card */}
+              <div className="lg:col-span-2 bg-gray-50 p-6 rounded-lg">
+                <h2 className="text-xl font-bold mb-4">
+                  {t("profilePage.businessAddress")}
+                </h2>
+                <p className="text-gray-700">
+                  {profileData.street} {profileData.number}, {profileData.city}, {profileData.postalCode}
                 </p>
-                <p className="font-medium">{profileData.phone}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">
-                  {t("profilePage.email")}
-                </p>
-                <p className="font-medium">{profileData.email}</p>
               </div>
             </div>
-          </div>
-
-          {/* Business Address Card */}
-          <div className="lg:col-span-2 bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">
-              {t("profilePage.businessAddress")}
-            </h2>
-            <p className="text-gray-700">
-              {profileData.street}, {profileData.city}, {profileData.postalCode}
-            </p>
-          </div>
+          ) : null}
         </div>
       )}
 
@@ -178,7 +183,13 @@ export default function ProfilePage() {
 
       {activeTab == "orders" && (
         <div className=" ">
-          <DataTable columns={columns} data={orders} />
+          {isLoading ? (
+            <div className="text-center py-8">{t("common.loading")}</div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-500">{t("common.error")}</div>
+          ) : (
+            <DataTable columns={columns} data={processedOrders} />
+          )}
         </div>
       )}
       {activeTab == "terms" && (

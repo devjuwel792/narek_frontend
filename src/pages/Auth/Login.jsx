@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../Redux/services/authApi";
+import { setCredentials } from "../../Redux/features/auth/authSlice";
 
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -9,15 +12,22 @@ import LoginImage from "../../assets/images/login-user.png";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading, error }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("narek101@gmail.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    navigate("/");
+    try {
+      const result = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ user: null, token: result.auth_token }));
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
   };
 
   return (
@@ -41,6 +51,7 @@ export default function Login() {
         <form onSubmit={handleLogin} className="max-w-md w-full">
           <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
           <p className="text-gray-600 mb-8">Sign in to your account</p>
+          {error && <p className="text-red-500 mb-4">Login failed. Please check your credentials.</p>}
 
           {/* Email Field */}
           <div className="mb-6">
@@ -49,7 +60,7 @@ export default function Login() {
             </label>
             <Input
               type="email"
-              placeholder="narek101@gmail.com"
+              placeholder="youremail@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full"

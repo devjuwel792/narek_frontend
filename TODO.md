@@ -1,6 +1,5 @@
-# TODO: Add Product Pagination
+# TODO: Fix FavoritesPage.jsx Profile Data Issue
 
-- [x] Update `src/Redux/services/productApi.js` to include `limit` and `offset` parameters in the `getProducts` query.
-- [x] Update `src/App.jsx` to pass default `limit` (e.g., 100) and `offset` (e.g., 0) to the `useGetProductsQuery` hook.
-- [x] Add pagination UI to `src/App.jsx` using the existing pagination component, with state for current page and handlers for page changes.
-- [x] Test the changes to ensure pagination works with the API response structure and UI controls.
+- [ ] Import useGetProfileQuery from "@/Redux/services/ordersApi" in FavoritesPage.jsx
+- [ ] Add the useGetProfileQuery hook to fetch profile data in FavoritesPage.jsx
+- [ ] Verify that ProductCard now receives correct product_segment_id and currency props

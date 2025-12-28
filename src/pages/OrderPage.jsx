@@ -9,10 +9,8 @@ import {
   removeFromCart,
   clearCart,
 } from "../Redux/features/cart/cartSlice";
-import {
-  placeOrder,
-  clearCurrentOrder,
-} from "../Redux/features/orders/ordersSlice";
+
+import { useCheckoutMutation } from "../Redux/services/checkoutApi";
 
 import { ArrowLeft, Trash2, CalendarDays } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -24,6 +22,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format, addDays } from "date-fns";
+import Swal from "sweetalert2";
+import { useGetProfileQuery } from "@/Redux/services/ordersApi";
 
 export default function OrderPage() {
   const currentLanguage = useSelector((state) => {
@@ -33,12 +33,16 @@ export default function OrderPage() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
+  console.log("🚀 ~ OrderPage ~ cartItems:", cartItems);
   const totalItems = useSelector((state) => state.cart.totalItems);
+  const { data: profile } = useGetProfileQuery();
+
+  const [checkout, { isLoading, error }] = useCheckoutMutation();
 
   const currentHour = new Date().getHours();
   const isAfter5PM = currentHour >= 17;
 
-  const minDate = isAfter5PM ? addDays(new Date(), 2) : addDays(new Date(), 0);
+  const minDate = isAfter5PM ? addDays(new Date(), 1) : addDays(new Date(), 0);
 
   const [deliveryData, setDeliveryData] = useState({
     deliveryDate: "",
@@ -47,7 +51,6 @@ export default function OrderPage() {
   });
 
   const [date, setDate] = useState(addDays(minDate, 1));
-
 
   useEffect(() => {
     if (date) {
@@ -71,12 +74,41 @@ export default function OrderPage() {
     dispatch(removeFromCart(id));
   };
 
-  const handleSubmitOrder = (e) => {
+  const handleSubmitOrder = async (e) => {
     e.preventDefault();
     if (cartItems.length > 0) {
-      dispatch(placeOrder({ cartItems, deliveryData }));
-      dispatch(clearCart());
-      navigate("/"); // Or navigate to order confirmation page
+      const body = {
+        delivery_date: date ? format(date, "yyyy-MM-dd") : "",
+        delivery_address: deliveryData.deliveryAddress,
+        extra_instructions: deliveryData.instructions,
+        status: "pending",
+        items: cartItems.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+        })),
+      };
+      try {
+        const result = await checkout(body).unwrap();
+        Swal.fire({
+          icon: "success",
+          title: "Order Placed Successfully!",
+          text: "Your order has been submitted.",
+          confirmButtonText: "OK",
+        }).then(() => {
+          dispatch(clearCart());
+          navigate("/");
+        });
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Order Failed",
+          text:
+            err.data?.message ||
+            err.message ||
+            "An error occurred while placing the order.",
+          confirmButtonText: "OK",
+        });
+      }
     }
   };
 
@@ -136,6 +168,10 @@ export default function OrderPage() {
                           ? item.name?.nld
                           : item.name._}
                       </h3>
+                      <span>
+                        {profile?.currency?.sign || "€"}
+                        {item.price}
+                      </span>
                       <p className="text-xs text-gray-600 mb-3">{item.size}</p>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -159,12 +195,17 @@ export default function OrderPage() {
                             +
                           </button>
                         </div>
-                        <button
-                          onClick={() => handleRemoveItem(item.id)}
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <div className="text-right">
+                          <p className="text-sm font-medium">
+                           {profile?.currency?.sign || "€"} {(item.price * item.quantity).toFixed(2)}
+                          </p>
+                          <button
+                            onClick={() => handleRemoveItem(item.id)}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -173,11 +214,20 @@ export default function OrderPage() {
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-700 font-medium">
                   {t("orderPage.totalItems")}
                 </span>
                 <span className="font-bold">{totalItems}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-700 font-medium">Total Amount</span>
+                <span className="font-bold">
+                 {profile?.currency?.sign || "€"}{" "}
+                  {cartItems
+                    .reduce((sum, item) => sum + item.price * item.quantity, 0)
+                    .toFixed(2)}
+                </span>
               </div>
             </div>
           </div>
@@ -258,8 +308,9 @@ export default function OrderPage() {
             <Button
               type="submit"
               className="w-full bg-primary hover:bg-green-400 text-white py-3 font-medium"
+              disabled={isLoading}
             >
-              {t("orderPage.submitOrder")}
+              {isLoading ? "Placing Order..." : t("orderPage.submitOrder")}
             </Button>
           </form>
         </div>

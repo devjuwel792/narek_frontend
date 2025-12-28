@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "../Redux/features/cart/cartSlice";
 import { toggleFavorite } from "../Redux/features/favorites/favoritesSlice";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, product_segment_id, currency }) {
+  console.log("🚀 ~ ProductCard ~ product_segment_id:", product_segment_id);
+  console.log("🚀 ~ ProductCard ~ product:", product);
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
@@ -32,6 +34,11 @@ export default function ProductCard({ product }) {
           size: product.size,
           image: product.image,
           quantity: 1,
+          price: parseFloat(
+            product.price_excl?.[product_segment_id]
+              ? product.price_excl?.[product_segment_id]
+              : product.price_excl?._
+          ),
         })
       );
     } else {
@@ -49,6 +56,11 @@ export default function ProductCard({ product }) {
           size: product.size,
           image: product.image,
           quantity: newQuantity,
+          price: parseFloat(
+            product.price_excl?.[product_segment_id]
+              ? product.price_excl?.[product_segment_id]
+              : product.price_excl?._
+          ),
         })
       );
     } else {
@@ -63,6 +75,7 @@ export default function ProductCard({ product }) {
         name: product.name,
         size: product.size,
         image: product.image,
+        price_excl: product.price_excl,
       })
     );
   };
@@ -109,6 +122,12 @@ export default function ProductCard({ product }) {
             : product.name._}
           {/* {product.name._} */}
         </h3>
+        <span>
+          {currency || "€"} {" "}
+          {product.price_excl?.[product_segment_id]
+            ? product.price_excl?.[product_segment_id]
+            : product.price_excl?._}
+        </span>
         <p className="text-sm text-gray-600 mb-4">{product.size}</p>
 
         {/* Quantity Selector */}
@@ -135,9 +154,6 @@ export default function ProductCard({ product }) {
             <Plus className="w-4 h-4" />
           </button>
         </div>
-        <span>
-          ${product.price_excl?.["1190"] || product.price_excl?._ || "00.00"}
-        </span>
       </div>
     </div>
   );

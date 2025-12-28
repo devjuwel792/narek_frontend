@@ -10,14 +10,16 @@ const ordersSlice = createSlice({
   initialState,
   reducers: {
     placeOrder: (state, action) => {
+     
       const { cartItems, deliveryData } = action.payload;
       const newOrder = {
-        id: Date.now(), // Simple ID generation
         items: cartItems,
-        deliveryData,
+        ...deliveryData,
         status: 'pending',
-        createdAt: new Date().toISOString(),
+
       };
+      
+
       state.orders.push(newOrder);
       state.currentOrder = newOrder;
     },

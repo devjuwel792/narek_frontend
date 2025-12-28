@@ -3,6 +3,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLanguage } from "@/Redux/features/language/languageSlice";
+import { logout } from "@/Redux/features/auth/authSlice";
 
 import { ShoppingCart, User, LogOut, Search, Heart } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -115,7 +116,10 @@ export default function UserHeader() {
 
             {/* Logout */}
             <button
-              onClick={() => navigate("/auth/login")}
+              onClick={() => {
+                dispatch(logout());
+                navigate("/auth/login");
+              }}
               className="hidden sm:flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-400 font-medium"
             >
               <LogOut className="w-4 h-4" />

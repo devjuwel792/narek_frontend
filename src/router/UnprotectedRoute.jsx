@@ -7,7 +7,7 @@ export default function UnprotectedRoute({ children }) {
 
   if (isAuthenticated) {
     // If authenticated, redirect to admin dashboard
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

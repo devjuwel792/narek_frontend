@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 import ProductCard from "./components/ProductCard";
-import { useGetProductGroupsQuery, useGetProductsQuery } from "./Redux/services/productApi";
+import {
+  useGetProductGroupsQuery,
+  useGetProductsQuery,
+} from "./Redux/services/productApi";
 import { useSelector } from "react-redux";
 import {
   Pagination,
@@ -15,10 +18,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "./components/ui/pagination";
-
-
-
-
+import { useGetProfileQuery } from "./Redux/services/ordersApi";
 
 export default function App() {
   const currentLanguage = useSelector((state) => {
@@ -41,16 +41,17 @@ export default function App() {
   } = useGetProductsQuery({
     product_group_id:
       selectedCategory.name === "All" ? null : selectedCategory.id,
-      productName: searchQuery,
-      limit,
-      offset: (currentPage - 1) * limit
+    productName: searchQuery,
+    limit,
+    offset: (currentPage - 1) * limit,
   });
 
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, searchQuery]);
 
- 
+  const { data: profile } = useGetProfileQuery();
+  console.log("🚀 ~ App ~ profile:", profile);
 
   const productGroups = data
     ? [
@@ -69,11 +70,12 @@ export default function App() {
         id: item.id,
         name: item?.name,
         // category: item.product_group?.name,
-        image: item?.pictures?.length > 0 ? item.pictures[0] : "/placeholder.png",
+        image:
+          item?.pictures?.length > 0 ? item.pictures[0] : "/placeholder.png",
         // size: item.unit_code.name,
         // price: item.price._,
         price_excl: item.price_excl,
-         quantity: 0,
+        quantity: 0,
       }))
     : [];
 
@@ -129,14 +131,25 @@ export default function App() {
 
         {/* Product Count */}
         <div className="mb-4 text-sm text-gray-600">
-          Showing {filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0} to {Math.min(currentPage * limit, productsData?.count || 0)} of {productsData?.count || 0} products
+          Showing{" "}
+          {filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0} to{" "}
+          {Math.min(currentPage * limit, productsData?.count || 0)} of{" "}
+          {productsData?.count || 0} products
         </div>
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {filteredProducts.map((product) => {
+            console.log(product);
+            return (
+              <ProductCard
+                key={product.id}
+                product={{ ...product, image: product?.image?.public_path }}
+                product_segment_id={profile?.contact_tier_id}
+                currency={profile?.currency?.sign}
+              />
+            );
+          })}
         </div>
 
         {/* Pagination */}
@@ -146,8 +159,14 @@ export default function App() {
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
-                    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    onClick={() =>
+                      handlePageChange(Math.max(1, currentPage - 1))
+                    }
+                    className={
+                      currentPage === 1
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
                   />
                 </PaginationItem>
 
@@ -172,7 +191,8 @@ export default function App() {
 
                 {/* Page numbers around current page */}
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                  const page =
+                    Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
                   return (
                     <PaginationItem key={page}>
                       <PaginationLink
@@ -207,8 +227,14 @@ export default function App() {
 
                 <PaginationItem>
                   <PaginationNext
-                    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    onClick={() =>
+                      handlePageChange(Math.min(totalPages, currentPage + 1))
+                    }
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
                   />
                 </PaginationItem>
               </PaginationContent>

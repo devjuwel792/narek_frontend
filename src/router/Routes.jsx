@@ -9,15 +9,16 @@ import FavoritesPage from "@/pages/FavoritesPage";
 import OrderPage from "@/pages/OrderPage";
 import ProfilePage from "@/pages/ProfilePage";
 import UnprotectedRoute from "@/router/UnprotectedRoute";
+import ProtectedRoute from "@/router/ProtectedRoute";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      // <ProtectedRoute>
-      <Layout />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
     ),
     errorElement: <h2>Route not found</h2>,
     children: [
