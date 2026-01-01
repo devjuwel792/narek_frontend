@@ -18,9 +18,32 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!validateEmail(email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     try {
       const result = await login({ email, password }).unwrap();
       dispatch(setCredentials({ user: null, token: result.auth_token }));
@@ -62,9 +85,15 @@ export default function Login() {
               type="email"
               placeholder="youremail@gmail.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors((prev) => ({ ...prev, email: "" }));
+              }}
+              className={`w-full ${errors.email ? "border-red-500" : ""}`}
             />
+            {errors.email && (
+              <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* Password Field */}

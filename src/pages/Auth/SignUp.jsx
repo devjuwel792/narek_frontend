@@ -28,6 +28,7 @@ export default function SignUp() {
     password: "",
     confirmPassword: "",
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,14 +36,47 @@ export default function SignUp() {
       ...prev,
       [name]: value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    const newErrors = {};
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required.";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = "Company name is required.";
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required.";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters long.";
+    }
+
+    if (!formData.confirmPassword.trim()) {
+      newErrors.confirmPassword = "Please confirm your password.";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
@@ -121,8 +155,12 @@ export default function SignUp() {
                 placeholder="Enter your full name"
                 value={formData.fullName}
                 onChange={handleChange}
+                className={errors.fullName ? "border-red-500" : ""}
                 required
               />
+              {errors.fullName && (
+                <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -148,8 +186,12 @@ export default function SignUp() {
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
+                  className={errors.email ? "border-red-500" : ""}
                   required
                 />
+                {errors.email && (
+                  <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+                )}
               </div>
             </div>
           </div>
@@ -168,8 +210,12 @@ export default function SignUp() {
                 placeholder="Enter your company name"
                 value={formData.companyName}
                 onChange={handleChange}
+                className={errors.companyName ? "border-red-500" : ""}
                 required
               />
+              {errors.companyName && (
+                <p className="text-xs text-red-500 mt-1">{errors.companyName}</p>
+              )}
             </div>
 
             <div>
@@ -205,7 +251,7 @@ export default function SignUp() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Number
+                Street  Number
                 </label>
                 <Input
                   type="text"
@@ -261,7 +307,7 @@ export default function SignUp() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="pr-10"
+                  className={`pr-10 ${errors.password ? "border-red-500" : ""}`}
                 />
                 <button
                   type="button"
@@ -275,6 +321,9 @@ export default function SignUp() {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-xs text-red-500 mt-1">{errors.password}</p>
+              )}
             </div>
 
             <div>
@@ -289,7 +338,7 @@ export default function SignUp() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="pr-10"
+                  className={`pr-10 ${errors.confirmPassword ? "border-red-500" : ""}`}
                 />
                 <button
                   type="button"
@@ -303,6 +352,9 @@ export default function SignUp() {
                   )}
                 </button>
               </div>
+              {errors.confirmPassword && (
+                <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>
+              )}
             </div>
           </div>
 

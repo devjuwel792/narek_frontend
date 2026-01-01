@@ -17,7 +17,9 @@ export default function UserHeader() {
   const { t } = useTranslation();
   const totalItems = useSelector((state) => state.cart.totalItems);
   const totalFavorites = useSelector((state) => state.favorites.items.length);
-  const currentLanguage = useSelector((state) => state.language.currentLanguage);
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
   const searchQuery = useSelector((state) => state.search.query);
 
   return (
@@ -38,7 +40,7 @@ export default function UserHeader() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 type="text"
-                placeholder={t('common.search')}
+                placeholder={t("common.search")}
                 value={searchQuery}
                 onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                 className="w-full border-none focus-visible:ring-primary bg-transparent pl-10"
@@ -51,31 +53,31 @@ export default function UserHeader() {
             {/* Language Selection */}
             <div className="hidden sm:flex gap-2">
               <button
-                onClick={() => dispatch(setLanguage('EN'))}
+                onClick={() => dispatch(setLanguage("EN"))}
                 className={`px-3 py-1 text-sm rounded font-medium ${
-                  currentLanguage.toUpperCase() === 'EN'
-                    ? 'bg-primary text-white'
-                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                  currentLanguage.toUpperCase() === "EN"
+                    ? "bg-primary text-white"
+                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
                 }`}
               >
                 EN
               </button>
               <button
-                onClick={() => dispatch(setLanguage('NL'))}
+                onClick={() => dispatch(setLanguage("NL"))}
                 className={`px-3 py-1 text-sm rounded font-medium ${
-                  currentLanguage.toUpperCase() === 'NL'
-                    ? 'bg-primary text-white'
-                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                  currentLanguage.toUpperCase() === "NL"
+                    ? "bg-primary text-white"
+                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
                 }`}
               >
                 NL
               </button>
               <button
-                onClick={() => dispatch(setLanguage('FR'))}
+                onClick={() => dispatch(setLanguage("FR"))}
                 className={`px-3 py-1 text-sm rounded font-medium ${
-                  currentLanguage.toUpperCase() === 'FR'
-                    ? 'bg-primary text-white'
-                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                  currentLanguage.toUpperCase() === "FR"
+                    ? "bg-primary text-white"
+                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
                 }`}
               >
                 FR
@@ -123,7 +125,7 @@ export default function UserHeader() {
               className="hidden sm:flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-400 font-medium"
             >
               <LogOut className="w-4 h-4" />
-              {t('common.logout')}
+              {t("common.logout")}
             </button>
           </div>
         </div>

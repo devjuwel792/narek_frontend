@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Get base URL from environment variable or use default
-const BASE_URL = import.meta.env.VITE_API_URL || "http://10.10.13.19:9400/api";
+const BASE_URL = import.meta.env.VITE_API_URL || "https://clashingly-nonlicensable-tennille.ngrok-free.dev/api";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -13,7 +13,8 @@ export const authApi = createApi({
 
       // If we have a token, include it in the headers
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("authorization", `Token ${token}`);
+         headers.set("ngrok-skip-browser-warning", "true"); 
       }
 
       return headers;
@@ -34,8 +35,19 @@ export const authApi = createApi({
         body,
       }),
     }),
-   
+    addToFavorites: builder.mutation({
+      query: (body) => ({
+        url: '/favorites/',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Favorites'],
+    }),
+    getFavorites: builder.query({
+      query: () => '/favorites/',
+      providesTags: ['Favorites'],
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginMutation,  } = authApi;
+export const { useRegisterUserMutation, useLoginMutation, useAddToFavoritesMutation, useGetFavoritesQuery } = authApi;

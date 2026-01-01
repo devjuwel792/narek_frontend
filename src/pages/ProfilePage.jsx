@@ -13,6 +13,7 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
   const { t } = useTranslation();
   const { data: profileApiData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
+  console.log("🚀 ~ ProfilePage ~ profileApiData:", profileApiData)
 
   const profileData = profileApiData ? {
     fullName: profileApiData.name,

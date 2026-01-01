@@ -1,15 +1,19 @@
-import { useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
 import { useTranslation } from "react-i18next";
 import { useGetProfileQuery } from "@/Redux/services/ordersApi";
+import { useGetProductsByIdsQuery } from "@/Redux/services/productApi";
+import { useSelector } from "react-redux";
 
 export default function FavoritesPage() {
+  const { t } = useTranslation();
+  const { data: profile } = useGetProfileQuery();
   const favorites = useSelector((state) => {
+  
     return state.favorites.items;
   });
 
-  const { t } = useTranslation();
-  const { data: profile } = useGetProfileQuery();
+  console.log("🚀 ~ FavoritesPage ~ favorites:", favorites)
+
 
   return (
     <div className="min-h-screen">
@@ -29,14 +33,20 @@ export default function FavoritesPage() {
         ) : (
           /* Products Grid */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-            {favorites.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={{ ...product, image: product?.image?.public_path }}
-                product_segment_id={profile?.contact_tier_id}
-                currency={profile?.currency?.sign}
-              />
-            ))}
+            {favorites.map((product) => {
+              console.log(product?.pictures?.public_path," from favorites page image path");
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={{
+                    ...product,
+                  }}
+                  product_segment_id={profile?.contact_tier_id}
+                  currency={profile?.currency?.sign}
+                  
+                />
+              );
+            })}
           </div>
         )}
       </main>

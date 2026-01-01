@@ -3,7 +3,7 @@ import {
   fetchBaseQuery
 } from "@reduxjs/toolkit/query/react";
 const BASE_URL =
-  import.meta.env.VITE_API_URL || "http://10.10.13.19:9400/api";
+  import.meta.env.VITE_API_URL || "https://clashingly-nonlicensable-tennille.ngrok-free.dev/api";
 export const ordersApi = createApi({
   reducerPath: "ordersApi",
   baseQuery: fetchBaseQuery({
@@ -17,6 +17,7 @@ export const ordersApi = createApi({
       // If we have a token, include it in the headers
       if (token) {
         headers.set("authorization", `Token ${token}`);
+         headers.set("ngrok-skip-browser-warning", "true"); 
       }
 
       return headers;

@@ -19,6 +19,7 @@ import {
   PaginationPrevious,
 } from "./components/ui/pagination";
 import { useGetProfileQuery } from "./Redux/services/ordersApi";
+import { useGetFavoritesQuery } from "./Redux/services/authApi";
 
 export default function App() {
   const currentLanguage = useSelector((state) => {
@@ -51,7 +52,8 @@ export default function App() {
   }, [selectedCategory, searchQuery]);
 
   const { data: profile } = useGetProfileQuery();
-  console.log("🚀 ~ App ~ profile:", profile);
+  const { data: favorites } = useGetFavoritesQuery();
+  
 
   const productGroups = data
     ? [
@@ -147,6 +149,7 @@ export default function App() {
                 product={{ ...product, image: product?.image?.public_path }}
                 product_segment_id={profile?.contact_tier_id}
                 currency={profile?.currency?.sign}
+                fevIds={favorites || []}
               />
             );
           })}

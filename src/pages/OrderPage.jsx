@@ -33,9 +33,10 @@ export default function OrderPage() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
-  console.log("🚀 ~ OrderPage ~ cartItems:", cartItems);
+
   const totalItems = useSelector((state) => state.cart.totalItems);
   const { data: profile } = useGetProfileQuery();
+  console.log("🚀 ~ OrderPage ~ profile:", profile);
 
   const [checkout, { isLoading, error }] = useCheckoutMutation();
 
@@ -46,11 +47,23 @@ export default function OrderPage() {
 
   const [deliveryData, setDeliveryData] = useState({
     deliveryDate: "",
-    deliveryAddress: "Din Ena City\nCity Mall 1221\n5154 Road",
+    deliveryAddress: `${profile?.street || ""} , ${
+      profile?.streetnumber || ""
+    }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
     instructions: "",
   });
+  useEffect(() => {
+    setDeliveryData((prev) => ({
+      ...prev,
+      deliveryAddress: `${profile?.street || ""} , ${
+        profile?.streetnumber || ""
+      }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
+    }));
+  }, [profile]);
 
   const [date, setDate] = useState(addDays(minDate, 1));
+
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (date) {
@@ -64,6 +77,7 @@ export default function OrderPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDeliveryData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleQuantityChange = (id, quantity) => {
@@ -76,6 +90,21 @@ export default function OrderPage() {
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
+    const newErrors = {};
+
+    if (!date) {
+      newErrors.deliveryDate = "Please select a delivery date.";
+    }
+
+    if (!deliveryData.deliveryAddress.trim()) {
+      newErrors.deliveryAddress = "Please enter a delivery address.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     if (cartItems.length > 0) {
       const body = {
         delivery_date: date ? format(date, "yyyy-MM-dd") : "",
@@ -197,7 +226,8 @@ export default function OrderPage() {
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-medium">
-                           {profile?.currency?.sign || "€"} {(item.price * item.quantity).toFixed(2)}
+                            {profile?.currency?.sign || "€"}{" "}
+                            {(item.price * item.quantity).toFixed(2)}
                           </p>
                           <button
                             onClick={() => handleRemoveItem(item.id)}
@@ -223,7 +253,7 @@ export default function OrderPage() {
               <div className="flex justify-between items-center">
                 <span className="text-gray-700 font-medium">Total Amount</span>
                 <span className="font-bold">
-                 {profile?.currency?.sign || "€"}{" "}
+                  {profile?.currency?.sign || "€"}{" "}
                   {cartItems
                     .reduce((sum, item) => sum + item.price * item.quantity, 0)
                     .toFixed(2)}
@@ -247,7 +277,9 @@ export default function OrderPage() {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full justify-start text-left font-normal"
+                    className={`w-full justify-start text-left font-normal ${
+                      errors.deliveryDate ? "border-red-500" : ""
+                    }`}
                   >
                     <CalendarDays className="mr-2 h-4 w-4" />
                     {date ? (
@@ -275,6 +307,11 @@ export default function OrderPage() {
                   </div>
                 </PopoverContent>
               </Popover>
+              {errors.deliveryDate && (
+                <p className="text-xs text-red-500 mt-1">
+                  {errors.deliveryDate}
+                </p>
+              )}
               <p className="text-xs text-gray-600 mt-2">
                 {t("orderPage.ordersAfter5PM")}
               </p>
@@ -288,8 +325,17 @@ export default function OrderPage() {
                 name="deliveryAddress"
                 value={deliveryData.deliveryAddress}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-10 min-h-24 resize-none"
+                className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-opacity-10 min-h-24 resize-none ${
+                  errors.deliveryAddress
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:border-primary focus:ring-primary"
+                }`}
               />
+              {errors.deliveryAddress && (
+                <p className="text-xs text-red-500 mt-1">
+                  {errors.deliveryAddress}
+                </p>
+              )}
             </div>
 
             <div>

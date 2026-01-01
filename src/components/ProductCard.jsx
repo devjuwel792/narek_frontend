@@ -4,8 +4,6 @@ import { addToCart, updateQuantity } from "../Redux/features/cart/cartSlice";
 import { toggleFavorite } from "../Redux/features/favorites/favoritesSlice";
 
 export default function ProductCard({ product, product_segment_id, currency }) {
-  console.log("🚀 ~ ProductCard ~ product_segment_id:", product_segment_id);
-  console.log("🚀 ~ ProductCard ~ product:", product);
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
@@ -47,6 +45,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   };
 
   const handleQuantityChange = (e) => {
+  
     const newQuantity = Number.parseInt(e.target.value) || 0;
     if (newQuantity > 0 && !cartItem) {
       dispatch(
@@ -69,6 +68,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   };
 
   const handleToggleFavorite = () => {
+    console.log(product.image)
     dispatch(
       toggleFavorite({
         id: product.id,
@@ -86,15 +86,15 @@ export default function ProductCard({ product, product_segment_id, currency }) {
       <div className="relative border-b-2 h-72 md:h-60  overflow-hidden flex items-center justify-center">
         <img
           src={product.image}
-          alt={
-            currentLanguage === "eng" && product.name?.eng?.length > 0
-              ? product.name?.eng
-              : currentLanguage === "fr" && product.name?.fra?.length > 0
-              ? product.name?.fra
-              : currentLanguage === "nl" && product.name?.nld?.length > 0
-              ? product.name?.nld
-              : product.name._
-          }
+          // alt={
+          //   currentLanguage === "eng" && product.name?.eng?.length > 0
+          //     ? product.name?.eng
+          //     : currentLanguage === "fr" && product.name?.fra?.length > 0
+          //     ? product.name?.fra
+          //     : currentLanguage === "nl" && product.name?.nld?.length > 0
+          //     ? product.name?.nld
+          //     : product.name._
+          // }
           className="h-full w-full object-contain"
         />
         {/* Favorite Button */}
@@ -123,7 +123,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           {/* {product.name._} */}
         </h3>
         <span>
-          {currency || "€"} {" "}
+          {currency || "€"}{" "}
           {product.price_excl?.[product_segment_id]
             ? product.price_excl?.[product_segment_id]
             : product.price_excl?._}
