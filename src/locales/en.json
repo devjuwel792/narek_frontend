@@ -34,9 +34,20 @@
     "city": "City",
     "postalCode": "Postal Code",
     "accountSetup": "Account Setup",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "passwordPlaceholder": "••••••••",
+    "streetPlaceholder": "Enter your street",
+    "numberPlaceholder": "Enter your number",
+    "cityPlaceholder": "Enter your city",
+    "postalCodePlaceholder": "Enter your postal code",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "requestAccount": "Request Account"
+    "requestAccount": "Request Account",
+    "successTitle": "Success!",
+    "profileUpdated": "Profile updated successfully!",
+    "ok": "OK",
+    "errorLoadingProfile": "Error loading profile"
   },
   "orderPage": {
     "back": "Back",

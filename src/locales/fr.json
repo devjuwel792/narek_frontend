@@ -34,9 +34,20 @@
     "city": "Ville",
     "postalCode": "Code Postal",
     "accountSetup": "Configuration du Compte",
+    "oldPassword": "Ancien Mot de Passe",
+    "newPassword": "Nouveau Mot de Passe",
+    "passwordPlaceholder": "••••••••",
+    "streetPlaceholder": "Entrez votre rue",
+    "numberPlaceholder": "Entrez votre numéro",
+    "cityPlaceholder": "Entrez votre ville",
+    "postalCodePlaceholder": "Entrez votre code postal",
     "password": "Mot de Passe",
     "confirmPassword": "Confirmer le Mot de Passe",
-    "requestAccount": "Demander un Compte"
+    "requestAccount": "Demander un Compte",
+    "successTitle": "Succès !",
+    "profileUpdated": "Profil mis à jour avec succès !",
+    "ok": "OK",
+    "errorLoadingProfile": "Erreur lors du chargement du profil"
   },
   "orderPage": {
     "back": "Retour",

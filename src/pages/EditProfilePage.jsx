@@ -76,10 +76,10 @@ export default function EditProfilePage() {
       };
       await updateProfile(updateData).unwrap();
       Swal.fire({
-        title: "Success!",
-        text: "Profile updated successfully!",
+        title: t("editProfile.successTitle"),
+        text: t("editProfile.profileUpdated"),
         icon: "success",
-        confirmButtonText: "OK",
+        confirmButtonText: t("editProfile.ok"),
       }).then(() => {
         navigate("/account?page=profile");
       });
@@ -89,8 +89,8 @@ export default function EditProfilePage() {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading profile</div>;
+  if (isLoading) return <div>{t("common.loading")}</div>;
+  if (error) return <div>{t("editProfile.errorLoadingProfile")}</div>;
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
@@ -194,31 +194,31 @@ export default function EditProfilePage() {
 
         {/* Business Address Section */}
         <section className="pb-8 border-b bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">Business Address</h2>
+          <h2 className="text-2xl font-bold mb-6">{t("editProfile.businessAddress")}</h2>
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Street
+                  {t("editProfile.street")}
                 </label>
                 <Input
                   type="text"
                   name="street"
                   value={formData.street}
                   onChange={handleChange}
-                  placeholder="Enter your street"
+                  placeholder={t("editProfile.streetPlaceholder")}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Number
+                  {t("editProfile.number")}
                 </label>
                 <Input
                   type="text"
                   name="number"
                   value={formData.number}
                   onChange={handleChange}
-                  placeholder="Enter your number"
+                  placeholder={t("editProfile.numberPlaceholder")}
                 />
               </div>
             </div>
@@ -226,26 +226,26 @@ export default function EditProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  City
+                  {t("editProfile.city")}
                 </label>
                 <Input
                   type="text"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="Enter your city"
+                  placeholder={t("editProfile.cityPlaceholder")}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Postal Code
+                  {t("editProfile.postalCode")}
                 </label>
                 <Input
                   type="text"
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleChange}
-                  placeholder="Enter your postal code"
+                  placeholder={t("editProfile.postalCodePlaceholder")}
                 />
               </div>
             </div>
@@ -266,7 +266,7 @@ export default function EditProfilePage() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
+                  placeholder={t("editProfile.passwordPlaceholder")}
                   className="w-full pr-10"
                 />
                 <button
@@ -293,7 +293,7 @@ export default function EditProfilePage() {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  placeholder="••••••••"
+                  placeholder={t("editProfile.passwordPlaceholder")}
                   className="w-full pr-10"
                 />
                 <button
@@ -320,13 +320,13 @@ export default function EditProfilePage() {
             className="border-primary text-primary hover:bg-green-50 bg-transparent"
             onClick={() => navigate("/account?page=profile")}
           >
-            cancel
+            {t("common.cancel")}
           </Button>
           <Button
             type="submit"
             className="bg-primary hover:bg-green-400 text-white"
           >
-            Request Account
+            {t("editProfile.requestAccount")}
           </Button>
         </div>
       </form>
