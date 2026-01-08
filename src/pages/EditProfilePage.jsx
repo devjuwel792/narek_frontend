@@ -4,11 +4,14 @@ import { useTranslation } from "react-i18next";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useGetProfileQuery, useUpdateProfileMutation } from "@/Redux/services/ordersApi";
-import Swal from 'sweetalert2';
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "@/Redux/services/ordersApi";
+import Swal from "sweetalert2";
 
 export default function EditProfilePage() {
-   const { t } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -29,14 +32,13 @@ export default function EditProfilePage() {
     confirmPassword: "",
   });
 
-
   useEffect(() => {
     if (profileData) {
       setFormData({
         fullName: profileData.name || "",
         phone: profileData.phone || "",
         email: profileData.email || "",
-        //companyName: profileData.name || "", 
+        //companyName: profileData.name || "",
         vatNumber: profileData.vat || "",
         street: profileData.street || "",
         number: profileData.streetnumber || "",
@@ -66,17 +68,18 @@ export default function EditProfilePage() {
         streetnumber: formData.number,
         city: formData.city,
         citycode: formData.postalCode,
+        old_password: formData.password || undefined,
+        new_password: formData.confirmPassword || undefined,
         // country_id: "BEL", // Default
         // language_id: "nld", // Default
         // currency_id: "EUR", // Default
       };
-      console.log("🚀 ~ handleSubmit ~ updateData:", updateData)
       await updateProfile(updateData).unwrap();
       Swal.fire({
-        title: 'Success!',
-        text: 'Profile updated successfully!',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Success!",
+        text: "Profile updated successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
       }).then(() => {
         navigate("/account?page=profile");
       });
@@ -97,27 +100,29 @@ export default function EditProfilePage() {
         className="flex items-center gap-2 text-gray-700 mb-8 hover:text-gray-900"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span>{t('common.back')}</span>
+        <span>{t("common.back")}</span>
       </button>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold mb-8">{t('editProfile.title')}</h1>
+      <h1 className="text-3xl font-bold mb-8">{t("editProfile.title")}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Contact Person Section */}
         <section className="pb-8 border-b bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">{t('editProfile.contactPerson')}</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {t("editProfile.contactPerson")}
+          </h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('editProfile.fullName')}
+                {t("editProfile.fullName")}
               </label>
               <Input
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                placeholder={t('editProfile.fullName')}
+                placeholder={t("editProfile.fullName")}
                 className="w-full"
               />
             </div>
@@ -125,26 +130,26 @@ export default function EditProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  {t('editProfile.phoneNumber')}
+                  {t("editProfile.phoneNumber")}
                 </label>
                 <Input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder={t('editProfile.phoneNumber')}
+                  placeholder={t("editProfile.phoneNumber")}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  {t('editProfile.email')}
+                  {t("editProfile.email")}
                 </label>
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder={t('editProfile.email')}
+                  placeholder={t("editProfile.email")}
                 />
               </div>
             </div>
@@ -153,7 +158,9 @@ export default function EditProfilePage() {
 
         {/* Company Details Section */}
         <section className="pb-8 border-b bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">{t('editProfile.companyDetails')}</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {t("editProfile.companyDetails")}
+          </h2>
           <div className="space-y-4">
             {/* <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
@@ -171,14 +178,14 @@ export default function EditProfilePage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('editProfile.vatNumber')}
+                {t("editProfile.vatNumber")}
               </label>
               <Input
                 type="text"
                 name="vatNumber"
                 value={formData.vatNumber}
                 onChange={handleChange}
-                placeholder={t('editProfile.vatNumber')}
+                placeholder={t("editProfile.vatNumber")}
                 className="w-full"
               />
             </div>
@@ -246,12 +253,12 @@ export default function EditProfilePage() {
         </section>
 
         {/* Account Setup Section */}
-        {/* <section className="pb-8 bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
+        <section className="pb-8 bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
           <h2 className="text-2xl font-bold mb-6">{t('editProfile.accountSetup')}</h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('editProfile.password')}
+                {t('editProfile.oldPassword')}
               </label>
               <div className="relative">
                 <Input
@@ -303,7 +310,7 @@ export default function EditProfilePage() {
               </div>
             </div>
           </div>
-        </section> */}
+        </section> 
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-4">

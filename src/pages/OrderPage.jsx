@@ -152,7 +152,7 @@ export default function OrderPage() {
         <span>{t("common.back")}</span>
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1  gap-8">
         {/* Cart Summary */}
         <div className="lg:col-span-1">
           <div className="border border-gray-200 rounded-lg p-4 bg-[#F9F9F9] ">
@@ -165,78 +165,179 @@ export default function OrderPage() {
                   {t("orderPage.yourCartIsEmpty")}
                 </p>
               ) : (
-                cartItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex gap-4 mb-4 pb-4 p-4 border-b last:border-0 items-center"
-                  >
-                    <img
-                      src={item.image}
-                      alt={
-                        currentLanguage === "eng" && item.name?.eng?.length > 0
-                          ? item.name?.eng
-                          : currentLanguage === "fr" &&
-                            item.name?.fra?.length > 0
-                          ? item.name?.fra
-                          : currentLanguage === "nl" &&
-                            item.name?.nld?.length > 0
-                          ? item.name?.nld
-                          : item.name._
-                      }
-                      className="w-16 h-16 object-cover bg-gray-50 m-2 rounded "
-                    />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-sm mb-1">
-                        {currentLanguage === "eng" && item.name?.eng?.length > 0
-                          ? item.name?.eng
-                          : currentLanguage === "fr" &&
-                            item.name?.fra?.length > 0
-                          ? item.name?.fra
-                          : currentLanguage === "nl" &&
-                            item.name?.nld?.length > 0
-                          ? item.name?.nld
-                          : item.name._}
-                      </h3>
-                      <span>
-                        {profile?.currency?.sign || "€"}
-                        {item.price}
-                      </span>
-                      <p className="text-xs text-gray-600 mb-3">{item.size}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() =>
-                              handleQuantityChange(item.id, item.quantity - 1)
-                            }
-                            className="px-2 py-1 text-gray-500 border rounded hover:text-gray-700"
-                          >
-                            −
-                          </button>
-                          <span className="border border-primary px-3 py-1 text-sm rounded text-primary font-medium">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() =>
-                              handleQuantityChange(item.id, item.quantity + 1)
-                            }
-                            className="px-2 py-1 text-gray-500 hover:text-gray-700 border rounded"
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-medium">
-                            {profile?.currency?.sign || "€"}{" "}
-                            {(item.price * item.quantity).toFixed(2)}
-                          </p>
-                          <button
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
+                // cartItems.map((item) => (
+                //   <div
+                //     key={item.id}
+                //     className="flex gap-4 mb-4 pb-4 p-4 border-b last:border-0 items-center"
+                //   >
+                //     <img
+                //       src={item.image}
+                //       alt={
+                //         currentLanguage === "eng" && item.name?.eng?.length > 0
+                //           ? item.name?.eng
+                //           : currentLanguage === "fr" &&
+                //             item.name?.fra?.length > 0
+                //           ? item.name?.fra
+                //           : currentLanguage === "nl" &&
+                //             item.name?.nld?.length > 0
+                //           ? item.name?.nld
+                //           : item.name._
+                //       }
+                //       className="w-16 h-16 object-cover bg-gray-50 m-2 rounded "
+                //     />
+                //     <div className="flex-1">
+                //       <h3 className="font-semibold text-sm mb-1">
+                //         {currentLanguage === "eng" && item.name?.eng?.length > 0
+                //           ? item.name?.eng
+                //           : currentLanguage === "fr" &&
+                //             item.name?.fra?.length > 0
+                //           ? item.name?.fra
+                //           : currentLanguage === "nl" &&
+                //             item.name?.nld?.length > 0
+                //           ? item.name?.nld
+                //           : item.name._}
+                //       </h3>
+                //       <span>
+                //         {profile?.currency?.sign || "€"}
+                //         {item.price}
+                //       </span>
+                //       <p className="text-xs text-gray-600 mb-3">{item.size}</p>
+                //       <div className="flex items-center justify-between">
+                //         <div className="flex items-center gap-2">
+                //           <button
+                //             onClick={() =>
+                //               handleQuantityChange(item.id, item.quantity - 1)
+                //             }
+                //             className="px-2 py-1 text-gray-500 border rounded hover:text-gray-700"
+                //           >
+                //             −
+                //           </button>
+                //           <span className="border border-primary px-3 py-1 text-sm rounded text-primary font-medium">
+                //             {item.quantity}
+                //           </span>
+                //           <button
+                //             onClick={() =>
+                //               handleQuantityChange(item.id, item.quantity + 1)
+                //             }
+                //             className="px-2 py-1 text-gray-500 hover:text-gray-700 border rounded"
+                //           >
+                //             +
+                //           </button>
+                //         </div>
+                //         <div className="text-right">
+                //           <p className="text-sm font-medium">
+                //             {profile?.currency?.sign || "€"}{" "}
+                //             {(item.price * item.quantity).toFixed(2)}
+                //           </p>
+                //           <button
+                //             onClick={() => handleRemoveItem(item.id)}
+                //             className="text-red-500 hover:text-red-700"
+                //           >
+                //             <Trash2 className="w-4 h-4" />
+                //           </button>
+                //         </div>
+                //       </div>
+                //     </div>
+                //   </div>
+                // ))
+
+                cartItems.map((item, indx) => (
+                  <div key={indx} className="mb-4">
+                    <h2 className="text-sm font-bold tracking-wider mb-6">
+                      {" "}
+                      {currentLanguage === "eng" && item.name?.eng?.length > 0
+                        ? item.name?.eng
+                        : currentLanguage === "fr" && item.name?.fra?.length > 0
+                        ? item.name?.fra
+                        : currentLanguage === "nl" && item.name?.nld?.length > 0
+                        ? item.name?.nld
+                        : item.name._}
+                    </h2>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="text-[#888] border-b border-transparent">
+                            <th className="text-left pb-4 font-semibold w-24">
+                              No
+                            </th>
+                            <th className="text-left pb-4 font-semibold">
+                              Description
+                            </th>
+                            <th className="text-center pb-4 font-semibold w-20">
+                              Quantity
+                            </th>
+                            <th className="text-right pb-4 font-semibold w-20">
+                              Unit Price
+                            </th>
+                            <th className="text-right pb-4 font-semibold w-20">
+                              Amount
+                            </th>
+
+                            <th className="text-right pb-4 font-semibold w-20">
+                              Total
+                            </th>
+                            <th className="w-10"></th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50">
+                          <tr className="group">
+                            <td className="py-4 text-[#888]">{item.id}</td>
+                            <td className="py-4 font-medium">
+                              {item.description}
+                            </td>
+                            <td className="py-4">
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() =>
+                                    handleQuantityChange(
+                                      item.id,
+                                      item.quantity - 1
+                                    )
+                                  }
+                                  className="px-2 py-1 text-gray-500 border rounded hover:text-gray-700"
+                                >
+                                  −
+                                </button>
+                                <span className="border border-primary px-3 py-1 text-sm rounded text-primary font-medium">
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    handleQuantityChange(
+                                      item.id,
+                                      item.quantity + 1
+                                    )
+                                  }
+                                  className="px-2 py-1 text-gray-500 hover:text-gray-700 border rounded"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </td>
+                            <td className="py-4 text-right">
+                              {profile?.currency?.sign || "€"}
+                              {item.price}
+                            </td>
+                            <td className="py-4 text-right">
+                              {profile?.currency?.sign || "€"}{" "}
+                              {(item.price * item.quantity).toFixed(2)}
+                            </td>
+
+                            <td className="py-4 text-right font-medium">
+                              {/* € {rowTotal} */}
+                            </td>
+                            <td className="py-4 text-right">
+                              <button
+                                onClick={() => removeItem(catIdx, itemIdx)}
+                                className="text-red-500 hover:text-red-700 transition-colors"
+                              >
+                                {/* <Trash2 size={16} /> */}
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 ))

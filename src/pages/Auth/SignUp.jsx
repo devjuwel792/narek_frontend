@@ -99,19 +99,20 @@ export default function SignUp() {
     try {
       await registerUser(body).unwrap();
       Swal.fire({
-        title: 'Success!',
-        text: 'Your account has been created successfully.',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Success!",
+        text: "Your account has been created successfully.",
+        icon: "success",
+        confirmButtonText: "OK",
       }).then(() => {
         navigate("/");
       });
     } catch (err) {
+      console.log(err, "Registration error");
       Swal.fire({
-        title: 'Registration Failed',
-        text: err.data?.message || "Registration failed. Please try again.",
-        icon: 'error',
-        confirmButtonText: 'OK'
+        title: "Registration Failed",
+        text: err.data?.email[0] || "Registration failed. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     }
   };
@@ -214,7 +215,9 @@ export default function SignUp() {
                 required
               />
               {errors.companyName && (
-                <p className="text-xs text-red-500 mt-1">{errors.companyName}</p>
+                <p className="text-xs text-red-500 mt-1">
+                  {errors.companyName}
+                </p>
               )}
             </div>
 
@@ -251,7 +254,7 @@ export default function SignUp() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                Street  Number
+                  Street Number
                 </label>
                 <Input
                   type="text"
@@ -338,7 +341,9 @@ export default function SignUp() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className={`pr-10 ${errors.confirmPassword ? "border-red-500" : ""}`}
+                  className={`pr-10 ${
+                    errors.confirmPassword ? "border-red-500" : ""
+                  }`}
                 />
                 <button
                   type="button"
@@ -353,7 +358,9 @@ export default function SignUp() {
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>
+                <p className="text-xs text-red-500 mt-1">
+                  {errors.confirmPassword}
+                </p>
               )}
             </div>
           </div>
