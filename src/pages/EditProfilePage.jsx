@@ -285,7 +285,7 @@ export default function EditProfilePage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('editProfile.confirmPassword')}
+                {t('editProfile.newPassword')}
               </label>
               <div className="relative">
                 <Input
