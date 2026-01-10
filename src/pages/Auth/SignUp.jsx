@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -107,10 +108,12 @@ export default function SignUp() {
         navigate("/");
       });
     } catch (err) {
-      console.log(err, "Registration error");
       Swal.fire({
         title: "Registration Failed",
-        text: err.data?.email[0] || "Registration failed. Please try again.",
+        text:
+          err.data?.email[0] ||
+          err.data?.details ||
+          "Registration failed. Please try again.",
         icon: "error",
         confirmButtonText: "OK",
       });
@@ -126,7 +129,7 @@ export default function SignUp() {
           className="flex items-center font-bold gap-2 text-gray-700 hover:text-gray-900 mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to login
+          {t('signUpPage.backToLogin')}
         </button>
 
         {/* Header */}
@@ -134,9 +137,9 @@ export default function SignUp() {
           <div>
             <img src="/logo.png" alt="Logo" className="mx-auto mb-5" />
           </div>
-          <h2 className="text-3xl font-bold mb-2">Registration</h2>
+          <h2 className="text-3xl font-bold mb-2">{t('signUpPage.registration')}</h2>
           <p className="text-gray-600">
-            Create your business account to start ordering
+            {t('signUpPage.createAccount')}
           </p>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
@@ -144,16 +147,16 @@ export default function SignUp() {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Contact Person Section */}
           <div className="bg-card border border-gray-200 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-6">Contact Person</h3>
+            <h3 className="text-xl font-bold mb-6">{t('signUpPage.contactPerson')}</h3>
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Full Name
+                {t('signUpPage.fullName')}
               </label>
               <Input
                 type="text"
                 name="fullName"
-                placeholder="Enter your full name"
+                placeholder={t('signUpPage.fullNamePlaceholder')}
                 value={formData.fullName}
                 onChange={handleChange}
                 className={errors.fullName ? "border-red-500" : ""}
@@ -167,24 +170,25 @@ export default function SignUp() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Phone Number
+                  {t('signUpPage.phoneNumber')}
                 </label>
                 <Input
                   type="tel"
                   name="phone"
-                  placeholder="Enter your phonr number"
+                  placeholder={t('signUpPage.phonePlaceholder')}
                   value={formData.phone}
                   onChange={handleChange}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Email
+                  {t('signUpPage.email')}
                 </label>
                 <Input
                   type="email"
                   name="email"
-                  placeholder="Enter your email"
+                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+                  placeholder={t('signUpPage.emailPlaceholder')}
                   value={formData.email}
                   onChange={handleChange}
                   className={errors.email ? "border-red-500" : ""}
@@ -199,16 +203,16 @@ export default function SignUp() {
 
           {/* Company Details Section */}
           <div className="bg-card border border-gray-200 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-6">Company Details</h3>
+            <h3 className="text-xl font-bold mb-6">{t('signUpPage.companyDetails')}</h3>
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Company Name
+                {t('signUpPage.companyName')}
               </label>
               <Input
                 type="text"
                 name="companyName"
-                placeholder="Enter your company name"
+                placeholder={t('signUpPage.companyNamePlaceholder')}
                 value={formData.companyName}
                 onChange={handleChange}
                 className={errors.companyName ? "border-red-500" : ""}
@@ -223,12 +227,12 @@ export default function SignUp() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                VAT Number
+                {t('signUpPage.vatNumber')}
               </label>
               <Input
                 type="text"
                 name="vatNumber"
-                placeholder="Enter your VAT number"
+                placeholder={t('signUpPage.vatPlaceholder')}
                 value={formData.vatNumber}
                 onChange={handleChange}
               />
@@ -237,29 +241,29 @@ export default function SignUp() {
 
           {/* Business Address Section */}
           <div className="bg-card border border-gray-200 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-6">Business Address</h3>
+            <h3 className="text-xl font-bold mb-6">{t('signUpPage.businessAddress')}</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Street
+                  {t('signUpPage.street')}
                 </label>
                 <Input
                   type="text"
                   name="street"
-                  placeholder="Enter your Street"
+                  placeholder={t('signUpPage.streetPlaceholder')}
                   value={formData.street}
                   onChange={handleChange}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Street Number
+                  {t('signUpPage.streetNumber')}
                 </label>
                 <Input
                   type="text"
                   name="number"
-                  placeholder="Enter your number"
+                  placeholder={t('signUpPage.streetNumberPlaceholder')}
                   value={formData.number}
                   onChange={handleChange}
                 />
@@ -269,24 +273,24 @@ export default function SignUp() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  City
+                  {t('signUpPage.city')}
                 </label>
                 <Input
                   type="text"
                   name="city"
-                  placeholder="Enter your city"
+                  placeholder={t('signUpPage.cityPlaceholder')}
                   value={formData.city}
                   onChange={handleChange}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Postal Code
+                  {t('signUpPage.postalCode')}
                 </label>
                 <Input
                   type="text"
                   name="postalCode"
-                  placeholder="Enter your postal code"
+                  placeholder={t('signUpPage.postalCodePlaceholder')}
                   value={formData.postalCode}
                   onChange={handleChange}
                 />
@@ -296,11 +300,11 @@ export default function SignUp() {
 
           {/* Account Setup Section */}
           <div className="bg-card border border-gray-200 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-6">Account Setup</h3>
+            <h3 className="text-xl font-bold mb-6">{t('signUpPage.accountSetup')}</h3>
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Password
+                {t('signUpPage.password')}
               </label>
               <div className="relative">
                 <Input
@@ -331,7 +335,7 @@ export default function SignUp() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                Confirm Password
+                {t('signUpPage.confirmPassword')}
               </label>
               <div className="relative">
                 <Input
@@ -373,14 +377,14 @@ export default function SignUp() {
               className="border-primary text-primary hover:bg-green-50 bg-transparent"
               onClick={() => navigate("/")}
             >
-              Cancel
+              {t('signUpPage.cancel')}
             </Button>
             <Button
               type="submit"
               className="bg-primary hover:bg-green-400 text-white"
               disabled={isLoading}
             >
-              {isLoading ? "Registering..." : "Request Account"}
+              {isLoading ? t('signUpPage.registering') : t('signUpPage.requestAccount')}
             </Button>
           </div>
         </form>

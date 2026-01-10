@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "./App.css";
 
@@ -22,6 +23,7 @@ import { useGetProfileQuery } from "./Redux/services/ordersApi";
 import { useGetFavoritesQuery } from "./Redux/services/authApi";
 
 export default function App() {
+  const { t } = useTranslation();
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
@@ -53,7 +55,6 @@ export default function App() {
 
   const { data: profile } = useGetProfileQuery();
   const { data: favorites } = useGetFavoritesQuery();
-  
 
   const productGroups = data
     ? [
@@ -69,19 +70,24 @@ export default function App() {
 
   const productList = productsData
     ? productsData.items.map((item) => ({
+        ...item,
         id: item.id,
         name: item?.name,
         // category: item.product_group?.name,
         image:
-          item?.pictures?.length > 0 ? item.pictures[0] : "/placeholder.png",
+          item?.pictures?.length > 0
+            ? item.pictures.at(-1)
+            : "/placeholder.png",
         // size: item.unit_code.name,
         // price: item.price._,
-        price_excl: item.price_excl,
+        // price_excl: item.price_excl,
         quantity: 0,
       }))
     : [];
 
   const filteredProducts = productList;
+  console.log("🚀 ~ App ~ filteredProducts:", filteredProducts)
+
   // selectedCategory === "All"
   //   ? productList
   //   : productList.filter((product) => product.category === selectedCategory);
@@ -133,10 +139,11 @@ export default function App() {
 
         {/* Product Count */}
         <div className="mb-4 text-sm text-gray-600">
-          Showing{" "}
-          {filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0} to{" "}
-          {Math.min(currentPage * limit, productsData?.count || 0)} of{" "}
-          {productsData?.count || 0} products
+          {t('common.showingProducts', {
+            from: filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0,
+            to: Math.min(currentPage * limit, productsData?.count || 0),
+            total: productsData?.count || 0
+          })}
         </div>
 
         {/* Products Grid */}

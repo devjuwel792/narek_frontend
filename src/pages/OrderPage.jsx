@@ -33,10 +33,10 @@ export default function OrderPage() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
+  console.log("🚀 ~ OrderPage ~ cartItems:", cartItems);
 
   const totalItems = useSelector((state) => state.cart.totalItems);
   const { data: profile } = useGetProfileQuery();
-  console.log("🚀 ~ OrderPage ~ profile:", profile);
 
   const [checkout, { isLoading, error }] = useCheckoutMutation();
 
@@ -152,97 +152,22 @@ export default function OrderPage() {
         <span>{t("common.back")}</span>
       </button>
 
-      <div className="grid grid-cols-1  gap-8">
+      <div className="space-y-8 ">
         {/* Cart Summary */}
-        <div className="lg:col-span-1">
+        <div className="">
           <div className="border border-gray-200 rounded-lg p-4 bg-[#F9F9F9] ">
             <h2 className="text-xl font-bold mb-6">
               {t("orderPage.cartSummary")}
             </h2>
-            <div className=" border rounded bg-white border-gray-200">
+            <div className=" ">
               {cartItems.length === 0 ? (
                 <p className="p-4 text-center text-gray-500">
                   {t("orderPage.yourCartIsEmpty")}
                 </p>
               ) : (
-                // cartItems.map((item) => (
-                //   <div
-                //     key={item.id}
-                //     className="flex gap-4 mb-4 pb-4 p-4 border-b last:border-0 items-center"
-                //   >
-                //     <img
-                //       src={item.image}
-                //       alt={
-                //         currentLanguage === "eng" && item.name?.eng?.length > 0
-                //           ? item.name?.eng
-                //           : currentLanguage === "fr" &&
-                //             item.name?.fra?.length > 0
-                //           ? item.name?.fra
-                //           : currentLanguage === "nl" &&
-                //             item.name?.nld?.length > 0
-                //           ? item.name?.nld
-                //           : item.name._
-                //       }
-                //       className="w-16 h-16 object-cover bg-gray-50 m-2 rounded "
-                //     />
-                //     <div className="flex-1">
-                //       <h3 className="font-semibold text-sm mb-1">
-                //         {currentLanguage === "eng" && item.name?.eng?.length > 0
-                //           ? item.name?.eng
-                //           : currentLanguage === "fr" &&
-                //             item.name?.fra?.length > 0
-                //           ? item.name?.fra
-                //           : currentLanguage === "nl" &&
-                //             item.name?.nld?.length > 0
-                //           ? item.name?.nld
-                //           : item.name._}
-                //       </h3>
-                //       <span>
-                //         {profile?.currency?.sign || "€"}
-                //         {item.price}
-                //       </span>
-                //       <p className="text-xs text-gray-600 mb-3">{item.size}</p>
-                //       <div className="flex items-center justify-between">
-                //         <div className="flex items-center gap-2">
-                //           <button
-                //             onClick={() =>
-                //               handleQuantityChange(item.id, item.quantity - 1)
-                //             }
-                //             className="px-2 py-1 text-gray-500 border rounded hover:text-gray-700"
-                //           >
-                //             −
-                //           </button>
-                //           <span className="border border-primary px-3 py-1 text-sm rounded text-primary font-medium">
-                //             {item.quantity}
-                //           </span>
-                //           <button
-                //             onClick={() =>
-                //               handleQuantityChange(item.id, item.quantity + 1)
-                //             }
-                //             className="px-2 py-1 text-gray-500 hover:text-gray-700 border rounded"
-                //           >
-                //             +
-                //           </button>
-                //         </div>
-                //         <div className="text-right">
-                //           <p className="text-sm font-medium">
-                //             {profile?.currency?.sign || "€"}{" "}
-                //             {(item.price * item.quantity).toFixed(2)}
-                //           </p>
-                //           <button
-                //             onClick={() => handleRemoveItem(item.id)}
-                //             className="text-red-500 hover:text-red-700"
-                //           >
-                //             <Trash2 className="w-4 h-4" />
-                //           </button>
-                //         </div>
-                //       </div>
-                //     </div>
-                //   </div>
-                // ))
-
+          
                 cartItems.map((item, indx) => (
-                  <div key={indx} className="mb-4">
+                  <div key={indx} className="mb-0">
                     <h2 className="text-sm font-bold tracking-wider mb-6">
                       {" "}
                       {currentLanguage === "eng" && item.name?.eng?.length > 0
@@ -258,33 +183,47 @@ export default function OrderPage() {
                       <table className="w-full text-xs">
                         <thead>
                           <tr className="text-[#888] border-b border-transparent">
-                            <th className="text-left pb-4 font-semibold w-24">
-                              No
+                            <th className="text-left font-semibold w-24">{t("orderPage.no")}</th>
+                            <th className="text-left font-semibold">{t("orderPage.image")}</th>
+                            <th className="text-center font-semibold w-20">
+                              {t("orderPage.quantity")}
                             </th>
-                            <th className="text-left pb-4 font-semibold">
-                              Description
+                            <th className="text-right font-semibold w-20">
+                              {t("orderPage.unitPrice")}
                             </th>
-                            <th className="text-center pb-4 font-semibold w-20">
-                              Quantity
+                            <th className="text-right font-semibold w-20">
+                              {t("orderPage.amount")}
                             </th>
-                            <th className="text-right pb-4 font-semibold w-20">
-                              Unit Price
-                            </th>
-                            <th className="text-right pb-4 font-semibold w-20">
-                              Amount
+                            <th className="text-right font-semibold w-20">
+                              {t("orderPage.tax")}
                             </th>
 
-                            <th className="text-right pb-4 font-semibold w-20">
-                              Total
+                            <th className="text-right font-semibold w-20">
+                              {t("orderPage.total")}
                             </th>
                             <th className="w-10"></th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-gray-500">
                           <tr className="group">
-                            <td className="py-4 text-[#888]">{item.id}</td>
+                            <td className="">{item.id}</td>
                             <td className="py-4 font-medium">
-                              {item.description}
+                              <img
+                                src={item.image}
+                                // alt={
+                                //   currentLanguage === "eng" &&
+                                //   item.name?.eng?.length > 0
+                                //     ? item.name?.eng
+                                //     : currentLanguage === "fr" &&
+                                //       item.name?.fra?.length > 0
+                                //     ? item.name?.fra
+                                //     : currentLanguage === "nl" &&
+                                //       item.name?.nld?.length > 0
+                                //     ? item.name?.nld
+                                //     : item.name._
+                                // }
+                                className="w-12 h-12 object-cover bg-gray-50 m-2 rounded "
+                              />
                             </td>
                             <td className="py-4">
                               <div className="flex items-center gap-2">
@@ -317,22 +256,27 @@ export default function OrderPage() {
                             </td>
                             <td className="py-4 text-right">
                               {profile?.currency?.sign || "€"}
-                              {item.price}
+                              {item.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
                             <td className="py-4 text-right">
                               {profile?.currency?.sign || "€"}{" "}
-                              {(item.price * item.quantity).toFixed(2)}
+                              {(item.price * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
 
                             <td className="py-4 text-right font-medium">
-                              {/* € {rowTotal} */}
+                              {profile?.currency?.sign || "€"}{" "}
+                              {(item?.tax * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </td>
+                            <td className="py-4 text-right font-medium">
+                              {profile?.currency?.sign || "€"}{" "}
+                              {(item?.price_tax_incl * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </td>
                             <td className="py-4 text-right">
                               <button
-                                onClick={() => removeItem(catIdx, itemIdx)}
+                                onClick={() => handleRemoveItem(item.id)}
                                 className="text-red-500 hover:text-red-700 transition-colors"
                               >
-                                {/* <Trash2 size={16} /> */}
+                                <Trash2 size={16} />
                               </button>
                             </td>
                           </tr>
@@ -345,20 +289,100 @@ export default function OrderPage() {
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-gray-700 font-medium">
-                  {t("orderPage.totalItems")}
-                </span>
-                <span className="font-bold">{totalItems}</span>
+              <div className="flex justify-end items-center mb-2">
+                <div className="w-80 flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">
+                    {t("orderPage.totalItems")}
+                  </span>
+                  <span className="font-bold">{totalItems}</span>
+                </div>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-700 font-medium">Total Amount</span>
-                <span className="font-bold">
-                  {profile?.currency?.sign || "€"}{" "}
-                  {cartItems
-                    .reduce((sum, item) => sum + item.price * item.quantity, 0)
-                    .toFixed(2)}
-                </span>
+              <div className="flex justify-end items-center">
+                <div className="w-80 flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">
+                    {t("orderPage.totalExclVat")}{" "}
+                  </span>
+                  <span className="font-bold">
+                    {" "}
+                    {profile?.currency?.sign || " €"}{" "}
+                    {cartItems
+                      .reduce(
+                        (sum, item) => sum + item.price * item.quantity,
+                        0
+                      )
+                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-end items-center">
+                <div className="w-80 flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">{t("orderPage.vat")}</span>
+                  <span className="font-bold">
+                    {" "}
+                    {profile?.currency?.sign || " €"}{" "}
+                    {cartItems
+                      .reduce(
+                        (sum, item) =>
+                          sum + item.tax.toFixed(2) * item.quantity,
+                        0
+                      )
+                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-end items-center">
+                <div className="w-80 flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">
+                    {t("orderPage.totalInclVat")}{" "}
+                  </span>
+                  <span className="font-bold">
+                    {profile?.currency?.sign || " €"}{" "}
+                    {cartItems
+                      .reduce(
+                        (sum, item) =>
+                          sum + item.price_tax_incl * item.quantity,
+                        0
+                      )
+                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-end items-center">
+                <div className="w-80 flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">
+                  {t("orderPage.totalEmptyGoods")}{" "}
+                  </span>
+                  <span className="font-bold">
+                    {profile?.currency?.sign || " €"}{" "}
+                    {cartItems
+                      .reduce(
+                        (sum, item) =>
+                          sum + item.empty_goods_value * item.quantity,
+                        0
+                      )
+                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-end items-center">
+                <div className="w-80 flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">{t("orderPage.totalAmountToBePaid")} </span>
+                  <span className="font-bold">
+                    {profile?.currency?.sign || " €"}{" "}
+                    {(
+                      cartItems.reduce(
+                        (sum, item) =>
+                          sum + item.empty_goods_value * item.quantity,
+                        0
+                      ) +
+                      cartItems.reduce(                        (sum, item) =>
+                          sum + item.price_tax_incl * item.quantity,
+                        0
+                      )
+                    ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

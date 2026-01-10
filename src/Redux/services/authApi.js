@@ -47,7 +47,14 @@ export const authApi = createApi({
       query: () => '/favorites/',
       providesTags: ['Favorites'],
     }),
+    setPassword: builder.mutation({
+      query: (body) => ({
+        url: '/auth/users/set_password/',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginMutation, useAddToFavoritesMutation, useGetFavoritesQuery } = authApi;
+export const { useRegisterUserMutation, useLoginMutation, useAddToFavoritesMutation, useGetFavoritesQuery, useSetPasswordMutation } = authApi;

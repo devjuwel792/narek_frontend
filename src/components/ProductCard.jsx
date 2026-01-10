@@ -4,6 +4,7 @@ import { addToCart, updateQuantity } from "../Redux/features/cart/cartSlice";
 import { toggleFavorite } from "../Redux/features/favorites/favoritesSlice";
 
 export default function ProductCard({ product, product_segment_id, currency }) {
+  console.log("🚀 ~ ProductCard ~ product:", product)
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
@@ -37,6 +38,18 @@ export default function ProductCard({ product, product_segment_id, currency }) {
               ? product.price_excl?.[product_segment_id]
               : product.price_excl?._
           ),
+          tax: parseFloat(
+            product.tax_amount?.[product_segment_id]
+              ? product.tax_amount?.[product_segment_id]
+              : product.tax_amount?._
+          ),
+          price_tax_incl: parseFloat(
+            product.price_incl?.[product_segment_id]
+              ? product.price_incl?.[product_segment_id]
+              : product.price_incl?._
+          ),
+          vat: product.vat,
+          empty_goods_value: product.empty_goods_value
         })
       );
     } else {
@@ -45,7 +58,6 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   };
 
   const handleQuantityChange = (e) => {
-  
     const newQuantity = Number.parseInt(e.target.value) || 0;
     if (newQuantity > 0 && !cartItem) {
       dispatch(
@@ -60,6 +72,18 @@ export default function ProductCard({ product, product_segment_id, currency }) {
               ? product.price_excl?.[product_segment_id]
               : product.price_excl?._
           ),
+          tax: parseFloat(
+            product.tax_amount?.[product_segment_id]
+              ? product.tax_amount?.[product_segment_id]
+              : product.tax_amount?._
+          ),
+          price_tax_incl: parseFloat(
+            product.price_incl?.[product_segment_id]
+              ? product.price_incl?.[product_segment_id]
+              : product.price_incl?._
+          ),
+          vat: product.vat,
+          empty_goods_value: product.empty_goods_value
         })
       );
     } else {
@@ -68,7 +92,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   };
 
   const handleToggleFavorite = () => {
-    console.log(product.image)
+  
     dispatch(
       toggleFavorite({
         id: product.id,
@@ -76,6 +100,10 @@ export default function ProductCard({ product, product_segment_id, currency }) {
         size: product.size,
         image: product.image,
         price_excl: product.price_excl,
+        tax_amount: product.tax_amount,
+        price_incl: product.price_incl,
+        vat: product.vat,
+        empty_goods_value: product.empty_goods_value
       })
     );
   };
@@ -125,8 +153,8 @@ export default function ProductCard({ product, product_segment_id, currency }) {
         <span>
           {currency || "€"}{" "}
           {product.price_excl?.[product_segment_id]
-            ? product.price_excl?.[product_segment_id]
-            : product.price_excl?._}
+            ? product.price_excl?.[product_segment_id].toFixed(2)
+            : product.price_excl?._.toFixed(2)}
         </span>
         <p className="text-sm text-gray-600 mb-4">{product.size}</p>
 

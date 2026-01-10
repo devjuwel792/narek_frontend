@@ -1,15 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {
+  createSlice
+} from "@reduxjs/toolkit";
 
 const loadStateFromLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem("cart");
     if (serializedState === null) {
-      return { items: [], totalItems: 0 };
+      return {
+        items: [],
+        totalItems: 0
+      };
     }
     return JSON.parse(serializedState);
   } catch (err) {
     console.error("Could not load cart state from localStorage:", err);
-    return { items: [], totalItems: 0 };
+    return {
+      items: [],
+      totalItems: 0
+    };
   }
 };
 
@@ -21,12 +29,34 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
 
-      const { id, name, size, image, quantity = 1, price } = action.payload;
+      const {
+        id,
+        name,
+        size,
+        image,
+        quantity = 1,
+        price,
+        tax,
+        price_tax_incl,
+        vat,
+        empty_goods_value
+      } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem) {
         existingItem.quantity += quantity;
       } else {
-        state.items.push({ id, name, size, image, quantity, price });
+        state.items.push({
+          id,
+          name,
+          size,
+          image,
+          quantity,
+          price,
+          tax,
+          price_tax_incl,
+          vat,
+          empty_goods_value
+        });
       }
       state.totalItems = state.items.reduce(
         (sum, item) => sum + item.quantity,
@@ -45,7 +75,15 @@ const cartSlice = createSlice({
     },
     updateQuantity: (state, action) => {
       // 
-      const { id, quantity, name, size, image } = action.payload;
+      const {
+        id,
+        quantity,
+        name,
+        size,
+        image,
+        tax,
+        price_tax_incl
+      } = action.payload;
       const item = state.items.find((item) => item.id === id);
       if (item) {
         item.quantity = Math.max(0, quantity);
@@ -67,6 +105,11 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+  clearCart
+} =
+cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,34 +1,31 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const TermsPage = () => {
+  const { t } = useTranslation();
+
   return (
     <div>
-      <div class="prose prose-lg max-w-none text-gray-700">
-        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Clause 1</h3>
-        <ul class="list-disc pl-6 space-y-3 mb-10">
-          <li>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </li>
-        </ul>
+      <div class="">
+        <h1 class="text-3xl font-bold mb-8 text-gray-900">
+          {t("termsPage.title")}
+        </h1>
 
-        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Clause 2</h3>
-        <ul class="list-disc pl-6 space-y-3">
-          <li>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </li>
-          <li>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera
-            condimentum eget purus in. Consectetur eget id morbi amet amet, in.
-            Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean
-            leo pharetra in sit semper et. Amet quam placerat sem.
-          </li>
-        </ul>
+        {Object.keys(t("termsPage.articles", { returnObjects: true })).map((articleKey) => {
+          const article = t(`termsPage.articles.${articleKey}`, { returnObjects: true });
+          return (
+            <section key={articleKey} class="mb-6">
+              <h2 class="text-xl font-semibold mb-2">
+                {article.title}
+              </h2>
+              {article.content.map((paragraph, index) => (
+                <p key={index} class={index < article.content.length - 1 ? "mb-2" : ""}>
+                  {paragraph}
+                </p>
+              ))}
+            </section>
+          );
+        })}
       </div>
     </div>
   );

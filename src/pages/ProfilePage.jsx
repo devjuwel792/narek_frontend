@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
   const { t } = useTranslation();
   const { data: profileApiData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
-  console.log("🚀 ~ ProfilePage ~ profileApiData:", profileApiData)
+
 
   const profileData = profileApiData ? {
     fullName: profileApiData.name,
@@ -36,12 +36,13 @@ export default function ProfilePage() {
 
   
   const { data: ordersData, isLoading, error } = useGetOrdersQuery();
+  console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData)
 
   const processedOrders = ordersData ? ordersData.map(order => ({
     orderDate: order.date,
     reference: order.number,
     totalItems: order.items.reduce((sum, item) => sum + parseInt(item.quantity), 0),
-    deliveryDate: order.date,
+    deliveryDate: order.delivery_date,
     status: order.status,
   })) : [];
 
@@ -59,13 +60,13 @@ export default function ProfilePage() {
       header: t("profilePage.totalItems"),
     },
     {
-      accessorKey: "delivery_date",
+      accessorKey: "deliveryDate",
       header: t("profilePage.deliveryDate"),
     },
-    {
-      accessorKey: "status",
-      header: t("profilePage.status"),
-    },
+    // {
+    //   accessorKey: "status",
+    //   header: t("profilePage.status"),
+    // },
   ];
 
   return (

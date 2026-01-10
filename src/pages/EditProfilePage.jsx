@@ -8,16 +8,17 @@ import {
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from "@/Redux/services/ordersApi";
+import { useSetPasswordMutation } from "@/Redux/services/authApi";
 import Swal from "sweetalert2";
 
 export default function EditProfilePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { data: profileData, isLoading, error } = useGetProfileQuery();
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
-  const [successMessage, setSuccessMessage] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -44,6 +45,7 @@ export default function EditProfilePage() {
         number: profileData.streetnumber || "",
         city: profileData.city || "",
         postalCode: profileData.citycode || "",
+        currentPassword: "",
         password: "",
         confirmPassword: "",
       });
@@ -55,9 +57,12 @@ export default function EditProfilePage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const [setPassword] = useSetPasswordMutation();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Update profile data
       const updateData = {
         name: formData.fullName, // Using companyName as name
         vat: formData.vatNumber,
@@ -68,29 +73,80 @@ export default function EditProfilePage() {
         streetnumber: formData.number,
         city: formData.city,
         citycode: formData.postalCode,
-        old_password: formData.password || undefined,
-        new_password: formData.confirmPassword || undefined,
-        // country_id: "BEL", // Default
-        // language_id: "nld", // Default
-        // currency_id: "EUR", // Default
       };
+
       await updateProfile(updateData).unwrap();
+
       Swal.fire({
-        title: t("editProfile.successTitle"),
-        text: t("editProfile.profileUpdated"),
+        title: "Success!",
+        text: "Profile updated successfully!",
         icon: "success",
-        confirmButtonText: t("editProfile.ok"),
+        confirmButtonText: "OK",
       }).then(() => {
         navigate("/account?page=profile");
       });
     } catch (err) {
       console.error("Failed to update profile:", err);
-      // Handle error, maybe show a toast or alert
+      Swal.fire({
+        title: t("common.error"),
+        text: t("common.failedToUpdateProfile"),
+        icon: "error",
+        confirmButtonText: t("common.ok"),
+      });
     }
   };
 
-  if (isLoading) return <div>{t("common.loading")}</div>;
-  if (error) return <div>{t("editProfile.errorLoadingProfile")}</div>;
+  const handlePasswordChange = async () => {
+    if (
+      !formData.currentPassword ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please fill in all password fields.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        title: "Error!",
+        text: "New password and confirm password do not match!",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    try {
+      const passwordData = {
+        current_password: formData.currentPassword,
+        new_password: formData.password,
+        re_new_password: formData.confirmPassword,
+      };
+      await setPassword(passwordData).unwrap();
+      Swal.fire({
+        title: "Success!",
+        text: "Password changed successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    } catch (err) {
+      console.error("Failed to change password:", err);
+      Swal.fire({
+        title: "Error!",
+        text:
+          (err.data.current_password && "Invalid Current Password") ||
+          "Failed to change password. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading profile</div>;
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
@@ -147,6 +203,7 @@ export default function EditProfilePage() {
                 <Input
                   type="email"
                   name="email"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder={t("editProfile.email")}
@@ -251,14 +308,59 @@ export default function EditProfilePage() {
             </div>
           </div>
         </section>
-
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            className="border-primary text-primary hover:bg-green-50 bg-transparent"
+            onClick={() => navigate("/account?page=profile")}
+          >
+            {t("editProfile.cancel")}
+          </Button>
+          <Button
+            type="submit"
+            className="bg-primary hover:bg-green-400 text-white"
+          >
+            {t("editProfile.requestAccount")}
+          </Button>
+        </div>
         {/* Account Setup Section */}
         <section className="pb-8 bg-[#F9F9F9] p-6 rounded-lg border-gray-200">
-          <h2 className="text-2xl font-bold mb-6">{t('editProfile.accountSetup')}</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {t("editProfile.accountSetup")}
+          </h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('editProfile.oldPassword')}
+                {t("editProfile.currentPassword")}
+              </label>
+              <div className="relative">
+                <Input
+                  type={showCurrentPassword ? "text" : "password"}
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="w-full pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showCurrentPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">
+                {t("editProfile.password")}
               </label>
               <div className="relative">
                 <Input
@@ -266,7 +368,7 @@ export default function EditProfilePage() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder={t("editProfile.passwordPlaceholder")}
+                  placeholder="••••••••"
                   className="w-full pr-10"
                 />
                 <button
@@ -285,7 +387,7 @@ export default function EditProfilePage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('editProfile.newPassword')}
+                {t("editProfile.confirmPassword")}
               </label>
               <div className="relative">
                 <Input
@@ -293,7 +395,7 @@ export default function EditProfilePage() {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  placeholder={t("editProfile.passwordPlaceholder")}
+                  placeholder="••••••••"
                   className="w-full pr-10"
                 />
                 <button
@@ -309,26 +411,18 @@ export default function EditProfilePage() {
                 </button>
               </div>
             </div>
-          </div>
-        </section> 
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-4">
-          <Button
-            type="button"
-            variant="outline"
-            className="border-primary text-primary hover:bg-green-50 bg-transparent"
-            onClick={() => navigate("/account?page=profile")}
-          >
-            {t("common.cancel")}
-          </Button>
-          <Button
-            type="submit"
-            className="bg-primary hover:bg-green-400 text-white"
-          >
-            {t("editProfile.requestAccount")}
-          </Button>
-        </div>
+            <div className="flex justify-end">
+              <Button
+                type="button"
+                onClick={handlePasswordChange}
+                className="bg-primary hover:bg-green-400 text-white"
+              >
+                {t("editProfile.changePassword")}
+              </Button>
+            </div>
+          </div>
+        </section>
       </form>
     </main>
   );

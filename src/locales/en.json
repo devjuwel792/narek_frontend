@@ -14,7 +14,25 @@
     "no": "No",
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "next": "Next",
+    "previous": "Previous",
+    "profileUpdated": "Profile updated successfully!",
+    "ok": "OK",
+    "failedToUpdateProfile": "Failed to update profile. Please try again.",
+    "pleaseFillAllPasswordFields": "Please fill in all password fields.",
+    "passwordsDoNotMatch": "New password and confirm password do not match!",
+    "passwordChangedSuccessfully": "Password changed successfully!",
+    "invalidCurrentPassword": "Invalid Current Password",
+    "failedToChangePassword": "Failed to change password. Please try again.",
+    "errorLoadingProfile": "Error loading profile",
+    "successExclamation": "Success!",
+    "profileUpdated": "Profile updated successfully!",
+    "pleaseFillAllPasswordFields": "Please fill in all password fields.",
+    "passwordsDoNotMatch": "New password and confirm password do not match!",
+    "passwordChangedSuccessfully": "Password changed successfully!",
+    "invalidCurrentPassword": "Invalid Current Password",
+    "showingProducts": "Showing {{from}} to {{to}} of {{total}} products"
   },
   "header": {
     "logoAlt": "Logo"
@@ -30,24 +48,20 @@
     "vatNumber": "VAT Number",
     "businessAddress": "Business Address",
     "street": "Street",
+    "streetPlaceholder": "Enter your Street",
     "number": "Number",
-    "city": "City",
-    "postalCode": "Postal Code",
-    "accountSetup": "Account Setup",
-    "oldPassword": "Old Password",
-    "newPassword": "New Password",
-    "passwordPlaceholder": "••••••••",
-    "streetPlaceholder": "Enter your street",
     "numberPlaceholder": "Enter your number",
+    "city": "City",
     "cityPlaceholder": "Enter your city",
+    "postalCode": "Postal Code",
     "postalCodePlaceholder": "Enter your postal code",
+    "accountSetup": "Account Setup",
+    "currentPassword": "Current Password",
     "password": "Password",
     "confirmPassword": "Confirm Password",
+    "changePassword": "Change Password",
     "requestAccount": "Request Account",
-    "successTitle": "Success!",
-    "profileUpdated": "Profile updated successfully!",
-    "ok": "OK",
-    "errorLoadingProfile": "Error loading profile"
+    "cancel": "Cancel"
   },
   "orderPage": {
     "back": "Back",
@@ -61,7 +75,26 @@
     "additionalInstructions": "Additional Instructions",
     "instructionsPlaceholder": "eg.,Din Ena City, gate code 1504",
     "submitOrder": "Submit Order",
-    "ordersAfter5PM": "Orders after 5 PM cannot be delivered the next day"
+    "ordersAfter5PM": "Orders after 5 PM cannot be delivered the next day",
+    "placingOrder": "Placing Order...",
+    "orderPlacedSuccessfully": "Order Placed Successfully!",
+    "orderSubmitted": "Your order has been submitted.",
+    "orderFailed": "Order Failed",
+    "errorPlacingOrder": "An error occurred while placing the order.",
+    "totalExclVat": "Total excl. VAT :",
+    "vat": "VAT :",
+    "totalInclVat": "Total incl. VAT :",
+    "totalEmptyGoods": "Total empty goods :",
+    "totalAmountToBePaid": "Total amount to be paid:",
+    "no": "No",
+    "image": "Image",
+    "quantity": "Quantity",
+    "unitPrice": "Unit Price",
+    "amount": "Amount",
+    "tax": "Tax",
+    "total": "Total",
+    "pleaseSelectDeliveryDate": "Please select a delivery date.",
+    "pleaseEnterDeliveryAddress": "Please enter a delivery address."
   },
   "profilePage": {
     "myAccount": "My Account",
@@ -95,18 +128,59 @@
     ]
   },
   "termsPage": {
-    "clause1": {
-      "title": "Clause 1",
-      "content": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
-      ]
-    },
-    "clause2": {
-      "title": "Clause 2",
-      "content": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
-      ]
+    "title": "General Terms and Conditions",
+    "articles": {
+      "1": {
+        "title": "Art. 1: Acceptance of the conditions",
+        "content": [
+          "The following conditions apply to all offers and deliveries carried out by the company and to the agreements concluded between the company and the customer, unless the company has expressly agreed otherwise in writing.",
+          "The general purchase conditions of the customer are only valid if they correspond to the general conditions of the company or have been expressly accepted by the company in writing."
+        ]
+      },
+      "2": {
+        "title": "Art. 2: Prices",
+        "content": [
+          "The customer is obliged to pay the price. This is determined based on market and price conditions. Any increase between the conclusion of the agreement and the delivery will be passed on to the customer.",
+          "The company is entitled to apply a proportional price increase in the event of circumstances beyond its control, such as increases in duties and excise duties, freight prices, raw materials, wages, collective labor agreements or currency changes.",
+          "VAT, other taxes, transport and packaging costs are at the customer's expense."
+        ]
+      },
+      "3": {
+        "title": "Art. 3: Payment",
+        "content": [
+          "All invoices are payable in cash upon receipt, unless otherwise agreed in writing. All payment costs are at the customer's expense.",
+          "Invoices are considered accepted in the absence of written protest within 7 days after dispatch.",
+          "In case of non-payment, default interest of 1.5% per started month is due by operation of law, as well as a flat-rate compensation of 15% of the invoice amount (minimum €74.37).",
+          "Late payment makes all outstanding invoices immediately due and gives the company the right to terminate the agreement without notice."
+        ]
+      },
+      "4": {
+        "title": "Art. 4: Delivery and complaints",
+        "content": [
+          "Delivery takes place ex works. The goods always travel at the customer's risk, regardless of who organizes the transport.",
+          "The customer must check the goods immediately upon delivery. Defects must be reported in writing and confirmed within 3 hours after discovery.",
+          "Late complaints are not accepted. The company must always have the opportunity to check the delivered goods."
+        ]
+      },
+      "5": {
+        "title": "Art. 5: Retention of title",
+        "content": [
+          "The delivered goods remain the property of the company until full payment of all amounts due, including interest and costs.",
+          "In case of non-payment, bankruptcy or seizure, the company is entitled to take back the goods at the customer's expense and risk."
+        ]
+      },
+      "6": {
+        "title": "Art. 6: Express termination clause",
+        "content": [
+          "In case of non-compliance with obligations, the agreement may be considered terminated, with a flat-rate compensation of 25% of the price of the goods, without prejudice to the right to higher compensation."
+        ]
+      },
+      "7": {
+        "title": "Art. 7: Jurisdiction",
+        "content": [
+          "For all disputes, only the courts of the District of Antwerp are competent and Belgian law applies."
+        ]
+      }
     }
   },
   "favoritesPage": {
@@ -122,5 +196,51 @@
     "message": "Message",
     "howCanWeHelp": "How can we help?",
     "send": "Send"
+  },
+  "loginPage": {
+    "welcomeBack": "Welcome Back",
+    "signIn": "Sign in to your account",
+    "loginFailed": "Login failed. Please check your credentials.",
+    "email": "Email",
+    "emailPlaceholder": "youremail@gmail.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Remember me",
+    "signUp": "Sign Up",
+    "login": "Login",
+    "noAccount": "Don't have an account?",
+    "registerHere": "Register here"
+  },
+  "signUpPage": {
+    "backToLogin": "Back to login",
+    "registration": "Registration",
+    "createAccount": "Create your business account to start ordering",
+    "contactPerson": "Contact Person",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "companyDetails": "Company Details",
+    "companyName": "Company Name",
+    "companyNamePlaceholder": "Enter your company name",
+    "vatNumber": "VAT Number",
+    "vatPlaceholder": "Enter your VAT number",
+    "businessAddress": "Business Address",
+    "street": "Street",
+    "streetPlaceholder": "Enter your Street",
+    "streetNumber": "Street Number",
+    "streetNumberPlaceholder": "Enter your number",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "postalCode": "Postal Code",
+    "postalCodePlaceholder": "Enter your postal code",
+    "accountSetup": "Account Setup",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "cancel": "Cancel",
+    "requestAccount": "Request Account",
+    "registering": "Registering..."
   }
 }

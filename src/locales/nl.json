@@ -14,7 +14,8 @@
     "no": "Nee",
     "loading": "Laden...",
     "error": "Fout",
-    "success": "Succes"
+    "success": "Succes",
+    "showingProducts": "Toont {{from}} tot {{to}} van {{total}} producten"
   },
   "header": {
     "logoAlt": "Logo"
@@ -50,7 +51,26 @@
     "additionalInstructions": "Aanvullende Instructies",
     "instructionsPlaceholder": "bijv., Din Ena City, poortcode 1504",
     "submitOrder": "Bestelling Verzenden",
-    "ordersAfter5PM": "Bestellingen na 17:00 kunnen niet de volgende dag worden geleverd"
+    "ordersAfter5PM": "Bestellingen na 17:00 kunnen niet de volgende dag worden geleverd",
+    "placingOrder": "Bestelling plaatsen...",
+    "orderPlacedSuccessfully": "Bestelling succesvol geplaatst!",
+    "orderSubmitted": "Uw bestelling is ingediend.",
+    "orderFailed": "Bestelling mislukt",
+    "errorPlacingOrder": "Er is een fout opgetreden bij het plaatsen van de bestelling.",
+    "totalExclVat": "Totaal excl. BTW :",
+    "vat": "BTW :",
+    "totalInclVat": "Totaal incl. BTW :",
+    "totalEmptyGoods": "Totaal lege goederen :",
+    "totalAmountToBePaid": "Totaal te betalen bedrag:",
+    "no": "Nr",
+    "image": "Afbeelding",
+    "quantity": "Hoeveelheid",
+    "unitPrice": "Eenheidsprijs",
+    "amount": "Bedrag",
+    "tax": "Belasting",
+    "total": "Totaal",
+    "pleaseSelectDeliveryDate": "Selecteer een leveringsdatum.",
+    "pleaseEnterDeliveryAddress": "Voer een leveringsadres in."
   },
   "profilePage": {
     "myAccount": "Mijn Account",
@@ -84,18 +104,59 @@
     ]
   },
   "termsPage": {
-    "clause1": {
-      "title": "Clausule 1",
-      "content": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
-      ]
-    },
-    "clause2": {
-      "title": "Clausule 2",
-      "content": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
-      ]
+    "title": "Algemene Voorwaarden",
+    "articles": {
+      "1": {
+        "title": "Art. 1 : Aanvaarden van de voorwaarden",
+        "content": [
+          "De hiernavolgende voorwaarden zijn toepasselijk op alle aanbiedingen en leveringen uitgevoerd door de firma en op de tussen de firma en de klant gesloten overeenkomsten, tenzij de firma schriftelijk een afwijkende overeenkomst heeft aangevraagd.",
+          "De algemene aankoopvoorwaarden van de klant zijn slechts geldig indien ze overeenstemmen met de algemene voorwaarden van de firma of door deze schriftelijk werden aanvaard."
+        ]
+      },
+      "2": {
+        "title": "Art. 2 : Prijzen",
+        "content": [
+          "De klant is gehouden tot betaling van de prijs. Deze wordt vastgesteld in functie van de markt- en prijzenconjunctuur. Iedere verhoging tussen het sluiten van de overeenkomst en de levering zal aan de klant doorgerekend worden.",
+          "De firma is gerechtigd om, in geval van omstandigheden onafhankelijk van haar wil, zoals verhoging van rechten en accijnzen, vrachtprijzen, grondstoffen, lonen, CAO’s of valutawijzigingen, een evenredige prijsverhoging toe te passen.",
+          "B.T.W., andere belastingen, vervoer- en verpakkingskosten zijn ten laste van de klant."
+        ]
+      },
+      "3": {
+        "title": "Art. 3 : Betaling",
+        "content": [
+          "Alle facturen zijn contant betaalbaar bij ontvangst, tenzij schriftelijk anders overeengekomen. Alle betalingskosten zijn ten laste van de klant.",
+          "Facturen worden als aanvaard beschouwd bij gebrek aan schriftelijk protest binnen 7 dagen na verzending.",
+          "Bij niet-betaling is van rechtswege een nalatigheidsintrest verschuldigd van 1,5% per begonnen maand, evenals een forfaitaire schadevergoeding van 15% van het factuurbedrag (minimum €74,37).",
+          "Niet-tijdige betaling maakt alle openstaande facturen onmiddellijk opeisbaar en geeft de firma het recht de overeenkomst te ontbinden zonder ingebrekestelling."
+        ]
+      },
+      "4": {
+        "title": "Art. 4 : Levering en klachten",
+        "content": [
+          "De levering geschiedt af fabriek. De goederen reizen steeds op risico van de klant, ongeacht wie het transport organiseert.",
+          "De klant dient de goederen onmiddellijk bij levering te controleren. Gebreken moeten schriftelijk gemeld worden en bevestigd binnen 3 uur na ontdekking.",
+          "Laattijdige klachten worden niet aanvaard. De firma moet steeds de mogelijkheid krijgen het geleverde te controleren."
+        ]
+      },
+      "5": {
+        "title": "Art. 5 : Eigendomsvoorbehoud",
+        "content": [
+          "De geleverde goederen blijven eigendom van de firma tot volledige betaling van alle verschuldigde bedragen, inclusief intresten en kosten.",
+          "Bij wanbetaling, faillissement of beslag is de firma gerechtigd de goederen terug te nemen op kosten en risico van de klant."
+        ]
+      },
+      "6": {
+        "title": "Art. 6 : Uitdrukkelijk ontbindend beding",
+        "content": [
+          "Bij niet-naleving van verplichtingen kan de overeenkomst als ontbonden worden beschouwd, met een forfaitaire schadevergoeding van 25% van de prijs van de goederen, onverminderd het recht op hogere schadevergoeding."
+        ]
+      },
+      "7": {
+        "title": "Art. 7 : Bevoegdheidsgeding",
+        "content": [
+          "Voor alle geschillen zijn uitsluitend de rechtbanken van het Arrondissement Antwerpen bevoegd en is het Belgisch recht van toepassing."
+        ]
+      }
     }
   },
   "favoritesPage": {
@@ -111,5 +172,51 @@
     "message": "Bericht",
     "howCanWeHelp": "Hoe kunnen we helpen?",
     "send": "Verzenden"
+  },
+  "loginPage": {
+    "welcomeBack": "Welkom terug",
+    "signIn": "Meld je aan bij je account",
+    "loginFailed": "Aanmelden mislukt. Controleer je inloggegevens.",
+    "email": "E-mail",
+    "emailPlaceholder": "jouwemail@gmail.com",
+    "password": "Wachtwoord",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Onthoud mij",
+    "signUp": "Aanmelden",
+    "login": "Aanmelden",
+    "noAccount": "Geen account?",
+    "registerHere": "Registreer hier"
+  },
+  "signUpPage": {
+    "backToLogin": "Terug naar aanmelden",
+    "registration": "Registratie",
+    "createAccount": "Maak je zakelijke account aan om te beginnen met bestellen",
+    "contactPerson": "Contactpersoon",
+    "fullName": "Volledige naam",
+    "fullNamePlaceholder": "Voer je volledige naam in",
+    "phoneNumber": "Telefoonnummer",
+    "phonePlaceholder": "Voer je telefoonnummer in",
+    "email": "E-mail",
+    "emailPlaceholder": "Voer je e-mail in",
+    "companyDetails": "Bedrijfsgegevens",
+    "companyName": "Bedrijfsnaam",
+    "companyNamePlaceholder": "Voer je bedrijfsnaam in",
+    "vatNumber": "BTW-nummer",
+    "vatPlaceholder": "Voer je BTW-nummer in",
+    "businessAddress": "Zakelijk adres",
+    "street": "Straat",
+    "streetPlaceholder": "Voer je straat in",
+    "streetNumber": "Straatnummer",
+    "streetNumberPlaceholder": "Voer je nummer in",
+    "city": "Stad",
+    "cityPlaceholder": "Voer je stad in",
+    "postalCode": "Postcode",
+    "postalCodePlaceholder": "Voer je postcode in",
+    "accountSetup": "Account instellen",
+    "password": "Wachtwoord",
+    "confirmPassword": "Wachtwoord bevestigen",
+    "cancel": "Annuleren",
+    "requestAccount": "Account aanvragen",
+    "registering": "Registreren..."
   }
 }

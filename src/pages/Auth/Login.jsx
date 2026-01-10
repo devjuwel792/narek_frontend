@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../Redux/services/authApi";
 import { setCredentials } from "../../Redux/features/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import LoginImage from "../../assets/images/login-user.png";
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [login, { isLoading, error }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -72,18 +74,18 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleLogin} className="max-w-md w-full">
-          <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
-          <p className="text-gray-600 mb-8">Sign in to your account</p>
-          {error && <p className="text-red-500 mb-4">Login failed. Please check your credentials.</p>}
+          <h2 className="text-3xl font-bold mb-2">{t('loginPage.welcomeBack')}</h2>
+          <p className="text-gray-600 mb-8">{t('loginPage.signIn')}</p>
+          {error && <p className="text-red-500 mb-4">{t('loginPage.loginFailed')}</p>}
 
           {/* Email Field */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-900 mb-2">
-              Email
+              {t('loginPage.email')}
             </label>
             <Input
               type="email"
-              placeholder="youremail@gmail.com"
+              placeholder={t('loginPage.emailPlaceholder')}
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -99,12 +101,12 @@ export default function Login() {
           {/* Password Field */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-900 mb-2">
-              Password
+              {t('loginPage.password')}
             </label>
             <div className="relative">
               <Input
                 type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
+                placeholder={t('loginPage.passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pr-10"
@@ -153,14 +155,14 @@ export default function Login() {
               className="w-full border-primary text-primary hover:bg-green-50 bg-transparent"
               onClick={() => navigate("/auth/sign-up")}
             >
-              Sign Up
+              {t('loginPage.signUp')}
             </Button>
             <Button
               onClick={handleLogin}
               type="submit"
               className="w-full bg-primary hover:bg-green-400 text-white"
             >
-              Login
+              {t('loginPage.login')}
             </Button>
           </div>
 

@@ -14,7 +14,19 @@
     "no": "Non",
     "loading": "Chargement...",
     "error": "Erreur",
-    "success": "Succès"
+    "success": "Succès",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "profileUpdated": "Profil mis à jour avec succès !",
+    "ok": "OK",
+    "failedToUpdateProfile": "Échec de la mise à jour du profil. Veuillez réessayer.",
+    "pleaseFillAllPasswordFields": "Veuillez remplir tous les champs de mot de passe.",
+    "passwordsDoNotMatch": "Le nouveau mot de passe et la confirmation ne correspondent pas !",
+    "passwordChangedSuccessfully": "Mot de passe changé avec succès !",
+    "invalidCurrentPassword": "Mot de passe actuel invalide",
+    "failedToChangePassword": "Échec du changement de mot de passe. Veuillez réessayer.",
+    "errorLoadingProfile": "Erreur lors du chargement du profil",
+    "showingProducts": "Affichage de {{from}} à {{to}} sur {{total}} produits"
   },
   "header": {
     "logoAlt": "Logo"
@@ -30,24 +42,19 @@
     "vatNumber": "Numéro de TVA",
     "businessAddress": "Adresse d'Affaires",
     "street": "Rue",
-    "number": "Numéro",
-    "city": "Ville",
-    "postalCode": "Code Postal",
-    "accountSetup": "Configuration du Compte",
-    "oldPassword": "Ancien Mot de Passe",
-    "newPassword": "Nouveau Mot de Passe",
-    "passwordPlaceholder": "••••••••",
     "streetPlaceholder": "Entrez votre rue",
+    "number": "Numéro",
     "numberPlaceholder": "Entrez votre numéro",
+    "city": "Ville",
     "cityPlaceholder": "Entrez votre ville",
+    "postalCode": "Code Postal",
     "postalCodePlaceholder": "Entrez votre code postal",
+    "accountSetup": "Configuration du Compte",
+    "currentPassword": "Mot de passe actuel",
     "password": "Mot de Passe",
     "confirmPassword": "Confirmer le Mot de Passe",
-    "requestAccount": "Demander un Compte",
-    "successTitle": "Succès !",
-    "profileUpdated": "Profil mis à jour avec succès !",
-    "ok": "OK",
-    "errorLoadingProfile": "Erreur lors du chargement du profil"
+    "changePassword": "Changer le mot de passe",
+    "requestAccount": "Demander un Compte"
   },
   "orderPage": {
     "back": "Retour",
@@ -61,7 +68,24 @@
     "additionalInstructions": "Instructions Supplémentaires",
     "instructionsPlaceholder": "par exemple, Din Ena City, code de porte 1504",
     "submitOrder": "Soumettre la Commande",
-    "ordersAfter5PM": "Les commandes après 17h ne peuvent pas être livrées le lendemain"
+    "ordersAfter5PM": "Les commandes après 17h ne peuvent pas être livrées le lendemain",
+    "placingOrder": "Commande en cours...",
+    "orderPlacedSuccessfully": "Commande passée avec succès !",
+    "orderSubmitted": "Votre commande a été soumise.",
+    "orderFailed": "Échec de la commande",
+    "errorPlacingOrder": "Une erreur s'est produite lors de la passation de la commande.",
+    "totalExclVat": "Total HT :",
+    "vat": "TVA :",
+    "totalInclVat": "Total TTC :",
+    "totalEmptyGoods": "Total marchandises vides :",
+    "totalAmountToBePaid": "Montant total à payer :",
+    "no": "N°",
+    "image": "Image",
+    "quantity": "Quantité",
+    "unitPrice": "Prix unitaire",
+    "amount": "Montant",
+    "tax": "Taxe",
+    "total": "Total"
   },
   "profilePage": {
     "myAccount": "Mon Compte",
@@ -95,18 +119,59 @@
     ]
   },
   "termsPage": {
-    "clause1": {
-      "title": "Clause 1",
-      "content": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
-      ]
-    },
-    "clause2": {
-      "title": "Clause 2",
-      "content": [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivera condimentum eget purus in. Consectetur eget id morbi amet amet, in. Ipsum viverra pretium tellus neque. Ullamcorper suspendisse aenean leo pharetra in sit semper et. Amet quam placerat sem."
-      ]
+    "title": "Conditions Générales",
+    "articles": {
+      "1": {
+        "title": "Art. 1 : Acceptation des conditions",
+        "content": [
+          "Les conditions suivantes s'appliquent à toutes les offres et livraisons effectuées par la société et aux accords conclus entre la société et le client, sauf si la société a expressément convenu autrement par écrit.",
+          "Les conditions générales d'achat du client ne sont valables que si elles correspondent aux conditions générales de la société ou ont été expressément acceptées par la société par écrit."
+        ]
+      },
+      "2": {
+        "title": "Art. 2 : Prix",
+        "content": [
+          "Le client est tenu de payer le prix. Celui-ci est déterminé en fonction des conditions du marché et des prix. Toute augmentation entre la conclusion de l'accord et la livraison sera répercutée sur le client.",
+          "La société est en droit d'appliquer une augmentation proportionnelle du prix en cas de circonstances indépendantes de sa volonté, telles que des augmentations de droits et accises, prix de fret, matières premières, salaires, conventions collectives ou changements de devise.",
+          "La TVA, autres taxes, frais de transport et d'emballage sont à la charge du client."
+        ]
+      },
+      "3": {
+        "title": "Art. 3 : Paiement",
+        "content": [
+          "Toutes les factures sont payables comptant à réception, sauf accord contraire écrit. Tous les frais de paiement sont à la charge du client.",
+          "Les factures sont considérées comme acceptées en l'absence de protestation écrite dans les 7 jours suivant l'envoi.",
+          "En cas de non-paiement, des intérêts de retard de 1,5% par mois entamé sont dus de plein droit, ainsi qu'une indemnité forfaitaire de 15% du montant de la facture (minimum 74,37 €).",
+          "Le paiement tardif rend toutes les factures impayées immédiatement exigibles et donne à la société le droit de résilier l'accord sans préavis."
+        ]
+      },
+      "4": {
+        "title": "Art. 4 : Livraison et réclamations",
+        "content": [
+          "La livraison s'effectue départ usine. Les marchandises voyagent toujours aux risques du client, quel que soit l'organisateur du transport.",
+          "Le client doit vérifier les marchandises immédiatement à la livraison. Les défauts doivent être signalés par écrit et confirmés dans les 3 heures suivant la découverte.",
+          "Les réclamations tardives ne sont pas acceptées. La société doit toujours avoir la possibilité de vérifier les marchandises livrées."
+        ]
+      },
+      "5": {
+        "title": "Art. 5 : Réserve de propriété",
+        "content": [
+          "Les marchandises livrées restent la propriété de la société jusqu'au paiement intégral de tous les montants dus, y compris intérêts et frais.",
+          "En cas de non-paiement, faillite ou saisie, la société est en droit de reprendre les marchandises aux frais et risques du client."
+        ]
+      },
+      "6": {
+        "title": "Art. 6 : Clause de résiliation expresse",
+        "content": [
+          "En cas de non-respect des obligations, l'accord peut être considéré comme résilié, avec une indemnité forfaitaire de 25% du prix des marchandises, sans préjudice du droit à une indemnisation plus élevée."
+        ]
+      },
+      "7": {
+        "title": "Art. 7 : Compétence juridictionnelle",
+        "content": [
+          "Pour tous les litiges, seuls les tribunaux de l'Arrondissement d'Anvers sont compétents et le droit belge s'applique."
+        ]
+      }
     }
   },
   "favoritesPage": {
@@ -122,5 +187,51 @@
     "message": "Message",
     "howCanWeHelp": "Comment pouvons-nous aider ?",
     "send": "Envoyer"
+  },
+  "loginPage": {
+    "welcomeBack": "Bienvenue de retour",
+    "signIn": "Connectez-vous à votre compte",
+    "loginFailed": "Échec de la connexion. Veuillez vérifier vos identifiants.",
+    "email": "E-mail",
+    "emailPlaceholder": "votremail@gmail.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Se souvenir de moi",
+    "signUp": "S'inscrire",
+    "login": "Se connecter",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "registerHere": "Inscrivez-vous ici"
+  },
+  "signUpPage": {
+    "backToLogin": "Retour à la connexion",
+    "registration": "Inscription",
+    "createAccount": "Créez votre compte professionnel pour commencer à commander",
+    "contactPerson": "Personne de contact",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Entrez votre nom complet",
+    "phoneNumber": "Numéro de téléphone",
+    "phonePlaceholder": "Entrez votre numéro de téléphone",
+    "email": "E-mail",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "companyDetails": "Détails de l'entreprise",
+    "companyName": "Nom de l'entreprise",
+    "companyNamePlaceholder": "Entrez le nom de votre entreprise",
+    "vatNumber": "Numéro de TVA",
+    "vatPlaceholder": "Entrez votre numéro de TVA",
+    "businessAddress": "Adresse professionnelle",
+    "street": "Rue",
+    "streetPlaceholder": "Entrez votre rue",
+    "streetNumber": "Numéro de rue",
+    "streetNumberPlaceholder": "Entrez votre numéro",
+    "city": "Ville",
+    "cityPlaceholder": "Entrez votre ville",
+    "postalCode": "Code postal",
+    "postalCodePlaceholder": "Entrez votre code postal",
+    "accountSetup": "Configuration du compte",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "cancel": "Annuler",
+    "requestAccount": "Demander un compte",
+    "registering": "Inscription en cours..."
   }
 }
