@@ -11,6 +11,7 @@ import { useRegisterUserMutation } from "@/Redux/services/authApi";
 import Swal from "sweetalert2";
 
 export default function SignUp() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
