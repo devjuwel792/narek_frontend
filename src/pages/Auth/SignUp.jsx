@@ -61,9 +61,9 @@ export default function SignUp() {
       newErrors.email = "Please enter a valid email address.";
     }
 
-    if (!formData.companyName.trim()) {
-      newErrors.companyName = "Company name is required.";
-    }
+    // if (!formData.companyName.trim()) {
+    //   newErrors.companyName = "Company name is required.";
+    // }
 
     if (!formData.password.trim()) {
       newErrors.password = "Password is required.";
@@ -188,7 +188,6 @@ export default function SignUp() {
                 <Input
                   type="email"
                   name="email"
-                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
                   placeholder={t('signUpPage.emailPlaceholder')}
                   value={formData.email}
                   onChange={handleChange}
