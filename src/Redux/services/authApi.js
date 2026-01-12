@@ -14,7 +14,7 @@ export const authApi = createApi({
       // If we have a token, include it in the headers
       if (token) {
         headers.set("authorization", `Token ${token}`);
-         headers.set("ngrok-skip-browser-warning", "true"); 
+        headers.set("ngrok-skip-browser-warning", "true");
       }
 
       return headers;
@@ -34,6 +34,19 @@ export const authApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Profile']
+    }),
+    getProfile: builder.query({
+      query: () => '/customer/',
+      providesTags: ['Profile'],
+    }),
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: '/customer/',
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['Profile'],
     }),
     addToFavorites: builder.mutation({
       query: (body) => ({
@@ -57,4 +70,7 @@ export const authApi = createApi({
   }),
 });
 
-export const { useRegisterUserMutation, useLoginMutation, useAddToFavoritesMutation, useGetFavoritesQuery, useSetPasswordMutation } = authApi;
+export const {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useRegisterUserMutation, useLoginMutation, useAddToFavoritesMutation, useGetFavoritesQuery, useSetPasswordMutation } = authApi;

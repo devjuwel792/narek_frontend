@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import {
   useGetProfileQuery,
   useUpdateProfileMutation,
-} from "@/Redux/services/ordersApi";
+} from "@/Redux/services/authApi";
 import { useSetPasswordMutation } from "@/Redux/services/authApi";
 import Swal from "sweetalert2";
 

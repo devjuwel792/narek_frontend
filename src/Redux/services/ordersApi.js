@@ -17,7 +17,7 @@ export const ordersApi = createApi({
       // If we have a token, include it in the headers
       if (token) {
         headers.set("authorization", `Token ${token}`);
-         headers.set("ngrok-skip-browser-warning", "true"); 
+        headers.set("ngrok-skip-browser-warning", "true");
       }
 
       return headers;
@@ -29,23 +29,9 @@ export const ordersApi = createApi({
         url: "/orders/",
       }),
     }),
-    getProfile: builder.query({
-      query: () => '/customer/',
-      providesTags: ['Profile'],
-    }),
-    updateProfile: builder.mutation({
-      query: (data) => ({
-        url: '/customer/',
-        method: 'PATCH',
-        body: data,
-      }),
-      invalidatesTags: ['Profile'],
-    }),
   }),
 });
 
 export const {
   useGetOrdersQuery,
-  useGetProfileQuery,
-  useUpdateProfileMutation
 } = ordersApi;

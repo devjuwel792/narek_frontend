@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/popover";
 import { format, addDays } from "date-fns";
 import Swal from "sweetalert2";
-import { useGetProfileQuery } from "@/Redux/services/ordersApi";
+import { useGetProfileQuery } from "@/Redux/services/authApi";
 
 export default function OrderPage() {
   const currentLanguage = useSelector((state) => {
@@ -47,17 +47,15 @@ export default function OrderPage() {
 
   const [deliveryData, setDeliveryData] = useState({
     deliveryDate: "",
-    deliveryAddress: `${profile?.street || ""} , ${
-      profile?.streetnumber || ""
-    }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
+    deliveryAddress: `${profile?.street || ""} , ${profile?.streetnumber || ""
+      }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
     instructions: "",
   });
   useEffect(() => {
     setDeliveryData((prev) => ({
       ...prev,
-      deliveryAddress: `${profile?.street || ""} , ${
-        profile?.streetnumber || ""
-      }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
+      deliveryAddress: `${profile?.street || ""} , ${profile?.streetnumber || ""
+        }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
     }));
   }, [profile]);
 
@@ -165,7 +163,7 @@ export default function OrderPage() {
                   {t("orderPage.yourCartIsEmpty")}
                 </p>
               ) : (
-          
+
                 cartItems.map((item, indx) => (
                   <div key={indx} className="mb-0">
                     <h2 className="text-sm font-bold tracking-wider mb-6">
@@ -173,10 +171,10 @@ export default function OrderPage() {
                       {currentLanguage === "eng" && item.name?.eng?.length > 0
                         ? item.name?.eng
                         : currentLanguage === "fr" && item.name?.fra?.length > 0
-                        ? item.name?.fra
-                        : currentLanguage === "nl" && item.name?.nld?.length > 0
-                        ? item.name?.nld
-                        : item.name._}
+                          ? item.name?.fra
+                          : currentLanguage === "nl" && item.name?.nld?.length > 0
+                            ? item.name?.nld
+                            : item.name._}
                     </h2>
 
                     <div className="overflow-x-auto">
@@ -351,7 +349,7 @@ export default function OrderPage() {
               <div className="flex justify-end items-center">
                 <div className="w-80 flex justify-between items-center">
                   <span className="text-gray-700 font-medium">
-                  {t("orderPage.totalEmptyGoods")}{" "}
+                    {t("orderPage.totalEmptyGoods")}{" "}
                   </span>
                   <span className="font-bold">
                     {profile?.currency?.sign || " €"}{" "}
@@ -376,8 +374,8 @@ export default function OrderPage() {
                           sum + item.empty_goods_value * item.quantity,
                         0
                       ) +
-                      cartItems.reduce(                        (sum, item) =>
-                          sum + item.price_tax_incl * item.quantity,
+                      cartItems.reduce((sum, item) =>
+                        sum + item.price_tax_incl * item.quantity,
                         0
                       )
                     ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -402,9 +400,8 @@ export default function OrderPage() {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className={`w-full justify-start text-left font-normal ${
-                      errors.deliveryDate ? "border-red-500" : ""
-                    }`}
+                    className={`w-full justify-start text-left font-normal ${errors.deliveryDate ? "border-red-500" : ""
+                      }`}
                   >
                     <CalendarDays className="mr-2 h-4 w-4" />
                     {date ? (
@@ -450,11 +447,10 @@ export default function OrderPage() {
                 name="deliveryAddress"
                 value={deliveryData.deliveryAddress}
                 onChange={handleChange}
-                className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-opacity-10 min-h-24 resize-none ${
-                  errors.deliveryAddress
-                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:border-primary focus:ring-primary"
-                }`}
+                className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-opacity-10 min-h-24 resize-none ${errors.deliveryAddress
+                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:border-primary focus:ring-primary"
+                  }`}
               />
               {errors.deliveryAddress && (
                 <p className="text-xs text-red-500 mt-1">

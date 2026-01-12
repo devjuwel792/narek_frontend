@@ -19,7 +19,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "./components/ui/pagination";
-import { useGetProfileQuery } from "./Redux/services/ordersApi";
+import { useGetProfileQuery } from "./Redux/services/authApi";
 import { useGetFavoritesQuery } from "./Redux/services/authApi";
 
 export default function App() {
@@ -58,31 +58,31 @@ export default function App() {
 
   const productGroups = data
     ? [
-        { name: "All", id: null },
-        ...data.items.map((item) => {
-          return {
-            name: item.name,
-            id: item.id,
-          };
-        }),
-      ]
+      { name: "All", id: null },
+      ...data.items.map((item) => {
+        return {
+          name: item.name,
+          id: item.id,
+        };
+      }),
+    ]
     : [{ name: "All", id: null }];
 
   const productList = productsData
     ? productsData.items.map((item) => ({
-        ...item,
-        id: item.id,
-        name: item?.name,
-        // category: item.product_group?.name,
-        image:
-          item?.pictures?.length > 0
-            ? item.pictures.at(-1)
-            : "/placeholder.png",
-        // size: item.unit_code.name,
-        // price: item.price._,
-        // price_excl: item.price_excl,
-        quantity: 0,
-      }))
+      ...item,
+      id: item.id,
+      name: item?.name,
+      // category: item.product_group?.name,
+      image:
+        item?.pictures?.length > 0
+          ? item.pictures.at(-1)
+          : "/placeholder.png",
+      // size: item.unit_code.name,
+      // price: item.price._,
+      // price_excl: item.price_excl,
+      quantity: 0,
+    }))
     : [];
 
   const filteredProducts = productList;
@@ -123,14 +123,12 @@ export default function App() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-md whitespace-nowrap font-medium transition-colors ${
-                ""
+              className={`px-4 py-2 rounded-md whitespace-nowrap font-medium transition-colors ${""
                 // selectedCategory?.name?.toLowerCase() == "all" && "w-20"
-              } ${
-                selectedCategory.id === cat.id
+                } ${selectedCategory.id === cat.id
                   ? "bg-primary text-white"
                   : "bg-white text-gray-700 border border-gray-200 hover:border-gray-300"
-              }`}
+                }`}
             >
               {cat.name}
             </button>

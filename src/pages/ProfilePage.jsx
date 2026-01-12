@@ -5,7 +5,9 @@ import { ArrowLeft, Edit2 } from "lucide-react";
 import { DataTable } from "../components/Datatable";
 import TermsPage from "./TermsPage";
 import PrivacyPage from "./PrivacyPage";
-import { useGetOrdersQuery, useGetProfileQuery } from "@/Redux/services/ordersApi";
+import { useGetOrdersQuery } from "@/Redux/services/ordersApi";
+import { useGetProfileQuery } from "@/Redux/services/authApi";
+
 
 
 export default function ProfilePage() {
@@ -34,7 +36,7 @@ export default function ProfilePage() {
     { id: "privacy", label: t("profilePage.privacyPolicy") },
   ];
 
-  
+
   const { data: ordersData, isLoading, error } = useGetOrdersQuery();
   console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData)
 
@@ -90,11 +92,10 @@ export default function ProfilePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-4 font-medium transition-colors ${
-                activeTab === tab.id
+              className={`pb-4 font-medium transition-colors ${activeTab === tab.id
                   ? "border-b-2 border-primary text-primary"
                   : "text-gray-600 hover:text-gray-900"
-              }`}
+                }`}
             >
               {tab.label}
             </button>

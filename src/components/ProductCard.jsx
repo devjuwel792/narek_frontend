@@ -92,7 +92,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   };
 
   const handleToggleFavorite = () => {
-  
+
     dispatch(
       toggleFavorite({
         id: product.id,
@@ -131,9 +131,8 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           className="absolute top-2 right-2 w-8 h-8 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-opacity"
         >
           <Heart
-            className={`w-5 h-5 ${
-              isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
-            }`}
+            className={`w-5 h-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
+              }`}
           />
         </button>
       </div>
@@ -144,17 +143,17 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           {currentLanguage === "eng" && product.name?.eng?.length > 0
             ? product.name?.eng
             : currentLanguage === "fr" && product.name?.fra?.length > 0
-            ? product.name?.fra
-            : currentLanguage === "nl" && product.name?.nld?.length > 0
-            ? product.name?.nld
-            : product.name._}
+              ? product.name?.fra
+              : currentLanguage === "nl" && product.name?.nld?.length > 0
+                ? product.name?.nld
+                : product.name._}
           {/* {product.name._} */}
         </h3>
         <span>
           {currency || "€"}{" "}
           {product.price_excl?.[product_segment_id]
-            ? product.price_excl?.[product_segment_id].toFixed(2)
-            : product.price_excl?._.toFixed(2)}
+            ? product.price_excl?.[product_segment_id]
+            : product.price_excl?._}
         </span>
         <p className="text-sm text-gray-600 mb-4">{product.size}</p>
 
@@ -170,9 +169,8 @@ export default function ProductCard({ product, product_segment_id, currency }) {
             type="number"
             value={quantity}
             onChange={handleQuantityChange}
-            className={`w-12 h-8 text-center border ${
-              quantity && "border-green-500"
-            }  rounded`}
+            className={`w-12 h-8 text-center border ${quantity && "border-green-500"
+              }  rounded`}
             min="0"
           />
           <button
