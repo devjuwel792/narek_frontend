@@ -83,7 +83,7 @@ export default function SignUp() {
     }
 
     const body = {
-      name: formData.companyName,
+      name: formData.fullName,
       street: formData.street,
       streetnumber: formData.number,
       citycode: formData.postalCode,
@@ -188,7 +188,7 @@ export default function SignUp() {
                 <Input
                   type="email"
                   name="email"
-                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
                   placeholder={t('signUpPage.emailPlaceholder')}
                   value={formData.email}
                   onChange={handleChange}
@@ -205,7 +205,7 @@ export default function SignUp() {
           {/* Company Details Section */}
           <div className="bg-card border border-gray-200 rounded-lg p-6">
             <h3 className="text-xl font-bold mb-6">{t('signUpPage.companyDetails')}</h3>
-
+            {/*
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-2">
                 {t('signUpPage.companyName')}
@@ -225,6 +225,7 @@ export default function SignUp() {
                 </p>
               )}
             </div>
+            */}
 
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
@@ -346,9 +347,8 @@ export default function SignUp() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className={`pr-10 ${
-                    errors.confirmPassword ? "border-red-500" : ""
-                  }`}
+                  className={`pr-10 ${errors.confirmPassword ? "border-red-500" : ""
+                    }`}
                 />
                 <button
                   type="button"
@@ -389,7 +389,7 @@ export default function SignUp() {
             </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
