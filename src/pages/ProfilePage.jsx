@@ -7,7 +7,7 @@ import TermsPage from "./TermsPage";
 import PrivacyPage from "./PrivacyPage";
 import { useGetOrdersQuery } from "@/Redux/services/ordersApi";
 import { useGetProfileQuery } from "@/Redux/services/authApi";
-
+import { useSelector } from "react-redux";
 
 
 export default function ProfilePage() {
@@ -16,6 +16,14 @@ export default function ProfilePage() {
   const { t } = useTranslation();
   const { data: profileApiData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
 
+  const currentLanguage = useSelector((state) => {
+    return state.language.currentLanguage;
+  });
+  const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
+  const formatPrice = (value) => new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
 
   const profileData = profileApiData ? {
     fullName: profileApiData.name,
@@ -41,10 +49,10 @@ export default function ProfilePage() {
   console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData)
 
   const processedOrders = ordersData ? ordersData.map(order => ({
-    orderDate: order.date,
+    orderDate: new Date(order.date).toLocaleDateString(locale),
     reference: order.number,
     totalItems: order.items.reduce((sum, item) => sum + parseInt(item.quantity), 0),
-    deliveryDate: order.delivery_date,
+    deliveryDate: new Date(order.delivery_date).toLocaleDateString(locale),
     status: order.status,
   })) : [];
 
@@ -93,8 +101,8 @@ export default function ProfilePage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`pb-4 font-medium transition-colors ${activeTab === tab.id
-                  ? "border-b-2 border-primary text-primary"
-                  : "text-gray-600 hover:text-gray-900"
+                ? "border-b-2 border-primary text-primary"
+                : "text-gray-600 hover:text-gray-900"
                 }`}
             >
               {tab.label}
