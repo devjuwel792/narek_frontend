@@ -29,11 +29,16 @@ export default function OrderPage() {
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
+  const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
+  const formatPrice = (value) => new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
-  console.log("🚀 ~ OrderPage ~ cartItems:", cartItems);
+
 
   const totalItems = useSelector((state) => state.cart.totalItems);
   const { data: profile } = useGetProfileQuery();
@@ -253,21 +258,17 @@ export default function OrderPage() {
                               </div>
                             </td>
                             <td className="py-4 text-right">
-                              {profile?.currency?.sign || "€"}
-                              {item.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              {profile?.currency?.sign || "€"} {formatPrice(item.price)}
                             </td>
                             <td className="py-4 text-right">
-                              {profile?.currency?.sign || "€"}{" "}
-                              {(item.price * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              {profile?.currency?.sign || "€"} {formatPrice(item.price * item.quantity)}
                             </td>
 
                             <td className="py-4 text-right font-medium">
-                              {profile?.currency?.sign || "€"}{" "}
-                              {(item?.tax * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              {profile?.currency?.sign || "€"} {formatPrice(item?.tax * item.quantity)}
                             </td>
                             <td className="py-4 text-right font-medium">
-                              {profile?.currency?.sign || "€"}{" "}
-                              {(item?.price_tax_incl * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              {profile?.currency?.sign || "€"} {formatPrice(item?.price_tax_incl * item.quantity)}
                             </td>
                             <td className="py-4 text-right">
                               <button
@@ -302,13 +303,11 @@ export default function OrderPage() {
                   </span>
                   <span className="font-bold">
                     {" "}
-                    {profile?.currency?.sign || " €"}{" "}
-                    {cartItems
+                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
                       .reduce(
                         (sum, item) => sum + item.price * item.quantity,
                         0
-                      )
-                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      ))}
                   </span>
                 </div>
               </div>
@@ -317,14 +316,12 @@ export default function OrderPage() {
                   <span className="text-gray-700 font-medium">{t("orderPage.vat")}</span>
                   <span className="font-bold">
                     {" "}
-                    {profile?.currency?.sign || " €"}{" "}
-                    {cartItems
+                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
                       .reduce(
                         (sum, item) =>
-                          sum + item.tax.toFixed(2) * item.quantity,
+                          sum + item.tax * item.quantity,
                         0
-                      )
-                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      ))}
                   </span>
                 </div>
               </div>
@@ -335,14 +332,12 @@ export default function OrderPage() {
                     {t("orderPage.totalInclVat")}{" "}
                   </span>
                   <span className="font-bold">
-                    {profile?.currency?.sign || " €"}{" "}
-                    {cartItems
+                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
                       .reduce(
                         (sum, item) =>
                           sum + item.price_tax_incl * item.quantity,
                         0
-                      )
-                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      ))}
                   </span>
                 </div>
               </div>
@@ -352,14 +347,12 @@ export default function OrderPage() {
                     {t("orderPage.totalEmptyGoods")}{" "}
                   </span>
                   <span className="font-bold">
-                    {profile?.currency?.sign || " €"}{" "}
-                    {cartItems
+                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
                       .reduce(
                         (sum, item) =>
                           sum + item.empty_goods_value * item.quantity,
                         0
-                      )
-                      .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      ))}
                   </span>
                 </div>
               </div>
@@ -367,8 +360,7 @@ export default function OrderPage() {
                 <div className="w-80 flex justify-between items-center">
                   <span className="text-gray-700 font-medium">{t("orderPage.totalAmountToBePaid")} </span>
                   <span className="font-bold">
-                    {profile?.currency?.sign || " €"}{" "}
-                    {(
+                    {profile?.currency?.sign || " €"} {formatPrice(
                       cartItems.reduce(
                         (sum, item) =>
                           sum + item.empty_goods_value * item.quantity,
@@ -378,7 +370,7 @@ export default function OrderPage() {
                         sum + item.price_tax_incl * item.quantity,
                         0
                       )
-                    ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    )}
                   </span>
                 </div>
               </div>
@@ -422,7 +414,9 @@ export default function OrderPage() {
                       mode="single"
                       selected={date}
                       onSelect={setDate}
-                      disabled={(date) => date < minDate}
+                      disabled={(date) =>
+                        date < minDate || date.getDay() === 0 || date.getDay() === 6
+                      }
                       className={"focus-visible:ring-primary border-primary"}
                       initialFocus
                     />

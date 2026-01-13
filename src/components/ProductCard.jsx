@@ -4,7 +4,6 @@ import { addToCart, updateQuantity } from "../Redux/features/cart/cartSlice";
 import { toggleFavorite } from "../Redux/features/favorites/favoritesSlice";
 
 export default function ProductCard({ product, product_segment_id, currency }) {
-  console.log("🚀 ~ ProductCard ~ product:", product)
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
@@ -17,6 +16,15 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   const isFavorite = useSelector((state) =>
     state.favorites.items.some((item) => item.id === product.id)
   );
+
+  const price = product.price_excl?.[product_segment_id]
+    ? product.price_excl[product_segment_id]
+    : product.price_excl._;
+  const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
+  const formattedPrice = new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price);
 
   const handleDecrease = () => {
     if (quantity > 0) {
@@ -49,7 +57,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
               : product.price_incl?._
           ),
           vat: product.vat,
-          empty_goods_value: product.empty_goods_value
+          empty_goods_value: product.empty_goods_value,
         })
       );
     } else {
@@ -83,7 +91,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
               : product.price_incl?._
           ),
           vat: product.vat,
-          empty_goods_value: product.empty_goods_value
+          empty_goods_value: product.empty_goods_value,
         })
       );
     } else {
@@ -92,7 +100,6 @@ export default function ProductCard({ product, product_segment_id, currency }) {
   };
 
   const handleToggleFavorite = () => {
-
     dispatch(
       toggleFavorite({
         id: product.id,
@@ -103,7 +110,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
         tax_amount: product.tax_amount,
         price_incl: product.price_incl,
         vat: product.vat,
-        empty_goods_value: product.empty_goods_value
+        empty_goods_value: product.empty_goods_value,
       })
     );
   };
@@ -150,10 +157,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           {/* {product.name._} */}
         </h3>
         <span>
-          {currency || "€"}{" "}
-          {product.price_excl?.[product_segment_id]
-            ? product.price_excl?.[product_segment_id]
-            : product.price_excl?._}
+          {currency || "€"} {formattedPrice}
         </span>
         <p className="text-sm text-gray-600 mb-4">{product.size}</p>
 
