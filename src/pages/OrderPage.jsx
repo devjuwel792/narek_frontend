@@ -22,6 +22,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format, addDays } from "date-fns";
+import { enUS, fr, nl } from "date-fns/locale";
 import Swal from "sweetalert2";
 import { useGetProfileQuery } from "@/Redux/services/authApi";
 
@@ -30,6 +31,7 @@ export default function OrderPage() {
     return state.language.currentLanguage;
   });
   const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
+  const dateLocale = currentLanguage === "eng" ? enUS : currentLanguage === "fr" ? fr : currentLanguage === "nl" ? nl : enUS;
   const formatPrice = (value) => new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -397,7 +399,7 @@ export default function OrderPage() {
                   >
                     <CalendarDays className="mr-2 h-4 w-4" />
                     {date ? (
-                      format(date, "MM/dd/yyyy")
+                      format(date, "PPP", { locale: dateLocale })
                     ) : (
                       <span>{t("orderPage.pickADate")}</span>
                     )}
@@ -412,6 +414,7 @@ export default function OrderPage() {
                     )} */}
                     <Calendar
                       mode="single"
+                      locale={dateLocale}
                       selected={date}
                       onSelect={setDate}
                       disabled={(date) =>
