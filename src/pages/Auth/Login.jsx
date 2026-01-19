@@ -76,7 +76,13 @@ export default function Login() {
         <form onSubmit={handleLogin} className="max-w-md w-full">
           <h2 className="text-3xl font-bold mb-2">{t('loginPage.welcomeBack')}</h2>
           <p className="text-gray-600 mb-8">{t('loginPage.signIn')}</p>
-          {error && <p className="text-red-500 mb-4">{t('loginPage.loginFailed')}</p>}
+          {error && (
+            <p className="text-red-500 mb-4 text-sm">
+              {error.data?.detail ||
+                error.data?.non_field_errors?.[0] ||
+                t('loginPage.loginFailed')}
+            </p>
+          )}
 
           {/* Email Field */}
           <div className="mb-6">
