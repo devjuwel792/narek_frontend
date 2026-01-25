@@ -22,7 +22,7 @@ i18n
   .init({
     resources,
     lng: 'nl', // default language
-    fallbackLng: 'en',
+    fallbackLng: 'nl',
     interpolation: {
       escapeValue: false, // React already does escaping
     },
