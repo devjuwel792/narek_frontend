@@ -5,12 +5,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const languageSlice = createSlice({
   name: 'language',
   initialState: {
-    currentLanguage: 'nl',
+    currentLanguage: localStorage.getItem('language') || 'nl',
   },
   reducers: {
     setLanguage: (state, action) => {
       const lang = action.payload.toLowerCase();
       state.currentLanguage = lang;
+      localStorage.setItem('language', lang);
       i18n.changeLanguage(lang);
     },
   },

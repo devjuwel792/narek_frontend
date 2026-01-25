@@ -152,7 +152,7 @@ export default function SignUp() {
 
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t('signUpPage.completeName')}
+                {t('signUpPage.companyName')}
               </label>
               <Input
                 type="text"

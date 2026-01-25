@@ -21,7 +21,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'nl', // default language
+    lng: localStorage.getItem('language') || 'nl', // default language from localStorage
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // React already does escaping
