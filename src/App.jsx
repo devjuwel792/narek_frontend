@@ -114,7 +114,7 @@ export default function App() {
     );
   }
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen overflow-x-hidden ">
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Categories */}
@@ -162,7 +162,7 @@ export default function App() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center mt-8">
+          <div className="justify-center mt-8  hidden sm:flex">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>

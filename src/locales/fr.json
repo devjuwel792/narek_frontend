@@ -26,7 +26,8 @@
     "invalidCurrentPassword": "Mot de passe actuel invalide",
     "failedToChangePassword": "Échec du changement de mot de passe. Veuillez réessayer.",
     "errorLoadingProfile": "Erreur lors du chargement du profil",
-    "showingProducts": "Affichage de {{from}} à {{to}} sur {{total}} produits"
+    "showingProducts": "Affichage de {{from}} à {{to}} sur {{total}} produits",
+    "preview": "aperçu"
   },
   "header": {
     "logoAlt": "Logo"
@@ -200,7 +201,10 @@
     "signUp": "S'inscrire",
     "login": "Se connecter",
     "noAccount": "Vous n'avez pas de compte ?",
-    "registerHere": "Inscrivez-vous ici"
+    "registerHere": "Inscrivez-vous ici",
+    "emailRequired": "L'e-mail est requis.",
+    "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
+    "passwordRequired": "Le mot de passe est requis."
   },
   "signUpPage": {
     "backToLogin": "Retour à la connexion",

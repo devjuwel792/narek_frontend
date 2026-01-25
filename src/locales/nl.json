@@ -15,7 +15,10 @@
     "loading": "Laden...",
     "error": "Fout",
     "success": "Succes",
-    "showingProducts": "Toont {{from}} tot {{to}} van {{total}} producten"
+    "showingProducts": "Toont {{from}} tot {{to}} van {{total}} producten",
+    "preview": "voorbeeld",
+    "next": "Volgende",
+    "previous": "Vorige"
   },
   "header": {
     "logoAlt": "Logo"
@@ -185,9 +188,11 @@
     "signUp": "Aanmelden",
     "login": "Aanmelden",
     "noAccount": "Geen account?",
-    "registerHere": "Registreer hier"
-  },
-  "signUpPage": {
+    "registerHere": "Registreer hier",
+    "emailRequired": "E-mail is verplicht.",
+    "invalidEmail": "Voer een geldig e-mailadres in.",
+    "passwordRequired": "Wachtwoord is verplicht."
+  },  "signUpPage": {
     "backToLogin": "Terug naar aanmelden",
     "registration": "Registratie",
     "createAccount": "Maak je zakelijke account aan om te beginnen met bestellen",

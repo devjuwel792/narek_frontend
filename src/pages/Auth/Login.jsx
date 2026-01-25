@@ -32,13 +32,13 @@ export default function Login() {
     const newErrors = {};
 
     if (!email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = t('loginPage.emailRequired');
     } else if (!validateEmail(email)) {
-      newErrors.email = "Please enter a valid email address.";
+      newErrors.email = t('loginPage.invalidEmail');
     }
 
     if (!password.trim()) {
-      newErrors.password = "Password is required.";
+      newErrors.password = t('loginPage.passwordRequired');
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -145,7 +145,7 @@ export default function Login() {
                 htmlFor="remember"
                 className="text-sm text-gray-700 cursor-pointer"
               >
-                Remember me
+                {t('loginPage.rememberMe')}
               </label>
             </div>
             {/* <a href="#" className="text-sm text-gray-900 hover:underline">
@@ -174,13 +174,13 @@ export default function Login() {
 
           {/* Register Link */}
           <p className="text-center text-sm text-gray-600">
-            Don't have an account?{" "}
+            {t('loginPage.noAccount')}{" "}
             <button
               type="button"
               onClick={() => navigate("/auth/sign-up")}
               className="font-semibold text-gray-900 hover:underline"
             >
-              Register here
+              {t('loginPage.registerHere')}
             </button>
           </p>
         </form>

@@ -1,16 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLanguage } from "@/Redux/features/language/languageSlice";
 import { logout } from "@/Redux/features/auth/authSlice";
 
-import { ShoppingCart, User, LogOut, Search, Heart } from "lucide-react";
+import { ShoppingCart, User, LogOut, Search, Heart, Menu, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
 import { setSearchQuery } from "@/Redux/features/search/searchSlice";
 
 export default function UserHeader() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ export default function UserHeader() {
 
           {/* Search Bar */}
           {location.pathname === "/" && (
-            <div className="relative flex-1 flex justify-start items-center border-primary border rounded-md max-w-md">
+            <div className="hidden sm:flex relative flex-1 justify-start items-center border-primary border rounded-md max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 type="text"
@@ -64,7 +66,7 @@ export default function UserHeader() {
               </button>
               <button
                 onClick={() => dispatch(setLanguage("NL"))}
-                className={`px-3 py-1 text-sm rounded font-medium ${
+                className={`px-3 py-1  text-sm rounded font-medium ${
                   currentLanguage.toUpperCase() === "NL"
                     ? "bg-primary text-white"
                     : "border border-gray-300 text-gray-700 hover:bg-gray-50"
@@ -87,7 +89,7 @@ export default function UserHeader() {
             {/* Favorites */}
             <button
               onClick={() => navigate("/favorites")}
-              className="relative p-2 hover:bg-gray-100 rounded-full"
+              className="relative hidden sm:flex p-2 hover:bg-gray-100 rounded-full"
             >
               <Heart className="w-6 h-6 text-gray-700" />
               {totalFavorites > 0 && (
@@ -100,7 +102,7 @@ export default function UserHeader() {
             {/* Cart */}
             <button
               onClick={() => navigate("/order")}
-              className="relative p-2 hover:bg-gray-100 rounded-full"
+              className="relative p-2 hidden sm:flex hover:bg-gray-100 rounded-full"
             >
               <ShoppingCart className="w-6 h-6 text-gray-700" />
               <span className="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">
@@ -128,7 +130,123 @@ export default function UserHeader() {
               {t("common.logout")}
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="sm:hidden p-2 hover:bg-gray-100 rounded-full"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-gray-700" />
+            ) : (
+              <Menu className="w-6 h-6 text-gray-700" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="sm:hidden bg-white border-t border-gray-200">
+            <div className="px-4 py-4 space-y-4">
+              {/* Mobile Search Bar */}
+              {location.pathname === "/" && (
+                <div className="relative flex justify-start items-center border-primary border rounded-md">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder={t("common.search")}
+                    value={searchQuery}
+                    onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                    className="w-full border-none focus-visible:ring-primary bg-transparent pl-10"
+                  />
+                </div>
+              )}
+
+              {/* Language Selection */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    dispatch(setLanguage("EN"));
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`px-3 py-1 text-sm rounded font-medium ${
+                    currentLanguage.toUpperCase() === "EN"
+                      ? "bg-primary text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => {
+                    dispatch(setLanguage("NL"));
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`px-3 py-1 text-sm rounded font-medium ${
+                    currentLanguage.toUpperCase() === "NL"
+                      ? "bg-primary text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  NL
+                </button>
+                <button
+                  onClick={() => {
+                    dispatch(setLanguage("FR"));
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`px-3 py-1 text-sm rounded font-medium ${
+                    currentLanguage.toUpperCase() === "FR"
+                      ? "bg-primary text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  FR
+                </button>
+              </div>
+
+              {/* Menu Items */}
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => {
+                    navigate("/favorites");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="relative p-2 hover:bg-gray-100 rounded-full"
+                >
+                  <Heart className="w-6 h-6 text-gray-700" />
+                  {totalFavorites > 0 && (
+                    <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                      {totalFavorites}
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => {
+                    navigate("/account");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                >
+                  <User className="w-6 h-6 text-gray-700" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    dispatch(logout());
+                    navigate("/auth/login");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-400 font-medium"
+                >
+                  <LogOut className="w-4 h-4" />
+                  {t("common.logout")}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

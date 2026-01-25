@@ -32,7 +32,8 @@
     "passwordsDoNotMatch": "New password and confirm password do not match!",
     "passwordChangedSuccessfully": "Password changed successfully!",
     "invalidCurrentPassword": "Invalid Current Password",
-    "showingProducts": "Showing {{from}} to {{to}} of {{total}} products"
+    "showingProducts": "Showing {{from}} to {{to}} of {{total}} products",
+    "preview": "Preview"
   },
   "header": {
     "logoAlt": "Logo"
@@ -209,7 +210,10 @@
     "signUp": "Sign Up",
     "login": "Login",
     "noAccount": "Don't have an account?",
-    "registerHere": "Register here"
+    "registerHere": "Register here",
+    "emailRequired": "Email is required.",
+    "invalidEmail": "Please enter a valid email address.",
+    "passwordRequired": "Password is required."
   },
   "signUpPage": {
     "backToLogin": "Back to login",

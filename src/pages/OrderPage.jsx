@@ -188,18 +188,18 @@ export default function OrderPage() {
                       <table className="w-full text-xs">
                         <thead>
                           <tr className="text-[#888] border-b border-transparent">
-                            <th className="text-left font-semibold w-24">{t("orderPage.no")}</th>
-                            <th className="text-left font-semibold">{t("orderPage.image")}</th>
+                            <th className="text-left font-semibold w-24 hidden md:table-cell">{t("orderPage.no")}</th>
+                            <th className="text-left font-semibold hidden md:table-cell">{t("orderPage.image")}</th>
                             <th className="text-center font-semibold w-20">
                               {t("orderPage.quantity")}
                             </th>
-                            <th className="text-right font-semibold w-20">
+                            <th className="text-right font-semibold w-20 hidden md:table-cell">
                               {t("orderPage.unitPrice")}
                             </th>
-                            <th className="text-right font-semibold w-20">
+                            <th className="text-right font-semibold w-20 hidden md:table-cell">
                               {t("orderPage.amount")}
                             </th>
-                            <th className="text-right font-semibold w-20">
+                            <th className="text-right font-semibold w-20 hidden md:table-cell">
                               {t("orderPage.tax")}
                             </th>
 
@@ -211,8 +211,8 @@ export default function OrderPage() {
                         </thead>
                         <tbody className="divide-y divide-gray-500">
                           <tr className="group">
-                            <td className="">{item.id}</td>
-                            <td className="py-4 font-medium">
+                            <td className="hidden md:table-cell">{item.id}</td>
+                            <td className="py-4 font-medium hidden md:table-cell">
                               <img
                                 src={item.image}
                                 // alt={
@@ -239,7 +239,7 @@ export default function OrderPage() {
                                       item.quantity - 1
                                     )
                                   }
-                                  className="px-2 py-1 text-gray-500 border rounded hover:text-gray-700"
+                                  className="px-2 py-1  text-gray-500 border rounded hover:text-gray-700"
                                 >
                                   −
                                 </button>
@@ -253,20 +253,20 @@ export default function OrderPage() {
                                       item.quantity + 1
                                     )
                                   }
-                                  className="px-2 py-1 text-gray-500 hover:text-gray-700 border rounded"
+                                  className="px-2 py-1  text-gray-500 hover:text-gray-700 border rounded"
                                 >
                                   +
                                 </button>
                               </div>
                             </td>
-                            <td className="py-4 text-right">
+                            <td className="py-4 text-right hidden md:table-cell">
                               {profile?.currency?.sign || "€"} {formatPrice(item.price)}
                             </td>
-                            <td className="py-4 text-right">
+                            <td className="py-4 text-right hidden md:table-cell">
                               {profile?.currency?.sign || "€"} {formatPrice(item.price * item.quantity)}
                             </td>
 
-                            <td className="py-4 text-right font-medium">
+                            <td className="py-4 text-right font-medium hidden md:table-cell">
                               {profile?.currency?.sign || "€"} {formatPrice(item?.tax * item.quantity)}
                             </td>
                             <td className="py-4 text-right font-medium">
