@@ -121,7 +121,7 @@ export default function UserHeader() {
             {/* Profile */}
             <button
               onClick={() => navigate("/account")}
-              className="p-2  flex hover:bg-gray-100 rounded-full cursor-pointer"
+              className="p-2 hidden  sm:flex hover:bg-gray-100 rounded-full cursor-pointer"
             >
               <User className="w-6 h-6 text-gray-700" />
             </button>
@@ -200,11 +200,14 @@ export default function UserHeader() {
                   FR
                 </button>
               </div>
-
+              <button
+                onClick={() => navigate("/account")}
+                className="p-2  flex hover:bg-gray-100 rounded-full cursor-pointer"
+              >
+                <User className="w-6 h-6 text-gray-700" />
+              </button>
               {/* Menu Items */}
               <div className="flex items-center gap-4">
-                
-
                 <button
                   onClick={() => {
                     dispatch(logout());
