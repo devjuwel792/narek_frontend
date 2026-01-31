@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Get base URL from environment variable or use default
-const BASE_URL = import.meta.env.VITE_API_URL || "https://clashingly-nonlicensable-tennille.ngrok-free.dev/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const checkoutApi = createApi({
   reducerPath: "checkoutApi",

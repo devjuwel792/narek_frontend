@@ -93,16 +93,16 @@ export default function ProfilePage() {
       {/* Title */}
       <h1 className="text-4xl font-bold mb-8">{t("profilePage.myAccount")}</h1>
 
-      {/* Tabs */}
-      <div className="border-b border-gray-200 mb-8">
-        <div className="flex gap-8">
+      {/* Tabs - Responsive */}
+      <div className="border-b border-gray-200 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="flex gap-4 sm:gap-6 md:gap-8 overflow-x-auto scrollbar-hide scroll-smooth">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-4 font-medium transition-colors ${activeTab === tab.id
-                ? "border-b-2 border-primary text-primary"
-                : "text-gray-600 hover:text-gray-900"
+              className={`pb-3 sm:pb-4 font-medium transition-colors whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${activeTab === tab.id
+                  ? "border-b-2 border-primary text-primary"
+                  : "text-gray-600 hover:text-gray-900"
                 }`}
             >
               {tab.label}

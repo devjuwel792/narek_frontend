@@ -157,7 +157,7 @@ export default function SignUp() {
               <Input
                 type="text"
                 name="fullName"
-                placeholder={t('signUpPage.fullNamePlaceholder')}
+                placeholder={t('signUpPage.companyNamePlaceholder')}
                 value={formData.fullName}
                 onChange={handleChange}
                 className={errors.fullName ? "border-red-500" : ""}

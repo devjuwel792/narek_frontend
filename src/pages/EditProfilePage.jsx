@@ -171,14 +171,14 @@ export default function EditProfilePage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
-                {t("editProfile.fullName")}
+                {t("editProfile.companyName")}
               </label>
               <Input
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                placeholder={t("editProfile.fullName")}
+                placeholder={t("editProfile.companyName")}
                 className="w-full"
               />
             </div>
