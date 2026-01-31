@@ -32,10 +32,9 @@ export default function UserHeader() {
       .filter((item) => item.userId === user?.id)
       .reduce((total, item) => total + item.quantity, 0),
   );
-  const totalFavorites = useSelector((state) =>
-    state.favorites.items
-      .filter((item) => item.userId === user?.id)
-      .reduce((total, item) => total + item.quantity, 0),
+  const totalFavorites = useSelector(
+    (state) =>
+      state.favorites.items.filter((item) => item.userId === user?.id).length,
   );
   const currentLanguage = useSelector(
     (state) => state.language.currentLanguage,

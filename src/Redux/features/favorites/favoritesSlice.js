@@ -44,6 +44,7 @@ const favoritesSlice = createSlice({
       localStorage.setItem("favorites", JSON.stringify(state));
     },
     toggleFavorite: (state, action) => {
+      debugger
       const {
         id,
         name,

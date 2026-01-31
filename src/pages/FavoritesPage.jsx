@@ -7,12 +7,10 @@ export default function FavoritesPage() {
   const { t } = useTranslation();
   const { data: profile } = useGetProfileQuery();
   const favorites = useSelector((state) => {
-
-    return state.favorites.items;
+    return state.favorites.items.filter((item) => item.userId === profile?.id);
   });
 
-  console.log("🚀 ~ FavoritesPage ~ favorites:", favorites)
-
+  console.log("🚀 ~ FavoritesPage ~ favorites:", favorites);
 
   return (
     <div className="min-h-screen">
@@ -33,7 +31,10 @@ export default function FavoritesPage() {
           /* Products Grid */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
             {favorites.map((product) => {
-              console.log(product?.pictures?.public_path, " from favorites page image path");
+              console.log(
+                product?.pictures?.public_path,
+                " from favorites page image path",
+              );
               return (
                 <ProductCard
                   key={product.id}
@@ -42,7 +43,6 @@ export default function FavoritesPage() {
                   }}
                   product_segment_id={profile?.contact_tier_id}
                   currency={profile?.currency?.sign}
-
                 />
               );
             })}

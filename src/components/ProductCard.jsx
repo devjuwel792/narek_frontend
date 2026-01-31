@@ -14,7 +14,7 @@ export default function ProductCard({ product, product_segment_id, currency ,use
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const isFavorite = useSelector((state) =>
-    state.favorites.items.some((item) => item.id === product.id),
+    state.favorites.items.some((item) => item.id === product.id && item.userId === userId),
   );
 
   const price = product.price_excl?.[product_segment_id]

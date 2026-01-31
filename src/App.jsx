@@ -27,6 +27,7 @@ export default function App() {
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
+  
   const searchQuery = useSelector((state) => state.search.query);
 
   const [selectedCategory, setSelectedCategory] = useState({
