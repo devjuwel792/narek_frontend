@@ -185,14 +185,15 @@
     "password": "Wachtwoord",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Onthoud mij",
-    "signUp": "Aanmelden",
+    "signUp": "Registreren",
     "login": "Aanmelden",
     "noAccount": "Geen account?",
     "registerHere": "Registreer hier",
     "emailRequired": "E-mail is verplicht.",
     "invalidEmail": "Voer een geldig e-mailadres in.",
     "passwordRequired": "Wachtwoord is verplicht."
-  },  "signUpPage": {
+  },
+  "signUpPage": {
     "backToLogin": "Terug naar aanmelden",
     "registration": "Registratie",
     "createAccount": "Maak je zakelijke account aan om te beginnen met bestellen",

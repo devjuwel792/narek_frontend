@@ -157,12 +157,6 @@ export default function ProfilePage() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm text-gray-600">
-                      {t("profilePage.fullName")}
-                    </p>
-                    <p className="font-medium">{profileData.fullName}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">
                       {t("profilePage.phone")}
                     </p>
                     <p className="font-medium">{profileData.phone}</p>
