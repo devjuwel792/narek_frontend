@@ -1,20 +1,18 @@
-import {
-  createSlice
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const loadStateFromLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem("favorites");
     if (serializedState === null) {
       return {
-        items: []
+        items: [],
       };
     }
     return JSON.parse(serializedState);
   } catch (err) {
     console.error("Could not load favorites state from localStorage:", err);
     return {
-      items: []
+      items: [],
     };
   }
 };
@@ -26,13 +24,7 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addToFavorites: (state, action) => {
-      const {
-        id,
-        name,
-        size,
-        image,
-        price_excl
-      } = action.payload;
+      const { id, name, size, image, price_excl } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (!existingItem) {
         state.items.push({
@@ -40,7 +32,7 @@ const favoritesSlice = createSlice({
           name,
           size,
           image,
-          price_excl
+          price_excl,
         });
       }
       localStorage.setItem("favorites", JSON.stringify(state));
@@ -60,7 +52,7 @@ const favoritesSlice = createSlice({
         vat,
         tax_amount,
         price_incl,
-        empty_goods_value
+        empty_goods_value,
       } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem) {
@@ -75,7 +67,7 @@ const favoritesSlice = createSlice({
           vat,
           tax_amount,
           price_incl,
-          empty_goods_value
+          empty_goods_value,
         });
       }
       localStorage.setItem("favorites", JSON.stringify(state));
@@ -83,10 +75,6 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const {
-  addToFavorites,
-  removeFromFavorites,
-  toggleFavorite
-} =
-favoritesSlice.actions;
+export const { addToFavorites, removeFromFavorites, toggleFavorite } =
+  favoritesSlice.actions;
 export default favoritesSlice.reducer;

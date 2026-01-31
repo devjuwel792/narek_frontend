@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Get base URL from environment variable or use default
 const BASE_URL = import.meta.env.VITE_API_URL ;
 
 export const authApi = createApi({
@@ -8,10 +7,8 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      // Get token from auth state
-      const token = getState().auth.token;
 
-      // If we have a token, include it in the headers
+      const token = getState().auth.token;
       if (token) {
         headers.set("authorization", `Token ${token}`);
         headers.set("ngrok-skip-browser-warning", "true");

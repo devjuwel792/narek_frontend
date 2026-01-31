@@ -1,7 +1,6 @@
 import ProductCard from "../components/ProductCard";
 import { useTranslation } from "react-i18next";
 import { useGetProfileQuery } from "@/Redux/services/authApi";
-import { useGetProductsByIdsQuery } from "@/Redux/services/productApi";
 import { useSelector } from "react-redux";
 
 export default function FavoritesPage() {
