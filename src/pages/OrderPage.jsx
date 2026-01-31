@@ -27,23 +27,40 @@ import Swal from "sweetalert2";
 import { useGetProfileQuery } from "@/Redux/services/authApi";
 
 export default function OrderPage() {
+  const { data: profile } = useGetProfileQuery();
+
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
-  const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
-  const dateLocale = currentLanguage === "eng" ? enUS : currentLanguage === "fr" ? fr : currentLanguage === "nl" ? nl : enUS;
-  const formatPrice = (value) => new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+  const locale =
+    currentLanguage === "eng"
+      ? "en"
+      : currentLanguage === "fr"
+        ? "fr"
+        : currentLanguage === "nl"
+          ? "nl"
+          : "en";
+  const dateLocale =
+    currentLanguage === "eng"
+      ? enUS
+      : currentLanguage === "fr"
+        ? fr
+        : currentLanguage === "nl"
+          ? nl
+          : enUS;
+  const formatPrice = (value) =>
+    new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const cartItems = useSelector((state) => state.cart.items);
-
+  const allCartItems = useSelector((state) => state.cart.items);
+  let cartItems = [];
+  cartItems = allCartItems.filter((item) => item.userId === profile?.id);
 
   const totalItems = useSelector((state) => state.cart.totalItems);
-  const { data: profile } = useGetProfileQuery();
 
   const [checkout, { isLoading, error }] = useCheckoutMutation();
 
@@ -54,15 +71,17 @@ export default function OrderPage() {
 
   const [deliveryData, setDeliveryData] = useState({
     deliveryDate: "",
-    deliveryAddress: `${profile?.street || ""} , ${profile?.streetnumber || ""
-      }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
+    deliveryAddress: `${profile?.street || ""} , ${
+      profile?.streetnumber || ""
+    }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
     instructions: "",
   });
   useEffect(() => {
     setDeliveryData((prev) => ({
       ...prev,
-      deliveryAddress: `${profile?.street || ""} , ${profile?.streetnumber || ""
-        }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
+      deliveryAddress: `${profile?.street || ""} , ${
+        profile?.streetnumber || ""
+      }, ${profile?.city || ""} ,${profile?.citycode || ""}`,
     }));
   }, [profile]);
 
@@ -170,7 +189,6 @@ export default function OrderPage() {
                   {t("orderPage.yourCartIsEmpty")}
                 </p>
               ) : (
-
                 cartItems.map((item, indx) => (
                   <div key={indx} className="mb-0">
                     <h2 className="text-sm font-bold tracking-wider mb-6">
@@ -179,7 +197,8 @@ export default function OrderPage() {
                         ? item.name?.eng
                         : currentLanguage === "fr" && item.name?.fra?.length > 0
                           ? item.name?.fra
-                          : currentLanguage === "nl" && item.name?.nld?.length > 0
+                          : currentLanguage === "nl" &&
+                              item.name?.nld?.length > 0
                             ? item.name?.nld
                             : item.name._}
                     </h2>
@@ -188,8 +207,12 @@ export default function OrderPage() {
                       <table className="w-full text-xs">
                         <thead>
                           <tr className="text-[#888] border-b border-transparent">
-                            <th className="text-left font-semibold w-24 hidden md:table-cell">{t("orderPage.no")}</th>
-                            <th className="text-left font-semibold hidden md:table-cell">{t("orderPage.image")}</th>
+                            <th className="text-left font-semibold w-24 hidden md:table-cell">
+                              {t("orderPage.no")}
+                            </th>
+                            <th className="text-left font-semibold hidden md:table-cell">
+                              {t("orderPage.image")}
+                            </th>
                             <th className="text-center font-semibold w-20">
                               {t("orderPage.quantity")}
                             </th>
@@ -236,7 +259,7 @@ export default function OrderPage() {
                                   onClick={() =>
                                     handleQuantityChange(
                                       item.id,
-                                      item.quantity - 1
+                                      item.quantity - 1,
                                     )
                                   }
                                   className="px-2 py-1  text-gray-500 border rounded hover:text-gray-700"
@@ -250,7 +273,7 @@ export default function OrderPage() {
                                   onClick={() =>
                                     handleQuantityChange(
                                       item.id,
-                                      item.quantity + 1
+                                      item.quantity + 1,
                                     )
                                   }
                                   className="px-2 py-1  text-gray-500 hover:text-gray-700 border rounded"
@@ -260,17 +283,23 @@ export default function OrderPage() {
                               </div>
                             </td>
                             <td className="py-4 text-right hidden md:table-cell">
-                              {profile?.currency?.sign || "€"} {formatPrice(item.price)}
+                              {profile?.currency?.sign || "€"}{" "}
+                              {formatPrice(item.price)}
                             </td>
                             <td className="py-4 text-right hidden md:table-cell">
-                              {profile?.currency?.sign || "€"} {formatPrice(item.price * item.quantity)}
+                              {profile?.currency?.sign || "€"}{" "}
+                              {formatPrice(item.price * item.quantity)}
                             </td>
 
                             <td className="py-4 text-right font-medium hidden md:table-cell">
-                              {profile?.currency?.sign || "€"} {formatPrice(item?.tax * item.quantity)}
+                              {profile?.currency?.sign || "€"}{" "}
+                              {formatPrice(item?.tax * item.quantity)}
                             </td>
                             <td className="py-4 text-right font-medium">
-                              {profile?.currency?.sign || "€"} {formatPrice(item?.price_tax_incl * item.quantity)}
+                              {profile?.currency?.sign || "€"}{" "}
+                              {formatPrice(
+                                item?.price_tax_incl * item.quantity,
+                              )}
                             </td>
                             <td className="py-4 text-right">
                               <button
@@ -305,25 +334,30 @@ export default function OrderPage() {
                   </span>
                   <span className="font-bold">
                     {" "}
-                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
-                      .reduce(
+                    {profile?.currency?.sign || " €"}{" "}
+                    {formatPrice(
+                      cartItems.reduce(
                         (sum, item) => sum + item.price * item.quantity,
-                        0
-                      ))}
+                        0,
+                      ),
+                    )}
                   </span>
                 </div>
               </div>
               <div className="flex justify-end items-center">
                 <div className="w-80 flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">{t("orderPage.vat")}</span>
+                  <span className="text-gray-700 font-medium">
+                    {t("orderPage.vat")}
+                  </span>
                   <span className="font-bold">
                     {" "}
-                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
-                      .reduce(
-                        (sum, item) =>
-                          sum + item.tax * item.quantity,
-                        0
-                      ))}
+                    {profile?.currency?.sign || " €"}{" "}
+                    {formatPrice(
+                      cartItems.reduce(
+                        (sum, item) => sum + item.tax * item.quantity,
+                        0,
+                      ),
+                    )}
                   </span>
                 </div>
               </div>
@@ -334,12 +368,14 @@ export default function OrderPage() {
                     {t("orderPage.totalInclVat")}{" "}
                   </span>
                   <span className="font-bold">
-                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
-                      .reduce(
+                    {profile?.currency?.sign || " €"}{" "}
+                    {formatPrice(
+                      cartItems.reduce(
                         (sum, item) =>
                           sum + item.price_tax_incl * item.quantity,
-                        0
-                      ))}
+                        0,
+                      ),
+                    )}
                   </span>
                 </div>
               </div>
@@ -349,29 +385,35 @@ export default function OrderPage() {
                     {t("orderPage.totalEmptyGoods")}{" "}
                   </span>
                   <span className="font-bold">
-                    {profile?.currency?.sign || " €"} {formatPrice(cartItems
-                      .reduce(
+                    {profile?.currency?.sign || " €"}{" "}
+                    {formatPrice(
+                      cartItems.reduce(
                         (sum, item) =>
                           sum + item.empty_goods_value * item.quantity,
-                        0
-                      ))}
+                        0,
+                      ),
+                    )}
                   </span>
                 </div>
               </div>
               <div className="flex justify-end items-center">
                 <div className="w-80 flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">{t("orderPage.totalAmountToBePaid")} </span>
+                  <span className="text-gray-700 font-medium">
+                    {t("orderPage.totalAmountToBePaid")}{" "}
+                  </span>
                   <span className="font-bold">
-                    {profile?.currency?.sign || " €"} {formatPrice(
+                    {profile?.currency?.sign || " €"}{" "}
+                    {formatPrice(
                       cartItems.reduce(
                         (sum, item) =>
                           sum + item.empty_goods_value * item.quantity,
-                        0
+                        0,
                       ) +
-                      cartItems.reduce((sum, item) =>
-                        sum + item.price_tax_incl * item.quantity,
-                        0
-                      )
+                        cartItems.reduce(
+                          (sum, item) =>
+                            sum + item.price_tax_incl * item.quantity,
+                          0,
+                        ),
                     )}
                   </span>
                 </div>
@@ -394,8 +436,9 @@ export default function OrderPage() {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className={`w-full justify-start text-left font-normal ${errors.deliveryDate ? "border-red-500" : ""
-                      }`}
+                    className={`w-full justify-start text-left font-normal ${
+                      errors.deliveryDate ? "border-red-500" : ""
+                    }`}
                   >
                     <CalendarDays className="mr-2 h-4 w-4" />
                     {date ? (
@@ -418,7 +461,9 @@ export default function OrderPage() {
                       selected={date}
                       onSelect={setDate}
                       disabled={(date) =>
-                        date < minDate || date.getDay() === 0 || date.getDay() === 6
+                        date < minDate ||
+                        date.getDay() === 0 ||
+                        date.getDay() === 6
                       }
                       className={"focus-visible:ring-primary border-primary"}
                       initialFocus
@@ -444,10 +489,11 @@ export default function OrderPage() {
                 name="deliveryAddress"
                 value={deliveryData.deliveryAddress}
                 onChange={handleChange}
-                className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-opacity-10 min-h-24 resize-none ${errors.deliveryAddress
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-gray-300 focus:border-primary focus:ring-primary"
-                  }`}
+                className={`w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-opacity-10 min-h-24 resize-none ${
+                  errors.deliveryAddress
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:border-primary focus:ring-primary"
+                }`}
               />
               {errors.deliveryAddress && (
                 <p className="text-xs text-red-500 mt-1">

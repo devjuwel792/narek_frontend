@@ -3,24 +3,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "../Redux/features/cart/cartSlice";
 import { toggleFavorite } from "../Redux/features/favorites/favoritesSlice";
 
-export default function ProductCard({ product, product_segment_id, currency }) {
+export default function ProductCard({ product, product_segment_id, currency ,userId }) {
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
   const dispatch = useDispatch();
   const cartItem = useSelector((state) =>
-    state.cart.items.find((item) => item.id === product.id)
+    state.cart.items.find((item) => item.id === product.id),
   );
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const isFavorite = useSelector((state) =>
-    state.favorites.items.some((item) => item.id === product.id)
+    state.favorites.items.some((item) => item.id === product.id),
   );
 
   const price = product.price_excl?.[product_segment_id]
     ? product.price_excl[product_segment_id]
     : product.price_excl._;
-  const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
+  const locale =
+    currentLanguage === "eng"
+      ? "en"
+      : currentLanguage === "fr"
+        ? "fr"
+        : currentLanguage === "nl"
+          ? "nl"
+          : "en";
   const formattedPrice = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -28,7 +35,7 @@ export default function ProductCard({ product, product_segment_id, currency }) {
 
   const handleDecrease = () => {
     if (quantity > 0) {
-      dispatch(updateQuantity({ id: product.id, quantity: quantity - 1 }));
+      dispatch(updateQuantity({ id: product.id, quantity: quantity - 1, userId: userId }));
     }
   };
 
@@ -41,27 +48,28 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           size: product.size,
           image: product.image,
           quantity: 1,
+          userId: userId,
           price: parseFloat(
             product.price_excl?.[product_segment_id]
               ? product.price_excl?.[product_segment_id]
-              : product.price_excl?._
+              : product.price_excl?._,
           ),
           tax: parseFloat(
             product.tax_amount?.[product_segment_id]
               ? product.tax_amount?.[product_segment_id]
-              : product.tax_amount?._
+              : product.tax_amount?._,
           ),
           price_tax_incl: parseFloat(
             product.price_incl?.[product_segment_id]
               ? product.price_incl?.[product_segment_id]
-              : product.price_incl?._
+              : product.price_incl?._,
           ),
           vat: product.vat,
           empty_goods_value: product.empty_goods_value,
-        })
+        }),
       );
     } else {
-      dispatch(updateQuantity({ id: product.id, quantity: quantity + 1 }));
+      dispatch(updateQuantity({ id: product.id, quantity: quantity + 1, userId: userId }));
     }
   };
 
@@ -75,27 +83,28 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           size: product.size,
           image: product.image,
           quantity: newQuantity,
+          userId: userId,
           price: parseFloat(
             product.price_excl?.[product_segment_id]
               ? product.price_excl?.[product_segment_id]
-              : product.price_excl?._
+              : product.price_excl?._,
           ),
           tax: parseFloat(
             product.tax_amount?.[product_segment_id]
               ? product.tax_amount?.[product_segment_id]
-              : product.tax_amount?._
+              : product.tax_amount?._,
           ),
           price_tax_incl: parseFloat(
             product.price_incl?.[product_segment_id]
               ? product.price_incl?.[product_segment_id]
-              : product.price_incl?._
+              : product.price_incl?._,
           ),
           vat: product.vat,
           empty_goods_value: product.empty_goods_value,
-        })
+        }),
       );
     } else {
-      dispatch(updateQuantity({ id: product.id, quantity: newQuantity }));
+      dispatch(updateQuantity({ id: product.id, quantity: newQuantity, userId: userId }));
     }
   };
 
@@ -105,13 +114,14 @@ export default function ProductCard({ product, product_segment_id, currency }) {
         id: product.id,
         name: product.name,
         size: product.size,
+        userId: userId,
         image: product.image,
         price_excl: product.price_excl,
         tax_amount: product.tax_amount,
         price_incl: product.price_incl,
         vat: product.vat,
         empty_goods_value: product.empty_goods_value,
-      })
+      }),
     );
   };
 
@@ -138,8 +148,9 @@ export default function ProductCard({ product, product_segment_id, currency }) {
           className="absolute top-2 right-2 w-8 h-8 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-opacity"
         >
           <Heart
-            className={`w-5 h-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
-              }`}
+            className={`w-5 h-5 ${
+              isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
+            }`}
           />
         </button>
       </div>
@@ -173,8 +184,9 @@ export default function ProductCard({ product, product_segment_id, currency }) {
             type="number"
             value={quantity}
             onChange={handleQuantityChange}
-            className={`w-12 h-8 text-center border ${quantity && "border-green-500"
-              }  rounded`}
+            className={`w-12 h-8 text-center border ${
+              quantity && "border-green-500"
+            }  rounded`}
             min="0"
           />
           <button

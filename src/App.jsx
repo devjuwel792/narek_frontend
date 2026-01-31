@@ -58,35 +58,35 @@ export default function App() {
 
   const productGroups = data
     ? [
-      { name: "All", id: null },
-      ...data.items.map((item) => {
-        return {
-          name: item.name,
-          id: item.id,
-        };
-      }),
-    ]
+        { name: "All", id: null },
+        ...data.items.map((item) => {
+          return {
+            name: item.name,
+            id: item.id,
+          };
+        }),
+      ]
     : [{ name: "All", id: null }];
 
   const productList = productsData
     ? productsData.items.map((item) => ({
-      ...item,
-      id: item.id,
-      name: item?.name,
-      // category: item.product_group?.name,
-      image:
-        item?.pictures?.length > 0
-          ? item.pictures.at(-1)
-          : "/placeholder.png",
-      // size: item.unit_code.name,
-      // price: item.price._,
-      // price_excl: item.price_excl,
-      quantity: 0,
-    }))
+        ...item,
+        id: item.id,
+        name: item?.name,
+        // category: item.product_group?.name,
+        image:
+          item?.pictures?.length > 0
+            ? item.pictures.at(-1)
+            : "/placeholder.png",
+        // size: item.unit_code.name,
+        // price: item.price._,
+        // price_excl: item.price_excl,
+        quantity: 0,
+      }))
     : [];
 
   const filteredProducts = productList;
-  console.log("🚀 ~ App ~ filteredProducts:", filteredProducts)
+  console.log("🚀 ~ App ~ filteredProducts:", filteredProducts);
 
   // selectedCategory === "All"
   //   ? productList
@@ -123,12 +123,14 @@ export default function App() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-md whitespace-nowrap font-medium transition-colors ${""
+              className={`px-4 py-2 rounded-md whitespace-nowrap font-medium transition-colors ${
+                ""
                 // selectedCategory?.name?.toLowerCase() == "all" && "w-20"
-                } ${selectedCategory.id === cat.id
+              } ${
+                selectedCategory.id === cat.id
                   ? "bg-primary text-white"
                   : "bg-white text-gray-700 border border-gray-200 hover:border-gray-300"
-                }`}
+              }`}
             >
               {cat.name}
             </button>
@@ -137,10 +139,11 @@ export default function App() {
 
         {/* Product Count */}
         <div className="mb-4 text-sm text-gray-600">
-          {t('common.showingProducts', {
-            from: filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0,
+          {t("common.showingProducts", {
+            from:
+              filteredProducts.length > 0 ? (currentPage - 1) * limit + 1 : 0,
             to: Math.min(currentPage * limit, productsData?.count || 0),
-            total: productsData?.count || 0
+            total: productsData?.count || 0,
           })}
         </div>
 
@@ -155,6 +158,7 @@ export default function App() {
                 product_segment_id={profile?.contact_tier_id}
                 currency={profile?.currency?.sign}
                 fevIds={favorites || []}
+                userId={profile?.id}
               />
             );
           })}
@@ -202,7 +206,8 @@ export default function App() {
                   {/* Page numbers around current page */}
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                     const page =
-                      Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                      Math.max(1, Math.min(totalPages - 4, currentPage - 2)) +
+                      i;
                     return (
                       <PaginationItem key={page}>
                         <PaginationLink
@@ -258,23 +263,23 @@ export default function App() {
                 disabled={currentPage === 1}
                 className="px-4 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t('common.previous')}
+                {t("common.previous")}
               </button>
               <span className="px-4 py-2 text-gray-700">
                 {currentPage} / {totalPages}
               </span>
               <button
-                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                onClick={() =>
+                  handlePageChange(Math.min(totalPages, currentPage + 1))
+                }
                 disabled={currentPage === totalPages}
                 className="px-4 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t('common.next')}
+                {t("common.next")}
               </button>
             </div>
           </>
         )}
-
-        
       </main>
     </div>
   );

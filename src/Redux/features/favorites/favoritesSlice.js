@@ -24,8 +24,8 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addToFavorites: (state, action) => {
-      const { id, name, size, image, price_excl } = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
+      const { id, name, size, image, price_excl ,userId} = action.payload;
+      const existingItem = state.items.find((item) => item.id === id && item.userId === userId);
       if (!existingItem) {
         state.items.push({
           id,
@@ -33,13 +33,14 @@ const favoritesSlice = createSlice({
           size,
           image,
           price_excl,
+          userId
         });
       }
       localStorage.setItem("favorites", JSON.stringify(state));
     },
     removeFromFavorites: (state, action) => {
-      const id = action.payload;
-      state.items = state.items.filter((item) => item.id !== id);
+      const { id ,userId} = action.payload;
+      state.items = state.items.filter((item) => item.id !== id && item.userId === userId);
       localStorage.setItem("favorites", JSON.stringify(state));
     },
     toggleFavorite: (state, action) => {
@@ -53,10 +54,11 @@ const favoritesSlice = createSlice({
         tax_amount,
         price_incl,
         empty_goods_value,
+        userId
       } = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
+      const existingItem = state.items.find((item) => item.id === id && item.userId === userId);
       if (existingItem) {
-        state.items = state.items.filter((item) => item.id !== id);
+        state.items = state.items.filter((item) => item.id !== id && item.userId === userId);
       } else {
         state.items.push({
           id,
@@ -68,6 +70,7 @@ const favoritesSlice = createSlice({
           tax_amount,
           price_incl,
           empty_goods_value,
+          userId
         });
       }
       localStorage.setItem("favorites", JSON.stringify(state));

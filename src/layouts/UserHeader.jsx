@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
 import { setSearchQuery } from "@/Redux/features/search/searchSlice";
+import { useGetProfileQuery } from "@/Redux/services/authApi";
 
 export default function UserHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,13 +26,22 @@ export default function UserHeader() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const totalItems = useSelector((state) => state.cart.totalItems);
-  const totalFavorites = useSelector((state) => state.favorites.items.length);
+  const { data: user } = useGetProfileQuery();
+  const totalItems = useSelector((state) =>
+    state.cart.items
+      .filter((item) => item.userId === user?.id)
+      .reduce((total, item) => total + item.quantity, 0),
+  );
+  const totalFavorites = useSelector((state) =>
+    state.favorites.items
+      .filter((item) => item.userId === user?.id)
+      .reduce((total, item) => total + item.quantity, 0),
+  );
   const currentLanguage = useSelector(
     (state) => state.language.currentLanguage,
   );
+
   const searchQuery = useSelector((state) => state.search.query);
- 
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -65,28 +75,31 @@ export default function UserHeader() {
             <div className="hidden sm:flex gap-2">
               <button
                 onClick={() => dispatch(setLanguage("EN"))}
-                className={`px-3 py-1 text-sm rounded font-medium ${currentLanguage.toUpperCase() === "EN"
-                  ? "bg-primary text-white"
-                  : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                  }`}
+                className={`px-3 py-1 text-sm rounded font-medium ${
+                  currentLanguage.toUpperCase() === "EN"
+                    ? "bg-primary text-white"
+                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                }`}
               >
                 EN
               </button>
               <button
                 onClick={() => dispatch(setLanguage("NL"))}
-                className={`px-3 py-1  text-sm rounded font-medium ${currentLanguage.toUpperCase() === "NL"
-                  ? "bg-primary text-white"
-                  : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                  }`}
+                className={`px-3 py-1  text-sm rounded font-medium ${
+                  currentLanguage.toUpperCase() === "NL"
+                    ? "bg-primary text-white"
+                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                }`}
               >
                 NL
               </button>
               <button
                 onClick={() => dispatch(setLanguage("FR"))}
-                className={`px-3 py-1 text-sm rounded font-medium ${currentLanguage.toUpperCase() === "FR"
-                  ? "bg-primary text-white"
-                  : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                  }`}
+                className={`px-3 py-1 text-sm rounded font-medium ${
+                  currentLanguage.toUpperCase() === "FR"
+                    ? "bg-primary text-white"
+                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                }`}
               >
                 FR
               </button>
@@ -130,6 +143,7 @@ export default function UserHeader() {
                 dispatch(logout());
                 navigate("/auth/login");
                 dispatch(setSearchQuery(""));
+                window.location.reload();
               }}
               className="hidden sm:flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-400 font-medium"
             >
@@ -164,10 +178,11 @@ export default function UserHeader() {
                     dispatch(setLanguage("EN"));
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`px-3 py-1 text-sm rounded font-medium ${currentLanguage.toUpperCase() === "EN"
-                    ? "bg-primary text-white"
-                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
+                  className={`px-3 py-1 text-sm rounded font-medium ${
+                    currentLanguage.toUpperCase() === "EN"
+                      ? "bg-primary text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
                 >
                   EN
                 </button>
@@ -176,10 +191,11 @@ export default function UserHeader() {
                     dispatch(setLanguage("NL"));
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`px-3 py-1 text-sm rounded font-medium ${currentLanguage.toUpperCase() === "NL"
-                    ? "bg-primary text-white"
-                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
+                  className={`px-3 py-1 text-sm rounded font-medium ${
+                    currentLanguage.toUpperCase() === "NL"
+                      ? "bg-primary text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
                 >
                   NL
                 </button>
@@ -188,10 +204,11 @@ export default function UserHeader() {
                     dispatch(setLanguage("FR"));
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`px-3 py-1 text-sm rounded font-medium ${currentLanguage.toUpperCase() === "FR"
-                    ? "bg-primary text-white"
-                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
+                  className={`px-3 py-1 text-sm rounded font-medium ${
+                    currentLanguage.toUpperCase() === "FR"
+                      ? "bg-primary text-white"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
                 >
                   FR
                 </button>

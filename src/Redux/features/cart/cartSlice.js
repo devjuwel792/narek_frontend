@@ -1,6 +1,4 @@
-import {
-  createSlice
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const loadStateFromLocalStorage = () => {
   try {
@@ -8,7 +6,7 @@ const loadStateFromLocalStorage = () => {
     if (serializedState === null) {
       return {
         items: [],
-        totalItems: 0
+        totalItems: 0,
       };
     }
     return JSON.parse(serializedState);
@@ -16,7 +14,7 @@ const loadStateFromLocalStorage = () => {
     console.error("Could not load cart state from localStorage:", err);
     return {
       items: [],
-      totalItems: 0
+      totalItems: 0,
     };
   }
 };
@@ -28,7 +26,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-
+      
       const {
         id,
         name,
@@ -39,12 +37,14 @@ const cartSlice = createSlice({
         tax,
         price_tax_incl,
         vat,
-        empty_goods_value
+        userId,
+        empty_goods_value,
       } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem) {
         existingItem.quantity += quantity;
       } else {
+        
         state.items.push({
           id,
           name,
@@ -53,14 +53,15 @@ const cartSlice = createSlice({
           quantity,
           price,
           tax,
+          userId,
           price_tax_incl,
           vat,
-          empty_goods_value
+          empty_goods_value,
         });
       }
       state.totalItems = state.items.reduce(
         (sum, item) => sum + item.quantity,
-        0
+        0,
       );
       localStorage.setItem("cart", JSON.stringify(state));
     },
@@ -69,22 +70,14 @@ const cartSlice = createSlice({
       state.items = state.items.filter((item) => item.id !== id);
       state.totalItems = state.items.reduce(
         (sum, item) => sum + item.quantity,
-        0
+        0,
       );
       localStorage.setItem("cart", JSON.stringify(state));
     },
     updateQuantity: (state, action) => {
-      // 
-      const {
-        id,
-        quantity,
-        name,
-        size,
-        image,
-        tax,
-        price_tax_incl
-      } = action.payload;
-      const item = state.items.find((item) => item.id === id);
+      
+      const { id, quantity ,userId } = action.payload;
+      const item = state.items.find((item) => item.id === id && item.userId === userId);
       if (item) {
         item.quantity = Math.max(0, quantity);
         if (item.quantity === 0) {
@@ -93,7 +86,7 @@ const cartSlice = createSlice({
       }
       state.totalItems = state.items.reduce(
         (sum, item) => sum + item.quantity,
-        0
+        0,
       );
       localStorage.setItem("cart", JSON.stringify(state));
     },
@@ -105,11 +98,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  updateQuantity,
-  clearCart
-} =
-cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;
