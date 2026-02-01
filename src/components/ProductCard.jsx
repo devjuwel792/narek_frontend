@@ -8,9 +8,12 @@ export default function ProductCard({ product, product_segment_id, currency ,use
     return state.language.currentLanguage;
   });
   const dispatch = useDispatch();
+
   const cartItem = useSelector((state) =>
-    state.cart.items.find((item) => item.id === product.id),
-  );
+    state.cart.items.find((item) => item.id === product.id && item.userId === userId),
+  ) || null;
+  console.log("🚀 ~ ProductCard ~ cartItem:", cartItem)
+
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const isFavorite = useSelector((state) =>
@@ -40,7 +43,8 @@ export default function ProductCard({ product, product_segment_id, currency ,use
   };
 
   const handleIncrease = () => {
-    if (quantity === 0) {
+    debugger;
+    if (quantity == 0) {
       dispatch(
         addToCart({
           id: product.id,
@@ -74,6 +78,7 @@ export default function ProductCard({ product, product_segment_id, currency ,use
   };
 
   const handleQuantityChange = (e) => {
+    debugger;
     const newQuantity = Number.parseInt(e.target.value) || 0;
     if (newQuantity > 0 && !cartItem) {
       dispatch(

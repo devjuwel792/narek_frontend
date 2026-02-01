@@ -109,7 +109,7 @@ export default function OrderPage() {
   };
 
   const handleRemoveItem = (id) => {
-    dispatch(removeFromCart(id));
+    dispatch(removeFromCart({ id, userId: profile?.id }));
   };
 
   const handleSubmitOrder = async (e) => {
