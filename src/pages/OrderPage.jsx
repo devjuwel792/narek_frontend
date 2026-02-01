@@ -105,7 +105,7 @@ export default function OrderPage() {
   };
 
   const handleQuantityChange = (id, quantity) => {
-    dispatch(updateQuantity({ id, quantity }));
+    dispatch(updateQuantity({ id, quantity, userId: profile?.id }));
   };
 
   const handleRemoveItem = (id) => {

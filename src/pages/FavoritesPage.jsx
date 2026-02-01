@@ -10,7 +10,7 @@ export default function FavoritesPage() {
     return state.favorites.items.filter((item) => item.userId === profile?.id);
   });
 
-  console.log("🚀 ~ FavoritesPage ~ favorites:", favorites);
+ 
 
   return (
     <div className="min-h-screen">
@@ -43,6 +43,7 @@ export default function FavoritesPage() {
                   }}
                   product_segment_id={profile?.contact_tier_id}
                   currency={profile?.currency?.sign}
+                  userId={profile?.id}
                 />
               );
             })}
