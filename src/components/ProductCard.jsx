@@ -43,7 +43,7 @@ export default function ProductCard({ product, product_segment_id, currency ,use
   };
 
   const handleIncrease = () => {
-    debugger;
+   
     if (quantity == 0) {
       dispatch(
         addToCart({
@@ -78,7 +78,7 @@ export default function ProductCard({ product, product_segment_id, currency ,use
   };
 
   const handleQuantityChange = (e) => {
-    debugger;
+
     const newQuantity = Number.parseInt(e.target.value) || 0;
     if (newQuantity > 0 && !cartItem) {
       dispatch(
