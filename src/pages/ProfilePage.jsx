@@ -55,7 +55,9 @@ export default function ProfilePage() {
     deliveryDate: new Date(order.delivery_date).toLocaleDateString(locale),
     status: order.status,
   })) : [];
+  console.log("🚀 ~ ProfilePage ~ processedOrders:", processedOrders)
 
+  
   const columns = [
     {
       accessorKey: "orderDate",

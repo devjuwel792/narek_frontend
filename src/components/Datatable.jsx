@@ -17,7 +17,7 @@ export function DataTable({
   // optional pagination props
   pagination: externalPagination,
   onPaginationChange,
-  pageSizeOptions = [10, 20, 50, 100],
+  pageSizeOptions = [10, 20, 50, 10000],
   showPagination = true,
 }) {
   const [sorting, setSorting] = React.useState([]);
@@ -28,7 +28,7 @@ export function DataTable({
   // internal pagination state when component is uncontrolled
   const [internalPagination, setInternalPagination] = React.useState({
     pageIndex: externalPagination?.pageIndex ?? 0,
-    pageSize: externalPagination?.pageSize ?? pageSizeOptions[0],
+    pageSize: externalPagination?.pageSize ?? pageSizeOptions[3],
   });
 
   // decide whether pagination is controlled externally
