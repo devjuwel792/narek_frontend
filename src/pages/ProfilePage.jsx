@@ -9,33 +9,46 @@ import { useGetOrdersQuery } from "@/Redux/services/ordersApi";
 import { useGetProfileQuery } from "@/Redux/services/authApi";
 import { useSelector } from "react-redux";
 
-
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
   const { t } = useTranslation();
-  const { data: profileApiData, isLoading: profileLoading, error: profileError } = useGetProfileQuery();
+  const {
+    data: profileApiData,
+    isLoading: profileLoading,
+    error: profileError,
+  } = useGetProfileQuery();
 
   const currentLanguage = useSelector((state) => {
     return state.language.currentLanguage;
   });
-  const locale = currentLanguage === "eng" ? "en" : currentLanguage === "fr" ? "fr" : currentLanguage === "nl" ? "nl" : "en";
-  const formatPrice = (value) => new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+  const locale =
+    currentLanguage === "eng"
+      ? "en"
+      : currentLanguage === "fr"
+        ? "fr"
+        : currentLanguage === "nl"
+          ? "nl"
+          : "en";
+  const formatPrice = (value) =>
+    new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
 
-  const profileData = profileApiData ? {
-    fullName: profileApiData.name,
-    phone: profileApiData.phone,
-    email: profileApiData.email,
-    companyName: profileApiData.name, // Assuming name is used for company name
-    vatNumber: profileApiData.vat,
-    street: profileApiData.street,
-    number: profileApiData.streetnumber,
-    city: profileApiData.city,
-    postalCode: profileApiData.citycode,
-  } : null;
+  const profileData = profileApiData
+    ? {
+        fullName: profileApiData.name,
+        phone: profileApiData.phone,
+        email: profileApiData.email,
+        companyName: profileApiData.name, // Assuming name is used for company name
+        vatNumber: profileApiData.vat,
+        street: profileApiData.street,
+        number: profileApiData.streetnumber,
+        city: profileApiData.city,
+        postalCode: profileApiData.citycode,
+      }
+    : null;
 
   const tabs = [
     { id: "profile", label: t("profilePage.profile") },
@@ -44,19 +57,23 @@ export default function ProfilePage() {
     { id: "privacy", label: t("profilePage.privacyPolicy") },
   ];
 
-
   const { data: ordersData, isLoading, error } = useGetOrdersQuery();
-  console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData)
+  console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData);
 
-  let processedOrders = ordersData ? ordersData.map(order => ({
-    orderDate: new Date(order.date).toLocaleDateString(locale),
-    reference: order.number,
-    totalItems: order.items.reduce((sum, item) => sum + parseInt(item.quantity), 0),
-    deliveryDate: new Date(order.delivery_date).toLocaleDateString(locale),
-    status: order.status,
-  })) : [];
+  let processedOrders = ordersData
+    ? ordersData.map((order) => ({
+        orderDate: new Date(order.date).toLocaleDateString(locale),
+        reference: order.number,
+        totalItems: order.items.reduce(
+          (sum, item) => sum + parseInt(item.quantity),
+          0,
+        ),
+        deliveryDate: new Date(order.delivery_date).toLocaleDateString(locale),
+        status: order.status,
+      }))
+    : [];
 
-  processedOrders =[
+  processedOrders = [
     {
       orderDate: "2024-01-15",
       reference: "ORD-001",
@@ -204,10 +221,8 @@ export default function ProfilePage() {
       deliveryDate: "2024-01-20",
       status: "Delivered",
     },
-  ]
+  ];
 
-
-  
   const columns = [
     {
       accessorKey: "orderDate",
@@ -252,10 +267,11 @@ export default function ProfilePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-3 sm:pb-4 font-medium transition-colors whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${activeTab === tab.id
+              className={`pb-3 sm:pb-4 font-medium transition-colors whitespace-nowrap flex-shrink-0 text-sm sm:text-base ${
+                activeTab === tab.id
                   ? "border-b-2 border-primary text-primary"
                   : "text-gray-600 hover:text-gray-900"
-                }`}
+              }`}
             >
               {tab.label}
             </button>
@@ -269,7 +285,9 @@ export default function ProfilePage() {
           {profileLoading ? (
             <div className="text-center py-8">{t("common.loading")}</div>
           ) : profileError ? (
-            <div className="text-center py-8 text-red-500">{t("common.error")}</div>
+            <div className="text-center py-8 text-red-500">
+              {t("common.error")}
+            </div>
           ) : profileData ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Company Details Card */}
@@ -328,7 +346,8 @@ export default function ProfilePage() {
                   {t("profilePage.businessAddress")}
                 </h2>
                 <p className="text-gray-700">
-                  {profileData.street} {profileData.number}, {profileData.city}, {profileData.postalCode}
+                  {profileData.street} {profileData.number}, {profileData.city},{" "}
+                  {profileData.postalCode}
                 </p>
               </div>
             </div>
@@ -340,13 +359,15 @@ export default function ProfilePage() {
 
       {activeTab == "orders" && (
         <div className=" ">
-          {/* {isLoading ? (
+          {isLoading ? (
             <div className="text-center py-8">{t("common.loading")}</div>
           ) : error ? (
-            <div className="text-center py-8 text-red-500">{t("common.error")}</div>
-          ) : ( */}
+            <div className="text-center py-8 text-red-500">
+              {t("common.error")}
+            </div>
+          ) : (
             <DataTable columns={columns} data={processedOrders} />
-          {/* )} */}
+          )}
         </div>
       )}
       {activeTab == "terms" && (

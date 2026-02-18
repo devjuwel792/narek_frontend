@@ -16,9 +16,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      // <ProtectedRoute>
+      <ProtectedRoute>
         <Layout />
-      // </ProtectedRoute>
+      </ProtectedRoute>
     ),
     errorElement: <h2>Route not found</h2>,
     children: [
