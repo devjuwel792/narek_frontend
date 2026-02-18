@@ -48,14 +48,164 @@ export default function ProfilePage() {
   const { data: ordersData, isLoading, error } = useGetOrdersQuery();
   console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData)
 
-  const processedOrders = ordersData ? ordersData.map(order => ({
+  let processedOrders = ordersData ? ordersData.map(order => ({
     orderDate: new Date(order.date).toLocaleDateString(locale),
     reference: order.number,
     totalItems: order.items.reduce((sum, item) => sum + parseInt(item.quantity), 0),
     deliveryDate: new Date(order.delivery_date).toLocaleDateString(locale),
     status: order.status,
   })) : [];
-  console.log("🚀 ~ ProfilePage ~ processedOrders:", processedOrders)
+
+  processedOrders =[
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+    {
+      orderDate: "2024-01-15",
+      reference: "ORD-001",
+      totalItems: 5,
+      deliveryDate: "2024-01-20",
+      status: "Delivered",
+    },
+  ]
+
 
   
   const columns = [
@@ -190,13 +340,13 @@ export default function ProfilePage() {
 
       {activeTab == "orders" && (
         <div className=" ">
-          {isLoading ? (
+          {/* {isLoading ? (
             <div className="text-center py-8">{t("common.loading")}</div>
           ) : error ? (
             <div className="text-center py-8 text-red-500">{t("common.error")}</div>
-          ) : (
+          ) : ( */}
             <DataTable columns={columns} data={processedOrders} />
-          )}
+          {/* )} */}
         </div>
       )}
       {activeTab == "terms" && (

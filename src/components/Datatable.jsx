@@ -71,10 +71,18 @@ export function DataTable({
     },
   });
 
+  // Get column headers for mobile card view
+  const getHeaderGroups = () => table.getHeaderGroups();
+  const firstHeaderGroup = getHeaderGroups()[0];
+  const columnHeaders = firstHeaderGroup?.headers.map((header) => ({
+    id: header.id,
+    header: header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext()),
+  })) || [];
+
   return (
     <div className="overflow-hidden bg-[#fafafa] rounded-md border border-[#f1f1f159]">
-      {/* Table Header */}
-      <div className="bg-[#4e4d4d18] flex justify-between border-b border-[#f1f1f159] py-2">
+      {/* Table Header - Desktop Only */}
+      <div className="hidden md:flex justify-between border-b border-[#f1f1f159] py-2">
         {table.getHeaderGroups().map((headerGroup) => (
           <div key={headerGroup.id} className="contents">
             {headerGroup.headers.map((header) => (
@@ -94,8 +102,8 @@ export function DataTable({
         ))}
       </div>
 
-      {/* Table Body */}
-      <div>
+      {/* Table Body - Desktop Row View */}
+      <div className="hidden md:block">
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <div
@@ -111,6 +119,41 @@ export function DataTable({
                   className="px-4 py-2 flex-1 text-sm text-black self-center"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </div>
+              ))}
+            </div>
+          ))
+        ) : (
+          <div className="grid grid-cols-1">
+            <div className="h-24 flex items-center justify-center text-gray-400 text-sm">
+              No results.
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <div
+              key={row.id}
+              data-state={row.getIsSelected() ? "selected" : undefined}
+              className={`border-[#00311159] border-b p-3 mb-2 last:mb-0 ${
+                tableStyle == "style2" ? "border-b" : "border-t"
+              }`}
+            >
+              {row.getVisibleCells().map((cell, cellIndex) => (
+                <div
+                  key={cell.id}
+                  className="flex justify-between items-center py-1.5 text-sm"
+                >
+                  <span className="font-medium text-gray-600 min-w-[100px]">
+                    {columnHeaders[cellIndex]?.header || ""}
+                  </span>
+                  <span className="text-black text-right flex-1">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </span>
                 </div>
               ))}
             </div>
