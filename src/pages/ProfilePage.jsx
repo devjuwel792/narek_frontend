@@ -58,7 +58,7 @@ export default function ProfilePage() {
   ];
 
   const { data: ordersData, isLoading, error } = useGetOrdersQuery();
-  console.log("🚀 ~ ProfilePage ~ ordersData:", ordersData);
+
 
   const processedOrders = ordersData
     ? ordersData.map((order) => ({

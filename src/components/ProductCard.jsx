@@ -188,7 +188,7 @@ export default function ProductCard({
 
       {/* Product Info */}
       <div className="p-4 flex flex-col justify-between h-40">
-        <h3 className="font-semibold text-gray-900 mb-1  whitespace-normal break-words">
+        <h3 className="font-semibold text-gray-900 mb-1 break-words">
           {currentLanguage === "eng" && product.name?.eng?.length > 0
             ? product.name?.eng
             : currentLanguage === "fr" && product.name?.fra?.length > 0
