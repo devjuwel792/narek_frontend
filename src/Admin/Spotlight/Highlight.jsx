@@ -16,7 +16,7 @@ export default function Highlight() {
   const [open, setOpen] = useState(false);
 
   const [cards, setCards] = useState([]);
-  console.log("🚀 ~ Highlight ~ cards:", cards)
+  
 
   useEffect(() => {
     if (highlightsData?.data) {

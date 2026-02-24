@@ -98,12 +98,12 @@ export default function BlogManagement() {
           toast.warning(
             `Upload completed with issues: ${created} records created, ${errors.length} errors occurred. Check console for details.`
           );
-          console.log("Upload errors:", errors);
+          
         } else if (created === 0 && errors.length > 0) {
           toast.error(
             `Upload failed. ${errors.length} errors occurred. Check console for details.`
           );
-          console.log("Upload errors:", errors);
+          
         } else {
           toast.success("Excel file uploaded successfully!");
         }
@@ -508,7 +508,7 @@ export function ContentForm({ fromType, data, onClose }) {
   };
 
   const handleCancel = () => {
-    console.log("Cancel clicked");
+    
   };
 
   const handleUpdate = async () => {
@@ -517,7 +517,7 @@ export function ContentForm({ fromType, data, onClose }) {
         id: data.id,
         data: formData,
       }).unwrap();
-      console.log("Update blog result:", result);
+      
       toast.success("Blog updated successfully");
       if (typeof onClose === "function") onClose();
     } catch (err) {
@@ -534,7 +534,7 @@ export function ContentForm({ fromType, data, onClose }) {
 
     try {
       const result = await createBlog(formData).unwrap();
-      console.log("Create blog result:", result);
+      
       toast.success("Blog created successfully");
       if (typeof onClose === "function") onClose();
     } catch (err) {

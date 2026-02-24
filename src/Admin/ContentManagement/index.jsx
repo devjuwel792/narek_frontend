@@ -105,12 +105,12 @@ export default function ContentManagement() {
           toast.warning(
             `Upload completed with issues: ${created} records created, ${errors.length} errors occurred. Check console for details.`
           );
-          console.log("Upload errors:", errors);
+          
         } else if (created === 0 && errors.length > 0) {
           toast.error(
             `Upload failed. ${errors.length} errors occurred. Check console for details.`
           );
-          console.log("Upload errors:", errors);
+          
         } else {
           toast.success("Excel file uploaded successfully!");
         }
@@ -523,7 +523,7 @@ export function ContentForm({ fromType, data, onClose }) {
   };
 
   const handleCancel = () => {
-    console.log("Cancel clicked");
+    
     onClose();
   };
 
@@ -553,12 +553,12 @@ export function ContentForm({ fromType, data, onClose }) {
         upload_images: formData.upload_images,
         status: formData.status,
       };
-      console.log("🚀 ~ handleUpdate ~ payload:", payload);
+      
       const result = await updateContent({
         id: data.id,
         data: payload,
       }).unwrap();
-      console.log("Update content result:", result);
+      
       toast.success("Content updated successfully");
       // close modal
       if (typeof onClose === "function") onClose();
@@ -600,9 +600,9 @@ export function ContentForm({ fromType, data, onClose }) {
         upload_images: formData.upload_images,
         status: formData.status,
       };
-      console.log("🚀 ~ handleSubmit ~ payload:", payload);
+      
       const result = await createContent(payload).unwrap();
-      console.log("Create content result:", result);
+      
       toast.success("Content created successfully");
       // close modal
       if (typeof onClose === "function") onClose();

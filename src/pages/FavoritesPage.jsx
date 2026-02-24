@@ -31,10 +31,7 @@ export default function FavoritesPage() {
           /* Products Grid */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
             {favorites.map((product) => {
-              console.log(
-                product?.pictures?.public_path,
-                " from favorites page image path",
-              );
+             
               return (
                 <ProductCard
                   key={product.id}

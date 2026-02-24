@@ -20,7 +20,7 @@ export default function ProductCard({
         (item) => item.id === product.id && item.userId === userId,
       ),
     ) || null;
-  console.log("🚀 ~ ProductCard ~ cartItem:", cartItem);
+  
 
   const quantity = cartItem ? cartItem.quantity : 0;
 
