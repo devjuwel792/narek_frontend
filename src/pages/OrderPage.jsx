@@ -85,7 +85,8 @@ export default function OrderPage() {
     }));
   }, [profile]);
 
-  const [date, setDate] = useState(addDays(minDate, 1));
+  const [date, setDate] = useState(null );
+  // const [date, setDate] = useState(addDays(minDate, 1));
 
   const [errors, setErrors] = useState({});
 
