@@ -20,7 +20,7 @@ export default function ProductCard({
         (item) => item.id === product.id && item.userId === userId,
       ),
     ) || null;
-  
+
 
   const quantity = cartItem ? cartItem.quantity : 0;
 
@@ -157,9 +157,9 @@ export default function ProductCard({
   };
 
   return (
-    <div className="bg-[#FBFFFC] rounded-lg border border-gray-200 overflow-hidden min-h-80 hover:shadow-lg transition-shadow">
+    <div className="bg-[#FBFFFC] rounded-lg border border-gray-200 overflow-hidden  hover:shadow-lg transition-shadow">
       {/* Product Image */}
-      <div className="relative border-b-2 h-72 md:h-60  overflow-hidden flex items-center justify-center">
+      <div className="relative border-b-2   overflow-hidden flex items-center justify-center">
         <img
           src={product.image}
           // alt={
@@ -171,7 +171,7 @@ export default function ProductCard({
           //     ? product.name?.nld
           //     : product.name._
           // }
-          className="h-full w-full object-contain"
+          className=" w-full object-contain  h-48"
         />
         {/* Favorite Button */}
         <button
@@ -179,30 +179,33 @@ export default function ProductCard({
           className="absolute top-2 right-2 w-8 h-8 bg-white bg-opacity-80 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-opacity"
         >
           <Heart
-            className={`w-5 h-5 ${
-              isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
-            }`}
+            className={`w-5 h-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
+              }`}
           />
         </button>
       </div>
 
       {/* Product Info */}
-      <div className="p-4 flex flex-col justify-between h-40">
-        <h3 className="font-semibold text-gray-900 mb-1 break-words">
-          {currentLanguage === "eng" && product.name?.eng?.length > 0
-            ? product.name?.eng
-            : currentLanguage === "fr" && product.name?.fra?.length > 0
-              ? product.name?.fra
-              : currentLanguage === "nl" && product.name?.nld?.length > 0
-                ? product.name?.nld
-                : product.name._}
-          {/* {product.name._} */}
-        </h3>
+      <div className="p-4 flex flex-col  justify-between ">
+
         <div>
+          <h3 className="font-semibold text-gray-900 mb-1 break-words">
+            {currentLanguage === "eng" && product.name?.eng?.length > 0
+              ? product.name?.eng
+              : currentLanguage === "fr" && product.name?.fra?.length > 0
+                ? product.name?.fra
+                : currentLanguage === "nl" && product.name?.nld?.length > 0
+                  ? product.name?.nld
+                  : product.name._}
+            {/* {product.name._} */}
+          </h3>
           <span>
             {currency || "€"} {formattedPrice}
           </span>
           <p className="text-sm text-gray-600 mb-4">{product.size}</p>
+        </div>
+
+        
 
           {/* Quantity Selector */}
           <div className="flex items-center justify-start gap-2">
@@ -216,9 +219,8 @@ export default function ProductCard({
               type="number"
               value={quantity}
               onChange={handleQuantityChange}
-              className={`w-12 h-8 text-center border flex-[2] ${
-                quantity && "border-green-500"
-              }  rounded`}
+              className={`w-12 h-8 text-center border flex-[2] ${quantity && "border-green-500"
+                }  rounded`}
               min="0"
             />
             <button
@@ -228,7 +230,7 @@ export default function ProductCard({
               <Plus className="w-4 h-4" />
             </button>
           </div>
-        </div>
+        
       </div>
     </div>
   );
